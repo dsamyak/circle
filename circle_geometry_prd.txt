@@ -1,0 +1,725 @@
+Product Requirements Document (PRD)
+Circle — Introduction to Geometry (Shapes) | Grade 1 Math
+Intellia SG | Singapore Primary Mathematics Curriculum (MOE)
+
+═══════════════════════════════════════════════════════════════
+
+1. EXECUTIVE SUMMARY
+
+This document defines product requirements for the "Circle" interactive
+lesson module, delivered as Lesson 6.1 within Intellia SG's Grade 1 Math
+program. The module targets Singapore Primary 1 students aged 6–7 and
+teaches the recognition, properties, and real-world identification of
+circles, fully aligned with the Singapore MOE Mathematics Framework and
+the Primary 1 Targeting Mathematics syllabus on Geometry — Shapes.
+
+The product is a standalone web page hosted at:
+
+  https://intelliasg.com/courses/grade-1-math/lessons/circle/
+
+It is built using React (Vite + JSX, JavaScript/CSS) and designed to
+strictly mirror the visual and UX structure established at
+https://wordproblem-sub.vercel.app/ and the repository
+https://github.com/dsamyak/wordproblem_sub.
+
+The module follows Intellia's 5-phase learner journey:
+
+  Phase 1 — WONDER     → curiosity hook
+  Phase 2 — STORY      → narrative-based concept introduction
+  Phase 3 — SIMULATE   → sandbox-style interactive simulation
+  Phase 4 — PLAY       → IntelliPlay™ gamified practice
+  Phase 5 — REFLECT    → journal / LearnFlow AI prompt
+
+Audio narration uses ElevenLabs exclusively (Voice: Alice, en-SG),
+following the architecture defined in audio_generation_pipeline.md:
+pre-generated .mp3 files for all scripted phase narrations,
+dynamic generation via VITE_ELEVENLABS_API_KEY for runtime content,
+and zero fallback to the browser Web Speech API to preserve a
+consistent, premium audio experience.
+
+═══════════════════════════════════════════════════════════════
+
+2. PRODUCT VISION & GOALS
+
+Vision
+
+To make the concept of "circle" tangible, memorable, and delightful for
+6–7 year old Singapore learners through animated simulations, real-world
+visual exploration, and adaptive gamified challenge — delivered in a
+consistent, premium Intellia experience.
+
+Goals
+
+  Goal                        | Metric
+  ----------------------------|------------------------------------------
+  Learning Completion         | ≥85% of students complete all 5 phases
+  Practice Engagement         | ≥90% attempt at least 10 practice Qs
+  Score Achievement           | Average challenge score ≥75% first try
+  Session Duration            | Average engagement ≥14 minutes/session
+  Curriculum Alignment        | 100% aligned to Singapore MOE Primary 1
+  Phase Progression           | ≥80% reach Play phase in a single session
+
+═══════════════════════════════════════════════════════════════
+
+3. TARGET USERS
+
+Primary: Grade 1 Students (Age 6–7)
+
+  - Limited reading; prefer visual shapes, animation, and colour
+  - Learn concretely first (C → P → A: Concrete-Pictorial-Abstract)
+  - Short attention spans; need frequent micro-rewards
+  - Singapore context: familiar with local names and everyday objects
+
+Secondary: Parents & Teachers
+
+  - Assign as classwork or homework
+  - Expect strict MOE curriculum alignment
+  - Monitor via completion indicators
+
+═══════════════════════════════════════════════════════════════
+
+4. CURRICULUM ALIGNMENT — Singapore MOE Primary 1
+
+  Topic:   Circle (Lesson 6.1)
+  Programme: Intellia SG Grade 1 Math — Section 6: Geometry (Shapes)
+  Lesson URL: https://intelliasg.com/courses/grade-1-math/lessons/circle/
+
+Source Textbooks Referenced:
+
+  - Targeting Mathematics Primary 1A (Casco Publications)
+    → Chapter on Shapes:
+      • Recognising Common 2D Shapes
+      • Identifying Circles in the Environment
+      • Describing Shapes by Properties (curved side, no corners)
+      • Sorting and Classifying Shapes
+
+  - MOE Primary 1 Mathematics Syllabus
+    → Strand: Geometry
+      • Shapes and Patterns
+      • Identifying and naming 2D shapes: circle, square, rectangle,
+        triangle
+      • Describing and classifying shapes by their properties
+
+MOE Learning Objectives Covered:
+
+  LO1: Name the shape "circle" correctly
+  LO2: Identify circles in the environment (coins, wheels, clocks, plates)
+  LO3: Describe a circle by its property: one curved side, no corners
+  LO4: Distinguish circles from other 2D shapes (square, rectangle,
+       triangle)
+  LO5: Sort and group circles among a mixed set of shapes
+  LO6: Identify circles in composite pictures and patterns
+
+Singapore Syllabus Concepts (CPA Progression):
+
+  Concrete   → physical circular objects (simulated digitally:
+               rotating coins, rolling wheels, spinning tops)
+  Pictorial  → circle diagram, shape cards, visual matching
+  Abstract   → naming, property description, classification rules
+
+Shape Properties Covered:
+
+  Circle:
+    - Exactly 1 side (curved, closed)
+    - 0 corners (vertices)
+    - All points on boundary equidistant from centre (not tested
+      formally at P1 — introduced as "perfectly round")
+    - No flat edges
+
+Contrast Shapes Used in Practice:
+
+  Square (4 straight sides, 4 corners)
+  Rectangle (4 straight sides, 4 corners, 2 pairs equal)
+  Triangle (3 straight sides, 3 corners)
+  Semi-circle (introduced as "half a circle" — bonus extension)
+
+═══════════════════════════════════════════════════════════════
+
+5. THE 5-PHASE LEARNER JOURNEY (Intellia Model)
+
+┌────────────────────────────────────────────────────────────┐
+│  INTRO SCREEN → Progress Map (5 steps visual tracker)      │
+└────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────────┐
+│  PHASE 1 — WONDER (≈ 1–2 min)                              │
+│  Hook: "What shape is a wheel? A coin? The sun? 🌞"        │
+│  Animated question: circular objects spin into frame       │
+│  Mascot appears, asks "What do they ALL have in common?"   │
+│  → Mystery builds: child leans forward, eager to find out  │
+└─────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────────┐
+│  PHASE 2 — STORY (≈ 2–3 min)                               │
+│  Narrative: Mia and Wei Ming go to a food centre.          │
+│  They spot circles everywhere — plates, cups, the          │
+│  clock on the wall, coins in Mia's purse, the fan          │
+│  above them.                                               │
+│  Illustrated story panels (animated, Singapore context)    │
+│  "A circle is perfectly round — no corners, no flat sides!"│
+│  → Circle revealed: one curved side, zero corners          │
+└─────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────────┐
+│  PHASE 3 — SIMULATE (≈ 4–5 min)                            │
+│  Sandbox: Three interactive simulation stations            │
+│  Station A: "Draw a Circle" — trace a circular path        │
+│  Station B: "Shape Sorter" — drag-sort shapes into bins    │
+│  Station C: "Spot the Circle" — click circles in a scene   │
+│  → Hypothesis about "round" becomes felt knowledge         │
+└─────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────────┐
+│  PHASE 4 — PLAY (≈ 5–6 min)                                │
+│  IntelliPlay™ Level: 100 randomised questions              │
+│  Shown in sets of 10 — "worlds" to unlock                  │
+│  Stars, XP, badges, streak fire counter                    │
+│  → Mastery is the cost of getting to the next world        │
+└─────────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────────┐
+│  PHASE 5 — REFLECT (≈ 1–2 min)                             │
+│  Journal prompt: "Can you name 3 circles you see at home?" │
+│  Or: LearnFlow AI chat (type/speak your understanding)     │
+│  → Lesson complete only here. Completion badge unlocked.   │
+└─────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════
+
+6. AUDIO NARRATION DESIGN
+
+The module uses ElevenLabs exclusively, following the pipeline defined
+in audio_generation_pipeline.md. No fallback to the browser Web Speech
+API is permitted.
+
+6.1 Voice Profile
+
+  Provider:   ElevenLabs
+  Voice Name: Alice (Clear, Engaging Educator)
+  Voice ID:   Xb7hH8MSUJpSbSDYk0k2
+  Model:      eleven_multilingual_v2
+
+6.2 Speech Styles per Phase
+
+  Phase          | Style       | ElevenLabs Params
+  ---------------|-------------|-----------------------------------------------
+  Wonder hook    | thinking    | stability 0.6, similarity 0.8, style 0.4
+  Story narration| statement   | stability 0.7, similarity 0.8, style 0.3
+  Simulation cues| instruction | stability 0.75, similarity 0.85, style 0.25
+  Praise / correct| celebration| stability 0.5, similarity 0.9, style 0.7
+  Hints          | emphasis    | stability 0.8, similarity 0.85, style 0.2
+  Questions      | question    | stability 0.55, similarity 0.8, style 0.5
+  Reflect prompt | encouragement| stability 0.6, similarity 0.85, style 0.55
+
+6.3 Pre-Generated Scripts (offline, stored as .mp3 in public/assets/audio/)
+
+  All phase narrations (Wonder, Story, Simulate instructions, Reflect
+  prompts) are pre-generated via scripts/generate_audio.js and stored
+  as static assets. The audioMap.js module maps each exact text string
+  to its .mp3 path for zero-latency playback.
+
+  Dynamic generation (on-the-fly ElevenLabs API call) is used for:
+    - Randomised question read-alouds (play phase)
+    - Praise variants ("Fantastic!", "You found it!", "Brilliant!")
+    - Hint narrations for dynamically generated questions
+
+6.4 Narration Segments (src/utils/narration.js)
+
+  All spoken text is authored using semantic helpers:
+    say("...")        → statement style
+    ask("...")        → question style
+    cheer("...")      → celebration style
+    emphasize("...")  → emphasis style
+    think("...")      → thinking style
+    celebrate("...")  → celebration style
+
+  1:1 strict parity is enforced: every word spoken must match
+  exactly what appears on screen to prevent confusion for
+  young learners.
+
+6.5 Preloading Strategy
+
+  While segment i plays, getAudioUrl is called preemptively for
+  segment i+1 so the next .mp3 is already downloaded when needed,
+  guaranteeing seamless narration with no latency gaps.
+
+═══════════════════════════════════════════════════════════════
+
+7. PHASE 1 — WONDER DESIGN (Detail)
+
+Entry animation (2–3 seconds):
+  - Black screen fades to a white classroom
+  - Everyday circular objects animate in one by one:
+    🪙 coin | 🕰️ clock | 🍕 pizza base | 🎡 Ferris wheel | ☀️ sun
+  - Each object "spins" gently as it lands
+  - Mascot (LearnFlow) floats in from bottom-right
+
+Narration (ElevenLabs / thinking style):
+  "Have you ever noticed... a coin is round. A clock is round.
+   The sun is round! What shape do they all share? Let's find out! 🔵"
+
+Interaction:
+  - Single large "Let's Explore!" button (minimum 56px height)
+  - No wrong actions possible — pure curiosity hook
+
+Exit condition: Student taps "Let's Explore!" → Phase 2 begins
+
+═══════════════════════════════════════════════════════════════
+
+8. PHASE 2 — STORY DESIGN (Detail)
+
+8.1 Story Script: "Mia's Circle Hunt"
+
+  Panel 1: Mia and Wei Ming walk into a food centre.
+    Narration: "One sunny day, Mia and Wei Ming went to the hawker
+    centre for lunch!"
+
+  Panel 2: The auntie serves noodles on a round plate.
+    Narration: "The auntie gave them noodles on a BIG round plate.
+    'Look!' said Mia. 'The plate is a circle!'"
+
+  Panel 3: Wei Ming picks up a coin to pay.
+    Narration: "'This coin is a circle too!' said Wei Ming, showing
+    Mia his 50-cent coin."
+
+  Panel 4: They look up at the round fan spinning above them.
+    Narration: "Above them, a round fan spun slowly.
+    'Circle again!' they both said."
+
+  Panel 5: Mascot appears with a big blue circle.
+    Narration: "A circle has ONE curved side and ZERO corners.
+    It is perfectly round! Can you name it? C-I-R-C-L-E. Circle!"
+
+  Panel 6: Interactive reveal — child taps to "name the shape".
+    Narration: "Great job! Now let's explore circles ourselves!"
+
+8.2 Story Panel Specs
+
+  Each panel: illustrated cartoon, Singapore hawker centre setting
+  Panels advance on tap/click OR auto-advance after audio ends
+  "Back" and "Next" nav arrows always visible
+  Progress dots (6 dots) shown at bottom of story area
+
+═══════════════════════════════════════════════════════════════
+
+9. PHASE 3 — SIMULATION DESIGN (Detail)
+
+9.1 Station A — "Draw a Circle" (Concrete)
+
+  Visual: A dotted circular guideline on a canvas
+  Interaction:
+    - Child traces a finger (touch) or mouse along the circular path
+    - A coloured trail follows their movement
+    - Accuracy measured by proximity to the guideline (±15% tolerance)
+    - On completion: circle "lights up" and bounces with a ✅
+    - Mascot cheers: "You drew a perfect circle! Round and smooth!"
+
+  Educational goal: Build kinaesthetic understanding that a circle
+  has no corners — the path never "turns sharply"
+
+  Controls: "Try Again" (resets trail) | "Done ✓" (submits attempt)
+
+9.2 Station B — "Shape Sorter" (Pictorial)
+
+  Visual: Two sorting bins on screen
+    Bin A: "Circle" (blue bin with ⭕ icon)
+    Bin B: "Not a Circle" (red bin with ✕ icon)
+
+  Shape cards presented one at a time (10 cards total):
+    Round 1 (cards 1–3):   Very clear circles vs squares
+    Round 2 (cards 4–7):   Circles vs rectangles and triangles
+    Round 3 (cards 8–10):  Ovals, ellipses (NOT circles), semi-circles
+                            → Extension: "Is an oval a circle? No!"
+
+  Interaction:
+    - Drag-and-drop shape card into correct bin
+    - OR tap card → tap correct bin (accessibility fallback)
+    - Wrong sort: gentle shake + "Look carefully — does it have corners?"
+    - Correct sort: pop animation + "That's right! A circle!"
+
+  Score gate: 8/10 correct to advance to Station C (or auto-advance
+  after 3 failed attempts on any card with explanation shown)
+
+9.3 Station C — "Spot the Circle" (Abstract-Visual)
+
+  Visual: A richly illustrated Singapore classroom scene containing
+  12–15 objects. Some are circular, some are not.
+
+  Circular objects hidden in scene:
+    Clock on wall, door knob, cup opening (top view),
+    coin on desk, ball on floor, wheel on toy car
+
+  Non-circular objects (distractors):
+    Book, window (rectangle), chalkboard, ruler, triangle-shaped sign
+
+  Interaction:
+    - Child taps/clicks on objects to identify circles
+    - Correct tap: object glows blue + 🎉 pop
+    - Wrong tap: object briefly turns red + "That has corners!"
+    - Counter: "You found [X] circles! Keep looking!"
+
+  Completion: Find all 6 circles → celebration animation → exit station
+
+═══════════════════════════════════════════════════════════════
+
+10. PHASE 4 — QUESTION BANK (100 Randomised Questions)
+
+10.1 Question Types (10 types × 10 questions = 100)
+
+  Type | Description                             | Example
+  -----|------------------------------------------|------------------------------------
+  Q1   | "Is this a circle?" — Yes/No            | Show a circle image → Yes or No?
+  Q2   | Multiple choice — name the shape        | [Image of circle] → What shape is this?
+  Q3   | Property question                       | How many corners does a circle have?
+  Q4   | "Which one is a circle?" — pick from 4  | 4 shapes shown, pick the circle
+  Q5   | Real-world identification               | Which object is shaped like a circle?
+  Q6   | Sort and count                          | How many circles are in this group?
+  Q7   | True/False — property statement        | "A circle has 3 corners" → True or False?
+  Q8   | Spot the odd one out                   | 3 circles + 1 square → which is different?
+  Q9   | Pattern completion                      | ○ □ ○ □ ○ ___ → what comes next?
+  Q10  | Word problem — shape in context        | "Siti draws a shape with no corners. What
+       |                                         |  shape did she draw?"
+
+10.2 Question Distribution
+
+  Type | Count | Difficulty Split (Easy / Medium / Hard)
+  -----|-------|----------------------------------------
+  Q1   |  10   | 5 / 3 / 2
+  Q2   |  10   | 5 / 3 / 2
+  Q3   |  10   | 4 / 4 / 2
+  Q4   |  10   | 4 / 4 / 2
+  Q5   |  10   | 3 / 4 / 3
+  Q6   |  10   | 3 / 4 / 3
+  Q7   |  10   | 4 / 4 / 2
+  Q8   |  10   | 3 / 4 / 3
+  Q9   |  10   | 3 / 4 / 3
+  Q10  |  10   | 3 / 4 / 3
+  TOTAL| 100   | 37 / 38 / 25
+
+10.3 Difficulty Definitions
+
+  Easy   (Difficulty 1): Circles clearly distinguishable; no distractors
+                         of similar shape; property questions are direct
+  Medium (Difficulty 2): Distractors include ovals/ellipses; word
+                         problems with one step; pattern with length 4
+  Hard   (Difficulty 3): Composite images with overlapping shapes;
+                         semi-circles included; abstract property
+                         reasoning; patterns with length 6+
+
+10.4 Singapore Context Objects Used in Questions
+
+  Real-world circles: coin (50-cent), clock face, plate, wheel, ball,
+  cookie, button, manhole cover, pizza base, fan blade, moon (full),
+  bubble, eye (cartoon), round table top, hoop
+
+  Singapore names used in word problems:
+    Wei Ming, Priya, Raju, Ahmad, Mia, Jun, Siti, Ryan, Xiao Ling, Beng
+
+10.5 Sample Question Objects
+
+  // Q4 Example — "Which one is a circle?"
+  {
+    id: "Q4_003",
+    type: "pick_circle",
+    world: 1,
+    difficulty: 1,
+    questionText: "Which shape is a circle?",
+    options: ["circle", "square", "triangle", "rectangle"],
+    correctAnswer: "circle",
+    visual: "shapes_mcq",
+    hint1: "A circle is perfectly round — no corners at all.",
+    hint2: "Run your finger along the shape. Does it feel smooth?",
+    explanation: "The circle is round with no corners or flat sides."
+  }
+
+  // Q10 Example — Word problem
+  {
+    id: "Q10_005",
+    type: "word_problem",
+    world: 3,
+    difficulty: 2,
+    questionText: "Siti draws a shape. It has no corners and one curved
+                   side. What shape did Siti draw?",
+    options: ["Triangle", "Circle", "Square", "Rectangle"],
+    correctAnswer: "Circle",
+    visual: "text_mcq",
+    characterName: "Siti",
+    hint1: "How many corners does a circle have? Zero!",
+    hint2: "A circle has just one curved side and no flat edges.",
+    explanation: "A circle has 0 corners and 1 curved side. Siti drew a circle!"
+  }
+
+  // Q7 Example — True/False
+  {
+    id: "Q7_002",
+    type: "true_false",
+    world: 2,
+    difficulty: 1,
+    questionText: "A circle has 4 corners. Is this TRUE or FALSE?",
+    correctAnswer: "False",
+    visual: "true_false",
+    hint1: "Count the corners on a circle. Touch each corner.",
+    hint2: "A circle is smooth and round — no corners anywhere!",
+    explanation: "FALSE! A circle has ZERO corners. It is perfectly round."
+  }
+
+═══════════════════════════════════════════════════════════════
+
+11. GAMIFICATION DESIGN
+
+11.1 Reward System
+
+  Stars (⭐):  Earned per 10-question set (1–3 stars based on score)
+  XP Points:  10 XP correct first try | 7 XP second try | 5 XP with hint
+  Streak 🔥:  Fire counter for consecutive correct answers
+  Streak bonus: +5 XP per correct answer when streak ≥ 5
+
+11.2 Badges (Unlockable)
+
+  🔵 "Circle Spotter"    — Complete Wonder + Story phases
+  🏅 "Shape Sorter"      — Complete all 3 Simulate stations
+  🥈 "Circle Champion"   — Score 70%+ on Play phase
+  🥇 "Shape Master"      — Score 80%+ on Play phase
+  💎 "Perfect Round"     — Score 10/10 in any single world
+  🔥 "Streak Legend"     — Achieve a streak of 10+ correct answers
+  🌟 "Full Explorer"     — Complete all 5 phases (lesson complete)
+  ⭐ "Circle Hunter"     — Spot all circles in Station C first try
+
+11.3 Feedback Mechanics
+
+  ✅ Correct: Bounce animation + ElevenLabs celebration audio +
+              "Fantastic! That's a circle! 🔵"
+  ❌ Incorrect: Gentle shake + "Let's look again! Remember —
+                circles have no corners."
+  Hint 1: Property text highlighted + mascot gesture
+  Hint 2: Visual counter animation or shape highlight
+  After 2 fails: Answer revealed + animated explanation with audio
+
+  No negative scoring — encouragement-first, always.
+
+11.4 World Map (IntelliPlay™ Level Progression)
+
+  World 1  — "Circle Island"    (Q 1–10:   easy identification)
+  World 2  — "Coin Kingdom"     (Q 11–20:  real-world circles)
+  World 3  — "Shape Safari"     (Q 21–30:  circles vs other shapes)
+  World 4  — "Corner Check"     (Q 31–40:  property questions)
+  World 5  — "Pattern Path"     (Q 41–50:  shape patterns)
+  World 6  — "True/False Tower" (Q 51–60:  property T/F)
+  World 7  — "Oddity Ocean"     (Q 61–70:  odd one out)
+  World 8  — "Scene Search"     (Q 71–80:  spot circles in scene)
+  World 9  — "Word World"       (Q 81–90:  word problems)
+  World 10 — "Circle Palace"    (Q 91–100: mixed hard challenge)
+
+  Each world unlocks only when ≥ 6/10 correct (1-star minimum)
+  3 stars required for a bonus "hidden challenge" in each world
+
+11.5 Mascot (LearnFlow AI Companion)
+
+  Character:   Friendly robot (matching Intellia branding — "LearnFlow")
+  Mood states: idle | curious | happy | thinking | celebrating
+  Appears in:  Wonder hook, Story narration, Reflect phase
+  Reacts to:   Correct answer, badge unlock, streak milestone
+  Special:     In Station A, mascot traces a circle alongside the child
+
+═══════════════════════════════════════════════════════════════
+
+12. UX & VISUAL DESIGN REQUIREMENTS
+
+12.1 Visual Theme
+
+  Brand:       Intellia SG — Think. Explore. Become.
+  Colours:     Match wordproblem-sub.vercel.app structure exactly
+    - Primary blue:  #4A90D9 (circle colour throughout)
+    - Accent gold:   #FFB300 (stars and rewards)
+    - Soft coral:    #FF6B6B (wrong answer feedback)
+    - Mint green:    #4CAF50 (correct feedback)
+    - White cards:   #FFFFFF with soft shadow rgba(0,0,0,0.08)
+    - Background:    #F0F7FF (light sky blue — airy and calm)
+
+  Typography:  Rounded, playful — Nunito / Fredoka One
+  Illustrations: Cartoon-style, child-friendly, Singapore hawker/school
+  Phase bands:  Each of the 5 phases has a distinct gradient colour band
+
+12.2 Layout Structure (mirrors wordproblem-sub.vercel.app)
+
+  Top bar:    Intellia logo | Lesson title "Circle" |
+              Progress tracker (5 dots, colour-coded per phase)
+  Main area:  Phase content (fills screen, responsive, card-based)
+  Bottom bar: XP counter | Stars earned | Streak fire | Phase nav arrow
+  Sidebar:    Hidden on mobile; shown on tablet+ (phase map + badge tray)
+
+12.3 Shape Visuals
+
+  All circles rendered as SVG:
+    - Smooth, anti-aliased, filled with gradient (light to mid blue)
+    - Dashed border for "empty / find me" states
+    - Animated fill (0.4s ease) when selected/identified correctly
+    - Bounce keyframe on correct identification
+  Comparison shapes (square, rectangle, triangle):
+    - Different colours (orange/purple/green) to clearly distinguish
+    - Same size class so comparison is shape-based, not size-based
+
+12.4 Accessibility
+
+  Large tap targets (min 48×48px for all interactive elements)
+  WCAG AA colour contrast on all text (ratio ≥ 4.5:1)
+  ElevenLabs audio narration for every question and phase
+  Audio mute toggle always accessible in top-right corner
+  No mandatory time pressure (optional timer in hard world challenge)
+  Keyboard navigable (Tab focus rings visible)
+
+12.5 Responsive Design
+
+  Primary:    iPad / tablet (768px+) — classroom primary device
+  Secondary:  Desktop browser (1024px+)
+  Tertiary:   Mobile (375px+) — stacked single-column layout
+  Touch:      All drag-and-drop interactions have tap fallback
+
+═══════════════════════════════════════════════════════════════
+
+13. CONTENT REQUIREMENTS
+
+13.1 Simulation Visuals
+
+  Station A canvas:  Dotted circle guideline on pastel background;
+                     child's trail rendered in gradient blue
+  Shape cards:       SVG shapes, drop shadow, rounded card frame
+  Scene illustration: Singapore classroom — detailed, warm, colourful
+  Counter items:      Circular emoji objects (🪙 🕰️ 🍪 ⚽ 🔵)
+
+13.2 Question Bank Coverage
+
+  All 10 question types × 10 questions = 100 unique questions
+  Questions randomised per session (Fisher-Yates shuffle)
+  No two sessions present the same question order
+  MCQ distractors: always include an oval/ellipse as a hard distractor
+  in relevant questions (to teach "oval ≠ circle")
+
+13.3 Word Problems — Singapore MOE Style
+
+  Format: "[Character] sees/draws/finds a shape. It has ___. What shape
+           is it?" — or — "How many circles are in [scene]?"
+  Objects: coins, plates, wheels, clocks, bubbles, buttons, hoops, balls
+  Names:   Singapore-context (see §10.4)
+  Aligned to "Let's Think Along" style from Targeting Mathematics 1A
+
+13.4 Audio Scripts (ElevenLabs pre-generation list)
+
+  All phrases below must be added to scripts/generate_audio.js
+  before build, with their assigned style:
+
+  WONDER PHASE:
+    { text: "Have you noticed? A coin is round. A clock is round. The sun is round! What shape do they all share?", style: "thinking" }
+    { text: "Let's find out together!", style: "encouragement" }
+
+  STORY PHASE:
+    { text: "One sunny day, Mia and Wei Ming went to the hawker centre for lunch!", style: "statement" }
+    { text: "The auntie gave them noodles on a big round plate. Look! The plate is a circle!", style: "statement" }
+    { text: "This coin is a circle too! said Wei Ming, showing Mia his fifty-cent coin.", style: "statement" }
+    { text: "Above them, a round fan spun slowly. Circle again! they both said.", style: "statement" }
+    { text: "A circle has one curved side and zero corners. It is perfectly round!", style: "emphasis" }
+    { text: "Can you name it? C. I. R. C. L. E. Circle!", style: "statement" }
+    { text: "Great job! Now let's explore circles ourselves!", style: "encouragement" }
+
+  SIMULATE PHASE — Station A:
+    { text: "Trace the dotted circle with your finger! Keep it smooth and round!", style: "instruction" }
+    { text: "You drew a perfect circle! Round and smooth — no corners at all!", style: "celebration" }
+    { text: "Almost! A circle has no sharp turns. Try again — nice and smooth!", style: "instruction" }
+
+  SIMULATE PHASE — Station B:
+    { text: "Sort the shapes! Does it belong in the Circle bin or the Not a Circle bin?", style: "question" }
+    { text: "That's right! A circle is perfectly round with no corners!", style: "celebration" }
+    { text: "Look carefully — does this shape have corners? Circles have none!", style: "emphasis" }
+    { text: "Is an oval a circle? No! An oval is stretched out. A circle is perfectly round.", style: "emphasis" }
+
+  SIMULATE PHASE — Station C:
+    { text: "Find all the circles hiding in this picture! Tap each one you see!", style: "instruction" }
+    { text: "You found a circle! Great spotting!", style: "celebration" }
+    { text: "That one has corners! Look for the perfectly round shapes!", style: "instruction" }
+    { text: "Amazing! You found all the circles! You are a Circle Champion!", style: "celebration" }
+
+  REFLECT PHASE:
+    { text: "Wow — you explored circles today! Can you name three circles you see at home?", style: "question" }
+    { text: "Lesson complete! You are a true Circle Explorer! Well done!", style: "celebration" }
+
+  FEEDBACK — CORRECT:
+    { text: "Fantastic! That's a circle!", style: "celebration" }
+    { text: "Brilliant! You got it!", style: "celebration" }
+    { text: "Amazing! Circles have no corners and you know it!", style: "celebration" }
+    { text: "Well done! Keep going!", style: "celebration" }
+
+  FEEDBACK — INCORRECT:
+    { text: "Let's look again! Remember — circles have no corners.", style: "instruction" }
+    { text: "Almost! Check if the shape is perfectly round.", style: "instruction" }
+    { text: "Not quite! A circle has one curved side and zero corners.", style: "emphasis" }
+
+  HINTS:
+    { text: "Hint! A circle is perfectly round — no corners, no flat sides.", style: "emphasis" }
+    { text: "Hint! Count the corners. Circles have zero corners!", style: "emphasis" }
+
+═══════════════════════════════════════════════════════════════
+
+14. TECHNICAL PLATFORM SUMMARY
+
+  Framework:  React 18 (Vite + JSX), single-page, single-file deployable
+  Repo mirror: Structure matches https://github.com/dsamyak/wordproblem_sub
+  Hosting:    Embedded in Intellia SG WordPress at the lesson URL
+              via iframe or React CDN bundle
+  Audio:      ElevenLabs exclusively (pipeline per audio_generation_pipeline.md)
+              — Voice: Alice (Xb7hH8MSUJpSbSDYk0k2), eleven_multilingual_v2
+              — Pre-generated .mp3 in public/assets/audio/
+              — Dynamic generation via VITE_ELEVENLABS_API_KEY
+              — No browser Web Speech API fallback
+  Browser:    Chrome, Safari, Edge (latest 2 major versions)
+  Auth:       None required — guest learner access
+  State:      localStorage (session resume within 24 hours)
+  Analytics:  Question attempt tracking (future phase v2)
+
+═══════════════════════════════════════════════════════════════
+
+15. SUCCESS CRITERIA (v1.0)
+
+  Criterion                                | Target
+  -----------------------------------------|------------------
+  All 100 questions randomised correctly   | ✅ Required
+  All 3 simulation stations functional     | ✅ Required
+  All 5 phases navigable end-to-end        | ✅ Required
+  Gamification (XP, stars, badges) working | ✅ Required
+  World map progression logic correct      | ✅ Required
+  Mobile/tablet responsive                 | ✅ Required
+  Singapore MOE syllabus 100% covered      | ✅ Required
+  Load time < 3 seconds                    | ✅ Required
+  WCAG AA accessible                       | ✅ Required
+  ElevenLabs audio pre-generated & mapped  | ✅ Required
+  Matches wordproblem-sub.vercel.app UI/UX | ✅ Required
+  Circle SVG animations smooth @ 60fps     | ✅ Required
+
+═══════════════════════════════════════════════════════════════
+
+16. OUT OF SCOPE (v1.0)
+
+  - Teacher dashboard / backend analytics
+  - Student login / account system
+  - Multiplayer or class competition features
+  - Parent progress emails
+  - Print worksheet generation
+  - Lessons 6.2 (Square), 6.3 (Rectangle) — separate modules
+  - Triangle and semi-circle as primary topics (used only as distractors)
+  - 3D shapes (sphere, cylinder — Grade 2 content)
+
+═══════════════════════════════════════════════════════════════
+
+Document Version: 1.0 | May 2026
+Product:          Intellia SG — Grade 1 Math, Lesson 6.1
+Topic:            Circle — Introduction to Geometry (Shapes)
+Curriculum:       Singapore MOE Primary 1 Mathematics
+Audio Pipeline:   ElevenLabs (alice / Xb7hH8MSUJpSbSDYk0k2 / eleven_multilingual_v2)
+Reference UI:     https://wordproblem-sub.vercel.app/
+Reference Repo:   https://github.com/dsamyak/wordproblem_sub
+Parent Page:      https://intelliasg.com/courses/grade-1-math/
+Lesson URL:       https://intelliasg.com/courses/grade-1-math/lessons/circle/
