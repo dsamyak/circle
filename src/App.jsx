@@ -20,7 +20,6 @@ const PHASES = [
 
 function App() {
   const [state, dispatch] = useGameState();
-  useLocalStorage(state, dispatch);
 
   const handleAudioToggle = () => {
     dispatch({ type: ACTIONS.TOGGLE_AUDIO });
@@ -139,7 +138,15 @@ function App() {
 
               return (
                 <React.Fragment key={p.id}>
-                  <div className={`journey-step ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}>
+                  <div 
+                    className={`journey-step ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}
+                    onClick={() => {
+                      if (isCompleted || isActive) {
+                        navigateTo(p.id);
+                      }
+                    }}
+                    style={{ cursor: isCompleted || isActive ? 'pointer' : 'default' }}
+                  >
                     <div className="journey-step-dot">
                       {isCompleted ? '✓' : p.num}
                     </div>
