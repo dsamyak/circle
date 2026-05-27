@@ -83,7 +83,7 @@ const WonderPhase = ({ onComplete, audioEnabled }) => {
             A coin is round. A clock is round. The sun is round!<br />
             What shape do they all share?
           </div>
-          <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap', marginTop: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16, marginTop: 16 }}>
             {WONDER_ITEMS.map((item, i) => (
               <div key={i} className="feature-card">
                 <div className="feature-card-icon">{item.emoji}</div>
