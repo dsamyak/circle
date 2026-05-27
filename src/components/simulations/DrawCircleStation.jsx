@@ -99,13 +99,28 @@ const DrawCircleStation = ({ onComplete, audioEnabled }) => {
       return;
     }
 
+    // Check if the circle is closed (start and end points are close)
+    const startPoint = trailPoints[0];
+    const endPoint = trailPoints[trailPoints.length - 1];
+    const distanceBetweenEnds = Math.hypot(startPoint.x - endPoint.x, startPoint.y - endPoint.y);
+
+    if (distanceBetweenEnds > 50) {
+      setMessage('Almost! Make sure to connect the ends to close the circle! 🔄');
+      const newAttempts = attempts + 1;
+      setAttempts(newAttempts);
+      if (newAttempts < 3) {
+        narrate(drawRetryNarration(), audioEnabled);
+        return;
+      }
+    }
+
     // Measure accuracy
     const acc = measureAccuracy(trailPoints);
     setAccuracy(Math.round(acc));
     const newAttempts = attempts + 1;
     setAttempts(newAttempts);
 
-    if (acc >= 60 || newAttempts >= 3) {
+    if ((acc >= 60 && distanceBetweenEnds <= 50) || newAttempts >= 3) {
       setComplete(true);
       setMessage(`${acc >= 60 ? 'Great circle!' : 'Good effort!'} Accuracy: ${Math.round(acc)}%`);
       narrate(drawSuccessNarration(), audioEnabled);
@@ -160,7 +175,7 @@ const DrawCircleStation = ({ onComplete, audioEnabled }) => {
           ref={canvasRef}
           width={CANVAS_SIZE}
           height={CANVAS_SIZE}
-          style={{ width: 280, height: 280, cursor: 'crosshair', display: 'block' }}
+          style={{ width: '100%', maxWidth: '320px', aspectRatio: '1/1', height: 'auto', cursor: 'crosshair', display: 'block' }}
           onMouseDown={startDraw}
           onMouseMove={draw}
           onMouseUp={endDraw}

@@ -151,7 +151,8 @@ const ShapeSorterStation = ({ onComplete, audioEnabled }) => {
           onDragOver={handleDragOver}
           onDrop={(e) => handleDrop(e, 'circle')}
           style={{
-            width: 140,
+            width: '45%',
+            maxWidth: 140,
             height: 100,
             borderRadius: 16,
             border: '3px dashed #4A90D9',
@@ -180,7 +181,8 @@ const ShapeSorterStation = ({ onComplete, audioEnabled }) => {
           onDragOver={handleDragOver}
           onDrop={(e) => handleDrop(e, 'not-circle')}
           style={{
-            width: 140,
+            width: '45%',
+            maxWidth: 140,
             height: 100,
             borderRadius: 16,
             border: '3px dashed #FF6B6B',
