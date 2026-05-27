@@ -12,12 +12,16 @@ const StoryPhase = ({ onComplete, audioEnabled }) => {
   const [letterReveal, setLetterReveal] = useState(0);
   const [isNarrating, setIsNarrating] = useState(false);
   const narrationDone = useRef({});
+  const [revealed, setRevealed] = useState(false);
 
   const panel = storyPanels[panelIndex];
   const isLast = panelIndex === storyPanels.length - 1;
 
   useEffect(() => {
-    if (narrationDone.current[panelIndex]) return;
+    setRevealed(false);
+    const revealTimer = setTimeout(() => setRevealed(true), 100);
+
+    if (narrationDone.current[panelIndex]) return () => clearTimeout(revealTimer);
     narrationDone.current[panelIndex] = true;
 
     setIsNarrating(true);
@@ -29,8 +33,11 @@ const StoryPhase = ({ onComplete, audioEnabled }) => {
       }
     });
 
-    return () => stopAudio();
-  }, [panelIndex, audioEnabled]);
+    return () => {
+      clearTimeout(revealTimer);
+      stopAudio();
+    };
+  }, [panelIndex, audioEnabled, panel.isInteractive]);
 
   // Letter-by-letter reveal for the interactive panel
   useEffect(() => {
@@ -60,102 +67,92 @@ const StoryPhase = ({ onComplete, audioEnabled }) => {
   };
 
   return (
-    <div style={{
-      flex: 1,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: panel.bg,
-      transition: 'background-color 0.5s ease',
-      padding: 24,
-      position: 'relative',
-    }}>
-      {/* Story Panel Content */}
-      <div
-        className="animate-fade-in"
-        key={panelIndex}
-        style={{
-          backgroundColor: 'rgba(255,255,255,0.95)',
-          borderRadius: 24,
-          padding: '32px 40px',
-          maxWidth: 600,
-          width: '100%',
-          textAlign: 'center',
-          boxShadow: '0 12px 40px rgba(0,0,0,0.08)',
-          position: 'relative',
-        }}
-      >
-        {/* Emoji illustration */}
-        <div style={{ fontSize: 72, marginBottom: 16 }}>
-          {panel.emoji}
+    <div className="story-phase">
+      {/* Progress Bar */}
+      <div className="story-progress">
+        <div className="story-progress-bar">
+          <div 
+            className="story-progress-fill"
+            style={{ width: `${((panelIndex + 1) / storyPanels.length) * 100}%` }}
+          />
         </div>
+        <div className="story-progress-label">
+          Page {panelIndex + 1} of {storyPanels.length}
+        </div>
+      </div>
 
-        {/* Story text */}
-        <p style={{
-          fontFamily: "'Nunito', sans-serif",
-          fontSize: 22,
-          fontWeight: 700,
-          color: '#4A4A4A',
-          lineHeight: 1.6,
-          margin: '0 0 24px 0',
-        }}>
-          {panel.text}
-        </p>
+      {/* Story Panel Content */}
+      <div className={`story-card ${!revealed ? 'flipping' : ''}`}>
+        <div className="story-text-section" style={{ textAlign: 'center' }}>
+          {/* Illustration */}
+          {panel.image ? (
+            <div className="story-image-section" style={{ borderRadius: 'var(--radius-md)', marginBottom: '24px' }}>
+              <img src={`/assets/images/${panel.image}`} alt={panel.text} className="story-image" />
+            </div>
+          ) : (
+            <div style={{ fontSize: '4rem', marginBottom: '16px' }}>
+              {panel.emoji}
+            </div>
+          )}
 
-        {/* Interactive circle for Panel 4 (highlight) */}
-        {panel.isHighlight && (
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
-            <CircleSVG size={120} animated glow />
+          <div className="story-title">The Story of Circle</div>
+
+          {/* Story text */}
+          <div className={`story-text ${revealed ? 'revealed' : ''}`}>
+            {panel.text}
           </div>
-        )}
 
-        {/* Interactive letter reveal for Panel 5 */}
-        {showInteractive && (
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: 8,
-            marginBottom: 24,
-          }}>
-            {'CIRCLE'.split('').map((letter, i) => (
-              <span
-                key={i}
-                className={i < letterReveal ? 'animate-bounce-in' : ''}
-                style={{
-                  width: 48,
-                  height: 56,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: i < letterReveal ? '#4A90D9' : '#E0E0E0',
-                  color: i < letterReveal ? '#FFFFFF' : '#E0E0E0',
-                  borderRadius: 12,
-                  fontSize: 28,
-                  fontFamily: "'Fredoka One', cursive",
-                  fontWeight: 700,
-                  transition: 'all 0.3s',
-                }}
-              >
-                {i < letterReveal ? letter : '?'}
-              </span>
-            ))}
+          {/* Interactive circle for Panel 4 (highlight) */}
+          {panel.isHighlight && (
+            <div className={`story-highlight ${revealed ? 'visible' : ''}`}>
+              <div className="story-highlight-text">A Perfect Round Shape</div>
+              <CircleSVG size={60} animated glow />
+            </div>
+          )}
+
+          {/* Interactive letter reveal for Panel 5 */}
+          {showInteractive && (
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              gap: 8,
+              marginTop: 24,
+            }}>
+              {'CIRCLE'.split('').map((letter, i) => (
+                <span
+                  key={i}
+                  className={i < letterReveal ? 'animate-bounce-in' : ''}
+                  style={{
+                    width: 40,
+                    height: 48,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: i < letterReveal ? 'var(--gold)' : 'rgba(255,255,255,0.1)',
+                    color: i < letterReveal ? '#1a1a2e' : 'rgba(255,255,255,0.3)',
+                    borderRadius: 8,
+                    fontSize: '1.5rem',
+                    fontFamily: 'var(--font-display)',
+                    fontWeight: 700,
+                    transition: 'all 0.3s',
+                    border: i < letterReveal ? 'none' : '2px solid rgba(255,255,255,0.2)',
+                  }}
+                >
+                  {i < letterReveal ? letter : '?'}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* Mascot peek */}
+          <div className="story-mascot" style={{ justifyContent: 'center' }}>
+            <Mascot mood={panel.isHighlight ? 'happy' : 'idle'} size={60} />
           </div>
-        )}
-
-        {/* Mascot peek */}
-        <div style={{ position: 'absolute', bottom: -30, right: -10 }}>
-          <Mascot mood={panel.isHighlight ? 'happy' : 'idle'} size={70} />
         </div>
       </div>
 
       {/* Navigation */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 32,
-        marginTop: 32,
-      }}>
+      <div className="story-nav">
         <button
           onClick={goBack}
           disabled={panelIndex === 0}
@@ -165,22 +162,20 @@ const StoryPhase = ({ onComplete, audioEnabled }) => {
             cursor: panelIndex === 0 ? 'default' : 'pointer',
             opacity: panelIndex === 0 ? 0.3 : 1,
             padding: 8,
+            color: 'var(--gold)',
           }}
           aria-label="Previous"
         >
-          <ChevronLeft size={36} color="#4A90D9" />
+          <ChevronLeft size={36} />
         </button>
 
         {/* Dots */}
-        <div style={{ display: 'flex', gap: 8 }}>
+        <div className="story-dots">
           {storyPanels.map((_, i) => (
-            <div key={i} style={{
-              width: 12,
-              height: 12,
-              borderRadius: '50%',
-              backgroundColor: i <= panelIndex ? '#4A90D9' : '#D0D0D0',
-              transition: 'background-color 0.3s',
-            }} />
+            <div 
+              key={i} 
+              className={`story-dot ${i === panelIndex ? 'active' : i < panelIndex ? 'completed' : ''}`} 
+            />
           ))}
         </div>
 
@@ -191,22 +186,21 @@ const StoryPhase = ({ onComplete, audioEnabled }) => {
             border: 'none',
             cursor: 'pointer',
             padding: 8,
+            color: 'var(--gold)',
           }}
           aria-label="Next"
         >
-          <ChevronRight size={36} color="#4A90D9" />
+          <ChevronRight size={36} />
         </button>
       </div>
 
       {/* Next Phase button on last panel */}
       {isLast && letterReveal >= 6 && (
-        <button
-          className="btn-primary animate-bounce-in"
-          onClick={onComplete}
-          style={{ marginTop: 24, fontSize: 20, padding: '14px 40px' }}
-        >
-          Let's Explore Circles! 🔵
-        </button>
+        <div style={{ marginTop: 24, animation: 'bounceIn 0.6s' }}>
+          <button className="btn btn-primary btn-lg" onClick={onComplete}>
+            Let's Explore Circles! 🔵
+          </button>
+        </div>
       )}
     </div>
   );

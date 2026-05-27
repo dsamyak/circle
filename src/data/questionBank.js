@@ -1,129 +1,2911 @@
 /**
- * Complete Question Bank — 100 questions across 10 types × 10 each.
- * Uses global student names: John, Mike, Emma, Sarah, Ryan, Lily, Jake, Mia, Alex, Sophie
- * Difficulty: 1=easy, 2=medium, 3=hard
+ * Complete Question Bank - Expanded for variety
  */
-
 const questionBank = [
-  // ═══ Q1: YES/NO — "Is this a circle?" (10) ═══
-  { id:"Q1_001", type:"yes_no", world:0, difficulty:1, questionText:"Is this shape a circle?", visual:"single_shape", targetShape:"circle", isCircle:true, options:["Yes","No"], correctAnswer:"Yes", hint1:"A circle is perfectly round with no corners.", hint2:"Does this shape have any corners? Circles have none!", explanation:"Yes! This is a circle. It is round with no corners." },
-  { id:"Q1_002", type:"yes_no", world:0, difficulty:1, questionText:"Is this shape a circle?", visual:"single_shape", targetShape:"square", isCircle:false, options:["Yes","No"], correctAnswer:"No", hint1:"Count the corners. Does a circle have corners?", hint2:"This shape has 4 corners. A circle has zero!", explanation:"No! This is a square. It has 4 corners — a circle has none." },
-  { id:"Q1_003", type:"yes_no", world:0, difficulty:1, questionText:"Is this shape a circle?", visual:"single_shape", targetShape:"circle", isCircle:true, options:["Yes","No"], correctAnswer:"Yes", hint1:"A circle is smooth and round all the way.", hint2:"Run your finger around it — no sharp turns!", explanation:"Yes! This shape is perfectly round — it's a circle!" },
-  { id:"Q1_004", type:"yes_no", world:0, difficulty:1, questionText:"Is this shape a circle?", visual:"single_shape", targetShape:"triangle", isCircle:false, options:["Yes","No"], correctAnswer:"No", hint1:"A circle has no corners at all.", hint2:"This shape has 3 corners. It's not a circle!", explanation:"No! This is a triangle. It has 3 corners and 3 straight sides." },
-  { id:"Q1_005", type:"yes_no", world:0, difficulty:1, questionText:"Is this shape a circle?", visual:"single_shape", targetShape:"circle", isCircle:true, options:["Yes","No"], correctAnswer:"Yes", hint1:"Look carefully — is it round?", hint2:"A circle has one curved side and zero corners.", explanation:"Yes! It's perfectly round with no corners. It's a circle!" },
-  { id:"Q1_006", type:"yes_no", world:1, difficulty:2, questionText:"Is this shape a circle?", visual:"single_shape", targetShape:"oval", isCircle:false, options:["Yes","No"], correctAnswer:"No", hint1:"A circle is perfectly round. Is this shape stretched?", hint2:"An oval looks like a circle but it's stretched out!", explanation:"No! This is an oval. It is stretched — not perfectly round like a circle." },
-  { id:"Q1_007", type:"yes_no", world:1, difficulty:2, questionText:"Is this shape a circle?", visual:"single_shape", targetShape:"rectangle", isCircle:false, options:["Yes","No"], correctAnswer:"No", hint1:"Does this shape have corners?", hint2:"Count the sides — rectangles have 4 straight sides.", explanation:"No! This is a rectangle with 4 corners and 4 straight sides." },
-  { id:"Q1_008", type:"yes_no", world:1, difficulty:2, questionText:"Is this shape a circle?", visual:"single_shape", targetShape:"circle", isCircle:true, options:["Yes","No"], correctAnswer:"Yes", hint1:"Is it round with no corners?", hint2:"A circle is the only shape that is perfectly round!", explanation:"Yes! This is a circle — round, smooth, no corners." },
-  { id:"Q1_009", type:"yes_no", world:2, difficulty:3, questionText:"Is this shape a circle?", visual:"single_shape", targetShape:"semicircle", isCircle:false, options:["Yes","No"], correctAnswer:"No", hint1:"A circle is a complete round shape.", hint2:"This is only half of a circle — a semi-circle!", explanation:"No! This is a semi-circle — only half a circle. A full circle is completely round." },
-  { id:"Q1_010", type:"yes_no", world:2, difficulty:3, questionText:"Is this shape a circle?", visual:"single_shape", targetShape:"circle", isCircle:true, options:["Yes","No"], correctAnswer:"Yes", hint1:"Check — is it perfectly round?", hint2:"One curved side, zero corners = circle!", explanation:"Yes! One curved side, zero corners — this is definitely a circle!" },
-
-  // ═══ Q2: NAME THE SHAPE — MCQ (10) ═══
-  { id:"Q2_001", type:"name_shape", world:0, difficulty:1, questionText:"What shape is this?", visual:"single_shape", targetShape:"circle", options:["Circle","Square","Triangle","Rectangle"], correctAnswer:"Circle", hint1:"This shape is perfectly round.", hint2:"No corners, no straight sides — it's round!", explanation:"This is a circle! It is round with no corners." },
-  { id:"Q2_002", type:"name_shape", world:0, difficulty:1, questionText:"What shape is this?", visual:"single_shape", targetShape:"square", options:["Circle","Square","Triangle","Rectangle"], correctAnswer:"Square", hint1:"Count the sides and corners.", hint2:"4 equal sides and 4 corners — that's a square!", explanation:"This is a square! It has 4 equal sides and 4 corners." },
-  { id:"Q2_003", type:"name_shape", world:0, difficulty:1, questionText:"What shape is this?", visual:"single_shape", targetShape:"triangle", options:["Circle","Square","Triangle","Rectangle"], correctAnswer:"Triangle", hint1:"Count the corners.", hint2:"3 sides and 3 corners make a triangle.", explanation:"This is a triangle! It has 3 sides and 3 corners." },
-  { id:"Q2_004", type:"name_shape", world:0, difficulty:1, questionText:"What shape is this?", visual:"single_shape", targetShape:"circle", options:["Circle","Oval","Square","Triangle"], correctAnswer:"Circle", hint1:"Is it round?", hint2:"Perfectly round = circle!", explanation:"This is a circle — perfectly round with no corners!" },
-  { id:"Q2_005", type:"name_shape", world:1, difficulty:1, questionText:"What shape is this?", visual:"single_shape", targetShape:"rectangle", options:["Circle","Square","Triangle","Rectangle"], correctAnswer:"Rectangle", hint1:"This shape has 4 sides.", hint2:"2 long sides and 2 short sides — rectangle!", explanation:"This is a rectangle! It has 4 sides and 4 corners." },
-  { id:"Q2_006", type:"name_shape", world:1, difficulty:2, questionText:"What shape is this?", visual:"single_shape", targetShape:"circle", options:["Circle","Oval","Semi-circle","Square"], correctAnswer:"Circle", hint1:"Is it perfectly round or stretched?", hint2:"A circle is never stretched — it's perfectly round.", explanation:"This is a circle. It's perfectly round, unlike an oval which is stretched." },
-  { id:"Q2_007", type:"name_shape", world:1, difficulty:2, questionText:"What shape is this?", visual:"single_shape", targetShape:"oval", options:["Circle","Oval","Rectangle","Triangle"], correctAnswer:"Oval", hint1:"Is this shape perfectly round?", hint2:"It looks like a stretched circle — that's an oval!", explanation:"This is an oval — like a circle that's been stretched!" },
-  { id:"Q2_008", type:"name_shape", world:2, difficulty:2, questionText:"What shape is this?", visual:"single_shape", targetShape:"circle", options:["Circle","Pentagon","Oval","Diamond"], correctAnswer:"Circle", hint1:"Round with no corners at all.", hint2:"Only one curved side — it must be a circle!", explanation:"This is a circle! One curved side, zero corners." },
-  { id:"Q2_009", type:"name_shape", world:2, difficulty:3, questionText:"What shape is this?", visual:"single_shape", targetShape:"semicircle", options:["Circle","Semi-circle","Oval","Triangle"], correctAnswer:"Semi-circle", hint1:"It looks like half of something round.", hint2:"Half of a circle is called a semi-circle!", explanation:"This is a semi-circle — exactly half of a circle!" },
-  { id:"Q2_010", type:"name_shape", world:2, difficulty:3, questionText:"What shape is this?", visual:"single_shape", targetShape:"circle", options:["Oval","Circle","Ellipse","Sphere"], correctAnswer:"Circle", hint1:"Is it a flat round shape?", hint2:"Perfectly round and flat = circle!", explanation:"This is a circle! It's a flat, perfectly round shape." },
-
-  // ═══ Q3: PROPERTY QUESTIONS (10) ═══
-  { id:"Q3_001", type:"property", world:1, difficulty:1, questionText:"How many corners does a circle have?", visual:"single_shape", targetShape:"circle", options:[0,1,3,4], correctAnswer:0, hint1:"Touch the edges of a circle. Do you feel any sharp points?", hint2:"A circle is smooth all the way around. No sharp corners!", explanation:"A circle has ZERO corners. It is perfectly smooth and round!" },
-  { id:"Q3_002", type:"property", world:1, difficulty:1, questionText:"How many sides does a circle have?", visual:"single_shape", targetShape:"circle", options:[0,1,2,4], correctAnswer:1, hint1:"A circle has one special side.", hint2:"It has one curved side that goes all the way around!", explanation:"A circle has exactly 1 side — one curved side that loops all the way around." },
-  { id:"Q3_003", type:"property", world:1, difficulty:1, questionText:"What type of sides does a circle have?", visual:"single_shape", targetShape:"circle", options:["Curved","Straight","Zigzag","Flat"], correctAnswer:"Curved", hint1:"Look at the edge of a circle — is it straight?", hint2:"A circle's side bends smoothly — it's curved!", explanation:"A circle has one curved side. No straight or flat edges!" },
-  { id:"Q3_004", type:"property", world:1, difficulty:1, questionText:"How many corners does a square have?", visual:"single_shape", targetShape:"square", options:[0,2,3,4], correctAnswer:4, hint1:"Count each point where two sides meet.", hint2:"A square has 4 corners — one at each point!", explanation:"A square has 4 corners. Unlike a circle which has zero!" },
-  { id:"Q3_005", type:"property", world:2, difficulty:2, questionText:"Which shape has ZERO corners?", visual:"shapes_mcq", options:["Circle","Square","Triangle","Rectangle"], correctAnswer:"Circle", hint1:"Most shapes have corners where sides meet.", hint2:"Only one of these shapes is perfectly round with no corners!", explanation:"The circle has ZERO corners! All the others have corners." },
-  { id:"Q3_006", type:"property", world:2, difficulty:2, questionText:"A circle has ___ straight sides.", visual:"single_shape", targetShape:"circle", options:[0,1,2,4], correctAnswer:0, hint1:"Look at a circle's edge carefully.", hint2:"A circle's edge is curved, not straight!", explanation:"A circle has ZERO straight sides. Its one side is curved!" },
-  { id:"Q3_007", type:"property", world:3, difficulty:2, questionText:"Which shape has exactly 1 curved side?", visual:"shapes_mcq", options:["Circle","Square","Triangle","Rectangle"], correctAnswer:"Circle", hint1:"Which shape has a round edge?", hint2:"Only circles have curved sides!", explanation:"The circle has exactly 1 curved side!" },
-  { id:"Q3_008", type:"property", world:3, difficulty:2, questionText:"How many flat edges does a circle have?", visual:"single_shape", targetShape:"circle", options:[0,1,2,4], correctAnswer:0, hint1:"A flat edge is a straight line.", hint2:"Circles have no straight or flat edges at all!", explanation:"A circle has ZERO flat edges — only one curved side." },
-  { id:"Q3_009", type:"property", world:4, difficulty:3, questionText:"What makes a circle different from an oval?", visual:"shapes_mcq", options:["A circle is perfectly round","A circle has corners","A circle has straight sides","A circle has 4 sides"], correctAnswer:"A circle is perfectly round", hint1:"Compare a circle and an oval. What's different?", hint2:"An oval is stretched. A circle is perfectly round!", explanation:"A circle is perfectly round — an oval is stretched out!" },
-  { id:"Q3_010", type:"property", world:4, difficulty:3, questionText:"Which description matches a circle?", visual:"text_mcq", options:["1 curved side, 0 corners","3 sides, 3 corners","4 sides, 4 corners","2 curved sides, 0 corners"], correctAnswer:"1 curved side, 0 corners", hint1:"A circle has how many sides?", hint2:"One curved side and zero corners!", explanation:"A circle has exactly 1 curved side and 0 corners!" },
-
-  // ═══ Q4: PICK THE CIRCLE — from 4 shapes (10) ═══
-  { id:"Q4_001", type:"pick_circle", world:0, difficulty:1, questionText:"Which shape is a circle?", visual:"shapes_mcq", options:["circle","square","triangle","rectangle"], correctAnswer:"circle", hint1:"A circle is perfectly round.", hint2:"Look for the shape with no corners!", explanation:"The circle is the perfectly round shape with no corners!" },
-  { id:"Q4_002", type:"pick_circle", world:0, difficulty:1, questionText:"Tap the circle!", visual:"shapes_mcq", options:["triangle","circle","square","rectangle"], correctAnswer:"circle", hint1:"Which shape is round?", hint2:"No corners, no straight sides — that's the circle!", explanation:"You found the circle! It's round with no corners." },
-  { id:"Q4_003", type:"pick_circle", world:0, difficulty:1, questionText:"Find the circle!", visual:"shapes_mcq", options:["square","rectangle","circle","triangle"], correctAnswer:"circle", hint1:"A circle has no flat sides.", hint2:"It's the only round shape here!", explanation:"The circle is the round one — no corners, no flat sides!" },
-  { id:"Q4_004", type:"pick_circle", world:1, difficulty:1, questionText:"Which shape is a circle?", visual:"shapes_mcq", options:["rectangle","triangle","square","circle"], correctAnswer:"circle", hint1:"Look for the round shape.", hint2:"A circle is smooth all around.", explanation:"The circle is perfectly round!" },
-  { id:"Q4_005", type:"pick_circle", world:1, difficulty:2, questionText:"Which shape is a circle?", visual:"shapes_mcq", options:["oval","circle","rectangle","triangle"], correctAnswer:"circle", hint1:"A circle is perfectly round. An oval is stretched out!", hint2:"The circle is not stretched — it's perfectly round.", explanation:"The circle is perfectly round. An oval looks similar but is stretched!" },
-  { id:"Q4_006", type:"pick_circle", world:2, difficulty:2, questionText:"Find the circle among these shapes!", visual:"shapes_mcq", options:["oval","semicircle","circle","triangle"], correctAnswer:"circle", hint1:"A full circle is completely round.", hint2:"Not half, not stretched — perfectly round!", explanation:"The circle is the only one that is completely, perfectly round!" },
-  { id:"Q4_007", type:"pick_circle", world:2, difficulty:2, questionText:"Tap the circle!", visual:"shapes_mcq", options:["semicircle","square","oval","circle"], correctAnswer:"circle", hint1:"Semi-circles are only half. Ovals are stretched.", hint2:"The circle is perfectly round!", explanation:"Correct! The circle is perfectly round — not half or stretched." },
-  { id:"Q4_008", type:"pick_circle", world:3, difficulty:2, questionText:"Which one is a circle?", visual:"shapes_mcq", options:["circle","oval","rectangle","semicircle"], correctAnswer:"circle", hint1:"Remember — circles are perfectly round.", hint2:"Not stretched, not half — perfectly round!", explanation:"The circle is the one that is perfectly round!" },
-  { id:"Q4_009", type:"pick_circle", world:4, difficulty:3, questionText:"Which shape has 0 corners and 1 curved side?", visual:"shapes_mcq", options:["triangle","oval","square","circle"], correctAnswer:"circle", hint1:"0 corners + 1 curved side = ?", hint2:"Only a circle has exactly 0 corners and 1 curved side.", explanation:"A circle! 0 corners, 1 curved side, perfectly round." },
-  { id:"Q4_010", type:"pick_circle", world:4, difficulty:3, questionText:"Find the shape that is perfectly round!", visual:"shapes_mcq", options:["oval","semicircle","rectangle","circle"], correctAnswer:"circle", hint1:"Perfectly round means no stretching.", hint2:"Circle is the only perfectly round shape!", explanation:"The circle is the only perfectly round shape here!" },
-
-  // ═══ Q5: REAL-WORLD IDENTIFICATION (10) ═══
-  { id:"Q5_001", type:"real_world", world:2, difficulty:1, questionText:"Which object is shaped like a circle?", visual:"real_objects", options:["🪙 Coin","📚 Book","📐 Ruler","🔺 Triangle sign"], correctAnswer:"🪙 Coin", hint1:"A circle is round with no flat edges.", hint2:"A coin is round — it's a circle!", explanation:"The coin is round — it is shaped like a circle!" },
-  { id:"Q5_002", type:"real_world", world:2, difficulty:1, questionText:"Which object is round like a circle?", visual:"real_objects", options:["📖 Book","⏰ Clock","📏 Ruler","🚪 Door"], correctAnswer:"⏰ Clock", hint1:"Which one is round?", hint2:"A clock face is round — it's a circle!", explanation:"The clock face is round like a circle!" },
-  { id:"Q5_003", type:"real_world", world:2, difficulty:1, questionText:"Which is shaped like a circle?", visual:"real_objects", options:["🍽️ Plate","📐 Set square","📦 Box","✉️ Envelope"], correctAnswer:"🍽️ Plate", hint1:"Think about which object is round.", hint2:"A plate is round!", explanation:"A plate is round — shaped like a circle!" },
-  { id:"Q5_004", type:"real_world", world:3, difficulty:2, questionText:"Which object is a circle?", visual:"real_objects", options:["🏀 Basketball","📺 TV screen","📕 Book","🚪 Door"], correctAnswer:"🏀 Basketball", hint1:"Think about which one is round.", hint2:"A basketball is round like a circle!", explanation:"A basketball is round like a circle!" },
-  { id:"Q5_005", type:"real_world", world:3, difficulty:2, questionText:"Find the circular object!", visual:"real_objects", options:["🖼️ Picture frame","🍪 Cookie","📱 Phone","💻 Laptop"], correctAnswer:"🍪 Cookie", hint1:"Which one is round?", hint2:"A round cookie is shaped like a circle!", explanation:"A round cookie is shaped like a circle!" },
-  { id:"Q5_006", type:"real_world", world:3, difficulty:2, questionText:"Which is round like a circle?", visual:"real_objects", options:["🧱 Brick","🎡 Ferris wheel","📦 Package","📋 Clipboard"], correctAnswer:"🎡 Ferris wheel", hint1:"Which object spins in a round shape?", hint2:"A Ferris wheel is round!", explanation:"A Ferris wheel is round like a circle!" },
-  { id:"Q5_007", type:"real_world", world:4, difficulty:2, questionText:"Which object is circular?", visual:"real_objects", options:["🔘 Button","📐 Triangle ruler","📦 Box","📏 Ruler"], correctAnswer:"🔘 Button", hint1:"Which one is round and small?", hint2:"A button is small and round — a circle!", explanation:"A button is round — it's shaped like a circle!" },
-  { id:"Q5_008", type:"real_world", world:4, difficulty:3, questionText:"Which is NOT shaped like a circle?", visual:"real_objects", options:["🪙 Coin","⏰ Clock","📕 Book","🍽️ Plate"], correctAnswer:"📕 Book", hint1:"Most of these are round. Which one isn't?", hint2:"A book has 4 corners — it's a rectangle, not a circle!", explanation:"A book is a rectangle with corners — not a circle!" },
-  { id:"Q5_009", type:"real_world", world:5, difficulty:3, questionText:"How many circular objects: 🪙⏰📚🍽️📐🔵?", visual:"real_objects", options:["2","3","4","5"], correctAnswer:"4", hint1:"Count the round objects.", hint2:"Coin, clock, plate, and the blue circle are round!", explanation:"🪙 coin, ⏰ clock, 🍽️ plate, and 🔵 circle = 4 circular objects!" },
-  { id:"Q5_010", type:"real_world", world:5, difficulty:3, questionText:"Which everyday object is a circle?", visual:"real_objects", options:["Manhole cover","Window","Door","Brick"], correctAnswer:"Manhole cover", hint1:"Think about shapes you see on the street.", hint2:"Manhole covers are round circles!", explanation:"A manhole cover is round — it's a circle!" },
-
-  // ═══ Q6: COUNT CIRCLES (10) ═══
-  { id:"Q6_001", type:"count_circles", world:3, difficulty:1, questionText:"How many circles do you see?", visual:"shape_group", shapes:["circle","circle","square","triangle"], correctAnswer:2, options:[1,2,3,4], hint1:"Look for the round shapes only.", hint2:"Count each perfectly round shape!", explanation:"There are 2 circles in this group!" },
-  { id:"Q6_002", type:"count_circles", world:3, difficulty:1, questionText:"Count the circles!", visual:"shape_group", shapes:["circle","square","circle","circle","rectangle"], correctAnswer:3, options:[1,2,3,4], hint1:"Circles are the round ones.", hint2:"Skip the shapes with corners — count the round ones!", explanation:"There are 3 circles!" },
-  { id:"Q6_003", type:"count_circles", world:3, difficulty:1, questionText:"How many circles are here?", visual:"shape_group", shapes:["circle","triangle","square","rectangle"], correctAnswer:1, options:[0,1,2,3], hint1:"Only one shape here is round.", hint2:"The round shape with no corners is the circle!", explanation:"There is 1 circle in this group!" },
-  { id:"Q6_004", type:"count_circles", world:4, difficulty:2, questionText:"How many circles can you count?", visual:"shape_group", shapes:["circle","oval","circle","triangle","square","circle"], correctAnswer:3, options:[2,3,4,5], hint1:"Ovals are NOT circles!", hint2:"Count only the perfectly round shapes. Ovals are stretched!", explanation:"There are 3 circles. The oval is NOT a circle!" },
-  { id:"Q6_005", type:"count_circles", world:4, difficulty:2, questionText:"Count the circles!", visual:"shape_group", shapes:["circle","circle","semicircle","circle","rectangle"], correctAnswer:3, options:[2,3,4,5], hint1:"A semi-circle is only half a circle!", hint2:"Count full circles only — not halves!", explanation:"There are 3 full circles. The semi-circle doesn't count!" },
-  { id:"Q6_006", type:"count_circles", world:5, difficulty:2, questionText:"How many circles?", visual:"shape_group", shapes:["square","rectangle","triangle","oval"], correctAnswer:0, options:[0,1,2,3], hint1:"Is there anything perfectly round here?", hint2:"An oval is NOT a circle!", explanation:"There are 0 circles! An oval is stretched — not a circle." },
-  { id:"Q6_007", type:"count_circles", world:5, difficulty:2, questionText:"Count all the circles!", visual:"shape_group", shapes:["circle","circle","circle","circle","square"], correctAnswer:4, options:[2,3,4,5], hint1:"Count every round shape.", hint2:"Skip the one with corners!", explanation:"There are 4 circles and 1 square!" },
-  { id:"Q6_008", type:"count_circles", world:6, difficulty:3, questionText:"How many circles are in this group?", visual:"shape_group", shapes:["circle","oval","semicircle","circle","oval","circle"], correctAnswer:3, options:[2,3,4,6], hint1:"Only perfectly round shapes are circles.", hint2:"Ovals and semi-circles are NOT circles!", explanation:"3 circles! Ovals are stretched and semi-circles are only half." },
-  { id:"Q6_009", type:"count_circles", world:6, difficulty:3, questionText:"Count the circles carefully!", visual:"shape_group", shapes:["circle","circle","oval","semicircle","circle","semicircle","circle"], correctAnswer:4, options:[3,4,5,7], hint1:"Be careful — not all round-looking shapes are circles!", hint2:"Only count the perfectly round ones!", explanation:"4 circles! Semi-circles and ovals don't count." },
-  { id:"Q6_010", type:"count_circles", world:7, difficulty:3, questionText:"How many circles?", visual:"shape_group", shapes:["oval","semicircle","oval","semicircle"], correctAnswer:0, options:[0,1,2,4], hint1:"Look carefully — are any of these perfectly round?", hint2:"Ovals are stretched. Semi-circles are half. None are full circles!", explanation:"0 circles! Ovals and semi-circles are NOT circles." },
-
-  // ═══ Q7: TRUE/FALSE (10) ═══
-  { id:"Q7_001", type:"true_false", world:3, difficulty:1, questionText:"A circle has 4 corners.", correctAnswer:"False", options:["True","False"], visual:"true_false", hint1:"Count the corners on a circle.", hint2:"A circle is smooth and round — no corners!", explanation:"FALSE! A circle has ZERO corners. It is perfectly round." },
-  { id:"Q7_002", type:"true_false", world:3, difficulty:1, questionText:"A circle is round.", correctAnswer:"True", options:["True","False"], visual:"true_false", hint1:"Think about the shape of a circle.", hint2:"A circle IS round — perfectly round!", explanation:"TRUE! A circle is perfectly round." },
-  { id:"Q7_003", type:"true_false", world:4, difficulty:1, questionText:"A circle has no corners.", correctAnswer:"True", options:["True","False"], visual:"true_false", hint1:"Does a circle have any sharp points?", hint2:"No sharp points = no corners!", explanation:"TRUE! A circle has zero corners." },
-  { id:"Q7_004", type:"true_false", world:4, difficulty:1, questionText:"A circle has straight sides.", correctAnswer:"False", options:["True","False"], visual:"true_false", hint1:"Look at the edge of a circle.", hint2:"A circle's edge is curved, not straight!", explanation:"FALSE! A circle has one CURVED side, not straight." },
-  { id:"Q7_005", type:"true_false", world:5, difficulty:2, questionText:"A coin is shaped like a circle.", correctAnswer:"True", options:["True","False"], visual:"true_false", hint1:"Think about a coin.", hint2:"A coin is round like a circle!", explanation:"TRUE! A coin is round — shaped like a circle." },
-  { id:"Q7_006", type:"true_false", world:5, difficulty:2, questionText:"An oval is the same as a circle.", correctAnswer:"False", options:["True","False"], visual:"true_false", hint1:"Are a circle and an oval the same?", hint2:"An oval is stretched. A circle is perfectly round!", explanation:"FALSE! An oval is stretched out. A circle is perfectly round." },
-  { id:"Q7_007", type:"true_false", world:6, difficulty:2, questionText:"A circle has exactly 1 side.", correctAnswer:"True", options:["True","False"], visual:"true_false", hint1:"How many sides does a circle have?", hint2:"One curved side that goes all the way around!", explanation:"TRUE! A circle has exactly 1 curved side." },
-  { id:"Q7_008", type:"true_false", world:6, difficulty:2, questionText:"A book is shaped like a circle.", correctAnswer:"False", options:["True","False"], visual:"true_false", hint1:"Think about a book's shape.", hint2:"A book has corners — it's a rectangle!", explanation:"FALSE! A book is shaped like a rectangle, not a circle." },
-  { id:"Q7_009", type:"true_false", world:7, difficulty:3, questionText:"A semi-circle is a full circle.", correctAnswer:"False", options:["True","False"], visual:"true_false", hint1:"What does 'semi' mean?", hint2:"Semi means half. A semi-circle is only half a circle!", explanation:"FALSE! A semi-circle is only HALF of a circle." },
-  { id:"Q7_010", type:"true_false", world:7, difficulty:3, questionText:"All round shapes are circles.", correctAnswer:"False", options:["True","False"], visual:"true_false", hint1:"Are ovals round? Are they circles?", hint2:"Ovals are round but NOT circles. Circles must be PERFECTLY round!", explanation:"FALSE! Ovals are round but not circles. Only perfectly round shapes are circles." },
-
-  // ═══ Q8: ODD ONE OUT (10) ═══
-  { id:"Q8_001", type:"odd_one_out", world:4, difficulty:1, questionText:"Which shape is different from the others?", visual:"shapes_mcq", options:["circle","circle","circle","square"], correctAnswer:"square", hint1:"Three shapes are the same. One is different!", hint2:"Look for the one with corners!", explanation:"The square is different! It has 4 corners — the others are all circles." },
-  { id:"Q8_002", type:"odd_one_out", world:4, difficulty:1, questionText:"Which one doesn't belong?", visual:"shapes_mcq", options:["circle","triangle","circle","circle"], correctAnswer:"triangle", hint1:"Which shape has corners?", hint2:"The triangle has 3 corners — it's not a circle!", explanation:"The triangle doesn't belong! It has corners — the others are all circles." },
-  { id:"Q8_003", type:"odd_one_out", world:5, difficulty:1, questionText:"Find the odd one out!", visual:"shapes_mcq", options:["circle","circle","rectangle","circle"], correctAnswer:"rectangle", hint1:"Look for the shape with corners.", hint2:"Rectangles have 4 corners!", explanation:"The rectangle is the odd one out — it has corners!" },
-  { id:"Q8_004", type:"odd_one_out", world:5, difficulty:2, questionText:"Which shape is different?", visual:"shapes_mcq", options:["circle","circle","oval","circle"], correctAnswer:"oval", hint1:"All circles are perfectly round.", hint2:"The oval is stretched — it's not a circle!", explanation:"The oval is different! It's stretched, not perfectly round like a circle." },
-  { id:"Q8_005", type:"odd_one_out", world:6, difficulty:2, questionText:"Find the odd one out!", visual:"shapes_mcq", options:["square","square","circle","square"], correctAnswer:"circle", hint1:"Three shapes are the same. One is different!", hint2:"The circle has no corners — the squares do!", explanation:"The circle is the odd one out — it has no corners!" },
-  { id:"Q8_006", type:"odd_one_out", world:6, difficulty:2, questionText:"Which doesn't belong?", visual:"shapes_mcq", options:["triangle","square","rectangle","circle"], correctAnswer:"circle", hint1:"Three shapes have corners. One doesn't.", hint2:"The circle is the only one without corners!", explanation:"The circle doesn't belong with the others — it has no corners!" },
-  { id:"Q8_007", type:"odd_one_out", world:7, difficulty:2, questionText:"Which is different?", visual:"shapes_mcq", options:["circle","semicircle","circle","circle"], correctAnswer:"semicircle", hint1:"Is one shape only half?", hint2:"A semi-circle is only half of a circle!", explanation:"The semi-circle is different — it's only half a circle!" },
-  { id:"Q8_008", type:"odd_one_out", world:7, difficulty:3, questionText:"Find the shape that doesn't belong!", visual:"shapes_mcq", options:["circle","circle","oval","circle"], correctAnswer:"oval", hint1:"One shape is stretched.", hint2:"Ovals look like circles but they're stretched!", explanation:"The oval doesn't belong — it's stretched, not perfectly round!" },
-  { id:"Q8_009", type:"odd_one_out", world:8, difficulty:3, questionText:"Which is the odd one out?", visual:"shapes_mcq", options:["triangle","triangle","triangle","circle"], correctAnswer:"circle", hint1:"Count corners on each shape.", hint2:"The circle has 0 corners while triangles have 3!", explanation:"The circle is different — 0 corners vs 3 corners on the triangles!" },
-  { id:"Q8_010", type:"odd_one_out", world:8, difficulty:3, questionText:"Which shape doesn't match?", visual:"shapes_mcq", options:["circle","oval","circle","circle"], correctAnswer:"oval", hint1:"Is one shape not perfectly round?", hint2:"The oval is stretched — not a perfect circle!", explanation:"The oval doesn't match! Circles are perfectly round, ovals are stretched." },
-
-  // ═══ Q9: PATTERN COMPLETION (10) ═══
-  { id:"Q9_001", type:"pattern", world:5, difficulty:1, questionText:"What shape comes next?", visual:"pattern_row", patternSequence:["circle","square","circle","square","circle"], correctAnswer:"square", options:["circle","square","triangle","rectangle"], hint1:"Read the pattern: circle, square, circle, square...", hint2:"After circle comes... square!", explanation:"The pattern is circle–square–circle–square. Next is square!" },
-  { id:"Q9_002", type:"pattern", world:5, difficulty:1, questionText:"Complete the pattern!", visual:"pattern_row", patternSequence:["square","circle","square","circle","square"], correctAnswer:"circle", options:["circle","square","triangle","rectangle"], hint1:"Square, circle, square, circle...", hint2:"After square comes circle!", explanation:"The pattern repeats: square–circle. Next is circle!" },
-  { id:"Q9_003", type:"pattern", world:5, difficulty:1, questionText:"What comes next?", visual:"pattern_row", patternSequence:["circle","circle","square","circle","circle"], correctAnswer:"square", options:["circle","square","triangle","rectangle"], hint1:"Look at the pattern carefully.", hint2:"Circle, circle, square — circle, circle, then what?", explanation:"The pattern is circle–circle–square. Next is square!" },
-  { id:"Q9_004", type:"pattern", world:6, difficulty:2, questionText:"What shape comes next?", visual:"pattern_row", patternSequence:["circle","triangle","square","circle","triangle"], correctAnswer:"square", options:["circle","square","triangle","rectangle"], hint1:"Three shapes repeat.", hint2:"Circle, triangle, square — circle, triangle, then?", explanation:"The pattern is circle–triangle–square. Next is square!" },
-  { id:"Q9_005", type:"pattern", world:6, difficulty:2, questionText:"Complete the pattern!", visual:"pattern_row", patternSequence:["triangle","circle","triangle","circle","triangle"], correctAnswer:"circle", options:["circle","square","triangle","rectangle"], hint1:"Triangle, circle, triangle, circle...", hint2:"After triangle comes circle!", explanation:"Triangle–circle repeats. Next is circle!" },
-  { id:"Q9_006", type:"pattern", world:7, difficulty:2, questionText:"What comes next?", visual:"pattern_row", patternSequence:["circle","square","square","circle","square"], correctAnswer:"square", options:["circle","square","triangle","rectangle"], hint1:"Look carefully at the groups.", hint2:"Circle, square, square — circle, square, then?", explanation:"The pattern is circle–square–square. Next is square!" },
-  { id:"Q9_007", type:"pattern", world:7, difficulty:2, questionText:"Which shape completes the pattern?", visual:"pattern_row", patternSequence:["rectangle","circle","rectangle","circle","rectangle"], correctAnswer:"circle", options:["circle","square","triangle","rectangle"], hint1:"Rectangle, circle, rectangle, circle...", hint2:"After rectangle comes circle!", explanation:"Rectangle–circle repeats. Next is circle!" },
-  { id:"Q9_008", type:"pattern", world:8, difficulty:3, questionText:"What shape comes next?", visual:"pattern_row", patternSequence:["circle","triangle","square","rectangle","circle","triangle"], correctAnswer:"square", options:["circle","square","triangle","rectangle"], hint1:"Four shapes in the pattern.", hint2:"Circle, triangle, square, rectangle — then it repeats!", explanation:"Pattern: circle–triangle–square–rectangle. Next is square!" },
-  { id:"Q9_009", type:"pattern", world:8, difficulty:3, questionText:"Complete the pattern!", visual:"pattern_row", patternSequence:["circle","circle","triangle","circle","circle","triangle","circle"], correctAnswer:"circle", options:["circle","square","triangle","rectangle"], hint1:"Look for groups of three.", hint2:"Circle, circle, triangle — circle, circle, triangle — circle, then?", explanation:"Pattern: circle–circle–triangle. Next is circle!" },
-  { id:"Q9_010", type:"pattern", world:9, difficulty:3, questionText:"What comes next?", visual:"pattern_row", patternSequence:["square","circle","circle","square","circle","circle","square"], correctAnswer:"circle", options:["circle","square","triangle","rectangle"], hint1:"Look for the repeating group.", hint2:"Square, circle, circle — square, circle, circle — square, then?", explanation:"Pattern: square–circle–circle. Next is circle!" },
-
-  // ═══ Q10: WORD PROBLEMS (10) ═══
-  { id:"Q10_001", type:"word_problem", world:6, difficulty:1, questionText:"Emma draws a shape with no corners. What shape did she draw?", visual:"text_mcq", characterName:"Emma", options:["Triangle","Circle","Square","Rectangle"], correctAnswer:"Circle", hint1:"Which shape has no corners?", hint2:"A circle has zero corners!", explanation:"A circle has 0 corners. Emma drew a circle!" },
-  { id:"Q10_002", type:"word_problem", world:6, difficulty:1, questionText:"John found a round coin on the floor. What shape is the coin?", visual:"text_mcq", characterName:"John", options:["Square","Rectangle","Triangle","Circle"], correctAnswer:"Circle", hint1:"A coin is round.", hint2:"Round objects are shaped like circles!", explanation:"A coin is round — it's shaped like a circle!" },
-  { id:"Q10_003", type:"word_problem", world:7, difficulty:1, questionText:"Sarah has a plate. The plate has no corners and it is round. What shape is it?", visual:"text_mcq", characterName:"Sarah", options:["Circle","Square","Rectangle","Triangle"], correctAnswer:"Circle", hint1:"Round + no corners = ?", hint2:"A circle is round with no corners!", explanation:"The plate is round with no corners — it's a circle!" },
-  { id:"Q10_004", type:"word_problem", world:7, difficulty:2, questionText:"Mike sees a shape on the board. It has one curved side and zero corners. What shape is it?", visual:"text_mcq", characterName:"Mike", options:["Triangle","Rectangle","Circle","Square"], correctAnswer:"Circle", hint1:"One curved side + zero corners = ?", hint2:"Only a circle has 1 curved side and 0 corners!", explanation:"1 curved side + 0 corners = circle! Mike saw a circle." },
-  { id:"Q10_005", type:"word_problem", world:7, difficulty:2, questionText:"Lily draws a shape. It is perfectly round like a cookie. What shape did she draw?", visual:"text_mcq", characterName:"Lily", options:["Oval","Circle","Square","Triangle"], correctAnswer:"Circle", hint1:"A cookie is round.", hint2:"Perfectly round = circle!", explanation:"A cookie is round like a circle. Lily drew a circle!" },
-  { id:"Q10_006", type:"word_problem", world:8, difficulty:2, questionText:"Jake has 3 circles and 2 squares. How many shapes have corners?", visual:"text_mcq", characterName:"Jake", options:["2","3","5","0"], correctAnswer:"2", hint1:"Circles have no corners. Squares have corners.", hint2:"Only the 2 squares have corners!", explanation:"Only the 2 squares have corners. Circles have zero corners!" },
-  { id:"Q10_007", type:"word_problem", world:8, difficulty:2, questionText:"Alex looks at the classroom clock. What shape is the clock face?", visual:"text_mcq", characterName:"Alex", options:["Square","Rectangle","Circle","Triangle"], correctAnswer:"Circle", hint1:"Think about a clock on the wall.", hint2:"A clock face is round — a circle!", explanation:"A clock face is round — it's a circle!" },
-  { id:"Q10_008", type:"word_problem", world:9, difficulty:3, questionText:"Ryan draws a shape on the board. His shape has no corners and just one curved side. He says it is round like the moon. What shape did Ryan draw?", visual:"text_mcq", characterName:"Ryan", options:["Triangle","Rectangle","Circle","Square"], correctAnswer:"Circle", hint1:"No corners + one curved side = ?", hint2:"The moon is round. Circles are round!", explanation:"A circle has 0 corners and 1 curved side. Ryan drew a circle!" },
-  { id:"Q10_009", type:"word_problem", world:9, difficulty:3, questionText:"Sophie has a box of shapes: 2 circles, 3 triangles, and 1 square. How many shapes have zero corners?", visual:"text_mcq", characterName:"Sophie", options:["1","2","3","6"], correctAnswer:"2", hint1:"Which shapes have zero corners?", hint2:"Only circles have zero corners!", explanation:"Only the 2 circles have zero corners. Triangles and squares all have corners!" },
-  { id:"Q10_010", type:"word_problem", world:9, difficulty:3, questionText:"Mia sees a wheel, a coin, and a button. All three are the same shape. What shape are they?", visual:"text_mcq", characterName:"Mia", options:["Square","Triangle","Rectangle","Circle"], correctAnswer:"Circle", hint1:"What do a wheel, coin, and button have in common?", hint2:"They are all round — all circles!", explanation:"A wheel, coin, and button are all round — they are all circles!" },
+  {
+    "id": "Q1_1",
+    "type": "yes_no",
+    "world": 0,
+    "difficulty": 1,
+    "questionText": "The robot found a rectangle. Is this shape a circle?",
+    "visual": "single_shape",
+    "targetShape": "rectangle",
+    "isCircle": false,
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "correctAnswer": "No",
+    "hint1": "Circles are perfectly round with no corners.",
+    "hint2": "Look at the corners or stretched sides!",
+    "explanation": "No! That is a rectangle."
+  },
+  {
+    "id": "Q1_2",
+    "type": "yes_no",
+    "world": 0,
+    "difficulty": 1,
+    "questionText": "The wizard found this shape. Is it a perfect circle?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "isCircle": true,
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "correctAnswer": "Yes",
+    "hint1": "Circles are perfectly round with no corners.",
+    "hint2": "It has no corners!",
+    "explanation": "Yes! It is perfectly round."
+  },
+  {
+    "id": "Q1_3",
+    "type": "yes_no",
+    "world": 1,
+    "difficulty": 1,
+    "questionText": "The robot found a rectangle. Is this shape a circle?",
+    "visual": "single_shape",
+    "targetShape": "rectangle",
+    "isCircle": false,
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "correctAnswer": "No",
+    "hint1": "Circles are perfectly round with no corners.",
+    "hint2": "Look at the corners or stretched sides!",
+    "explanation": "No! That is a rectangle."
+  },
+  {
+    "id": "Q1_4",
+    "type": "yes_no",
+    "world": 2,
+    "difficulty": 1,
+    "questionText": "The robot found a triangle. Is this shape a circle?",
+    "visual": "single_shape",
+    "targetShape": "triangle",
+    "isCircle": false,
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "correctAnswer": "No",
+    "hint1": "Circles are perfectly round with no corners.",
+    "hint2": "Look at the corners or stretched sides!",
+    "explanation": "No! That is a triangle."
+  },
+  {
+    "id": "Q1_5",
+    "type": "yes_no",
+    "world": 2,
+    "difficulty": 2,
+    "questionText": "The robot found a oval. Is this shape a circle?",
+    "visual": "single_shape",
+    "targetShape": "oval",
+    "isCircle": false,
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "correctAnswer": "No",
+    "hint1": "Circles are perfectly round with no corners.",
+    "hint2": "Look at the corners or stretched sides!",
+    "explanation": "No! That is a oval."
+  },
+  {
+    "id": "Q1_6",
+    "type": "yes_no",
+    "world": 3,
+    "difficulty": 2,
+    "questionText": "The wizard found this shape. Is it a perfect circle?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "isCircle": true,
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "correctAnswer": "Yes",
+    "hint1": "Circles are perfectly round with no corners.",
+    "hint2": "It has no corners!",
+    "explanation": "Yes! It is perfectly round."
+  },
+  {
+    "id": "Q1_7",
+    "type": "yes_no",
+    "world": 4,
+    "difficulty": 2,
+    "questionText": "The robot found a oval. Is this shape a circle?",
+    "visual": "single_shape",
+    "targetShape": "oval",
+    "isCircle": false,
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "correctAnswer": "No",
+    "hint1": "Circles are perfectly round with no corners.",
+    "hint2": "Look at the corners or stretched sides!",
+    "explanation": "No! That is a oval."
+  },
+  {
+    "id": "Q1_8",
+    "type": "yes_no",
+    "world": 4,
+    "difficulty": 2,
+    "questionText": "The wizard found this shape. Is it a perfect circle?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "isCircle": true,
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "correctAnswer": "Yes",
+    "hint1": "Circles are perfectly round with no corners.",
+    "hint2": "It has no corners!",
+    "explanation": "Yes! It is perfectly round."
+  },
+  {
+    "id": "Q1_9",
+    "type": "yes_no",
+    "world": 5,
+    "difficulty": 2,
+    "questionText": "The wizard found this shape. Is it a perfect circle?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "isCircle": true,
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "correctAnswer": "Yes",
+    "hint1": "Circles are perfectly round with no corners.",
+    "hint2": "It has no corners!",
+    "explanation": "Yes! It is perfectly round."
+  },
+  {
+    "id": "Q1_10",
+    "type": "yes_no",
+    "world": 6,
+    "difficulty": 3,
+    "questionText": "The wizard found this shape. Is it a perfect circle?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "isCircle": true,
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "correctAnswer": "Yes",
+    "hint1": "Circles are perfectly round with no corners.",
+    "hint2": "It has no corners!",
+    "explanation": "Yes! It is perfectly round."
+  },
+  {
+    "id": "Q1_11",
+    "type": "yes_no",
+    "world": 6,
+    "difficulty": 3,
+    "questionText": "The wizard found this shape. Is it a perfect circle?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "isCircle": true,
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "correctAnswer": "Yes",
+    "hint1": "Circles are perfectly round with no corners.",
+    "hint2": "It has no corners!",
+    "explanation": "Yes! It is perfectly round."
+  },
+  {
+    "id": "Q1_12",
+    "type": "yes_no",
+    "world": 7,
+    "difficulty": 3,
+    "questionText": "The robot found a oval. Is this shape a circle?",
+    "visual": "single_shape",
+    "targetShape": "oval",
+    "isCircle": false,
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "correctAnswer": "No",
+    "hint1": "Circles are perfectly round with no corners.",
+    "hint2": "Look at the corners or stretched sides!",
+    "explanation": "No! That is a oval."
+  },
+  {
+    "id": "Q1_13",
+    "type": "yes_no",
+    "world": 8,
+    "difficulty": 3,
+    "questionText": "The robot found a triangle. Is this shape a circle?",
+    "visual": "single_shape",
+    "targetShape": "triangle",
+    "isCircle": false,
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "correctAnswer": "No",
+    "hint1": "Circles are perfectly round with no corners.",
+    "hint2": "Look at the corners or stretched sides!",
+    "explanation": "No! That is a triangle."
+  },
+  {
+    "id": "Q1_14",
+    "type": "yes_no",
+    "world": 8,
+    "difficulty": 3,
+    "questionText": "The wizard found this shape. Is it a perfect circle?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "isCircle": true,
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "correctAnswer": "Yes",
+    "hint1": "Circles are perfectly round with no corners.",
+    "hint2": "It has no corners!",
+    "explanation": "Yes! It is perfectly round."
+  },
+  {
+    "id": "Q1_15",
+    "type": "yes_no",
+    "world": 9,
+    "difficulty": 4,
+    "questionText": "The wizard found this shape. Is it a perfect circle?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "isCircle": true,
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "correctAnswer": "Yes",
+    "hint1": "Circles are perfectly round with no corners.",
+    "hint2": "It has no corners!",
+    "explanation": "Yes! It is perfectly round."
+  },
+  {
+    "id": "Q2_1",
+    "type": "name_shape",
+    "world": 0,
+    "difficulty": 1,
+    "questionText": "The pirate needs to name this shape to unlock the chest. What is it?",
+    "visual": "single_shape",
+    "targetShape": "square",
+    "options": [
+      "Square",
+      "Circle",
+      "Oval",
+      "Triangle"
+    ],
+    "correctAnswer": "Square",
+    "hint1": "Count the sides and corners.",
+    "hint2": "It's not a circle.",
+    "explanation": "It is a square!"
+  },
+  {
+    "id": "Q2_2",
+    "type": "name_shape",
+    "world": 0,
+    "difficulty": 1,
+    "questionText": "The pirate needs to name this shape to unlock the chest. What is it?",
+    "visual": "single_shape",
+    "targetShape": "square",
+    "options": [
+      "Oval",
+      "Square",
+      "Circle",
+      "Rectangle"
+    ],
+    "correctAnswer": "Square",
+    "hint1": "Count the sides and corners.",
+    "hint2": "It's not a circle.",
+    "explanation": "It is a square!"
+  },
+  {
+    "id": "Q2_3",
+    "type": "name_shape",
+    "world": 1,
+    "difficulty": 1,
+    "questionText": "The pirate needs to name this shape to unlock the chest. What is it?",
+    "visual": "single_shape",
+    "targetShape": "rectangle",
+    "options": [
+      "Rectangle",
+      "Circle",
+      "Triangle",
+      "Semicircle"
+    ],
+    "correctAnswer": "Rectangle",
+    "hint1": "Count the sides and corners.",
+    "hint2": "It's not a circle.",
+    "explanation": "It is a rectangle!"
+  },
+  {
+    "id": "Q2_4",
+    "type": "name_shape",
+    "world": 2,
+    "difficulty": 1,
+    "questionText": "The pirate needs to name this shape to unlock the chest. What is it?",
+    "visual": "single_shape",
+    "targetShape": "triangle",
+    "options": [
+      "Triangle",
+      "Rectangle",
+      "Oval",
+      "Square"
+    ],
+    "correctAnswer": "Triangle",
+    "hint1": "Count the sides and corners.",
+    "hint2": "It's not a circle.",
+    "explanation": "It is a triangle!"
+  },
+  {
+    "id": "Q2_5",
+    "type": "name_shape",
+    "world": 2,
+    "difficulty": 2,
+    "questionText": "The pirate needs to name this shape to unlock the chest. What is it?",
+    "visual": "single_shape",
+    "targetShape": "semicircle",
+    "options": [
+      "Square",
+      "Oval",
+      "Circle",
+      "Semicircle"
+    ],
+    "correctAnswer": "Semicircle",
+    "hint1": "Count the sides and corners.",
+    "hint2": "It's not a circle.",
+    "explanation": "It is a semicircle!"
+  },
+  {
+    "id": "Q2_6",
+    "type": "name_shape",
+    "world": 3,
+    "difficulty": 2,
+    "questionText": "The pirate needs to name this shape to unlock the chest. What is it?",
+    "visual": "single_shape",
+    "targetShape": "square",
+    "options": [
+      "Square",
+      "Semicircle",
+      "Triangle",
+      "Circle"
+    ],
+    "correctAnswer": "Square",
+    "hint1": "Count the sides and corners.",
+    "hint2": "It's not a circle.",
+    "explanation": "It is a square!"
+  },
+  {
+    "id": "Q2_7",
+    "type": "name_shape",
+    "world": 4,
+    "difficulty": 2,
+    "questionText": "The pirate needs to name this shape to unlock the chest. What is it?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "options": [
+      "Semicircle",
+      "Square",
+      "Oval",
+      "Circle"
+    ],
+    "correctAnswer": "Circle",
+    "hint1": "Count the sides and corners.",
+    "hint2": "It's perfectly round!",
+    "explanation": "It is a circle!"
+  },
+  {
+    "id": "Q2_8",
+    "type": "name_shape",
+    "world": 4,
+    "difficulty": 2,
+    "questionText": "The pirate needs to name this shape to unlock the chest. What is it?",
+    "visual": "single_shape",
+    "targetShape": "oval",
+    "options": [
+      "Oval",
+      "Rectangle",
+      "Square",
+      "Triangle"
+    ],
+    "correctAnswer": "Oval",
+    "hint1": "Count the sides and corners.",
+    "hint2": "It's not a circle.",
+    "explanation": "It is a oval!"
+  },
+  {
+    "id": "Q2_9",
+    "type": "name_shape",
+    "world": 5,
+    "difficulty": 2,
+    "questionText": "The pirate needs to name this shape to unlock the chest. What is it?",
+    "visual": "single_shape",
+    "targetShape": "square",
+    "options": [
+      "Triangle",
+      "Circle",
+      "Square",
+      "Semicircle"
+    ],
+    "correctAnswer": "Square",
+    "hint1": "Count the sides and corners.",
+    "hint2": "It's not a circle.",
+    "explanation": "It is a square!"
+  },
+  {
+    "id": "Q2_10",
+    "type": "name_shape",
+    "world": 6,
+    "difficulty": 3,
+    "questionText": "The pirate needs to name this shape to unlock the chest. What is it?",
+    "visual": "single_shape",
+    "targetShape": "triangle",
+    "options": [
+      "Circle",
+      "Oval",
+      "Rectangle",
+      "Triangle"
+    ],
+    "correctAnswer": "Triangle",
+    "hint1": "Count the sides and corners.",
+    "hint2": "It's not a circle.",
+    "explanation": "It is a triangle!"
+  },
+  {
+    "id": "Q2_11",
+    "type": "name_shape",
+    "world": 6,
+    "difficulty": 3,
+    "questionText": "The pirate needs to name this shape to unlock the chest. What is it?",
+    "visual": "single_shape",
+    "targetShape": "rectangle",
+    "options": [
+      "Semicircle",
+      "Rectangle",
+      "Circle",
+      "Oval"
+    ],
+    "correctAnswer": "Rectangle",
+    "hint1": "Count the sides and corners.",
+    "hint2": "It's not a circle.",
+    "explanation": "It is a rectangle!"
+  },
+  {
+    "id": "Q2_12",
+    "type": "name_shape",
+    "world": 7,
+    "difficulty": 3,
+    "questionText": "The pirate needs to name this shape to unlock the chest. What is it?",
+    "visual": "single_shape",
+    "targetShape": "semicircle",
+    "options": [
+      "Square",
+      "Semicircle",
+      "Rectangle",
+      "Oval"
+    ],
+    "correctAnswer": "Semicircle",
+    "hint1": "Count the sides and corners.",
+    "hint2": "It's not a circle.",
+    "explanation": "It is a semicircle!"
+  },
+  {
+    "id": "Q2_13",
+    "type": "name_shape",
+    "world": 8,
+    "difficulty": 3,
+    "questionText": "The pirate needs to name this shape to unlock the chest. What is it?",
+    "visual": "single_shape",
+    "targetShape": "triangle",
+    "options": [
+      "Rectangle",
+      "Circle",
+      "Triangle",
+      "Semicircle"
+    ],
+    "correctAnswer": "Triangle",
+    "hint1": "Count the sides and corners.",
+    "hint2": "It's not a circle.",
+    "explanation": "It is a triangle!"
+  },
+  {
+    "id": "Q2_14",
+    "type": "name_shape",
+    "world": 8,
+    "difficulty": 3,
+    "questionText": "The pirate needs to name this shape to unlock the chest. What is it?",
+    "visual": "single_shape",
+    "targetShape": "rectangle",
+    "options": [
+      "Rectangle",
+      "Oval",
+      "Circle",
+      "Square"
+    ],
+    "correctAnswer": "Rectangle",
+    "hint1": "Count the sides and corners.",
+    "hint2": "It's not a circle.",
+    "explanation": "It is a rectangle!"
+  },
+  {
+    "id": "Q2_15",
+    "type": "name_shape",
+    "world": 9,
+    "difficulty": 4,
+    "questionText": "The pirate needs to name this shape to unlock the chest. What is it?",
+    "visual": "single_shape",
+    "targetShape": "rectangle",
+    "options": [
+      "Rectangle",
+      "Square",
+      "Triangle",
+      "Oval"
+    ],
+    "correctAnswer": "Rectangle",
+    "hint1": "Count the sides and corners.",
+    "hint2": "It's not a circle.",
+    "explanation": "It is a rectangle!"
+  },
+  {
+    "id": "Q3_1",
+    "type": "property",
+    "world": 0,
+    "difficulty": 1,
+    "questionText": "The space alien asks: How many corners does a circle have?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "options": [
+      2,
+      1,
+      0,
+      4
+    ],
+    "correctAnswer": 0,
+    "hint1": "Smooth and round!",
+    "hint2": "Think about perfectly round shapes.",
+    "explanation": "The answer is 0. Circles have 1 curved side and 0 corners."
+  },
+  {
+    "id": "Q3_2",
+    "type": "property",
+    "world": 0,
+    "difficulty": 1,
+    "questionText": "The space alien asks: How many curved sides does a circle have?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "options": [
+      0,
+      1,
+      4,
+      2
+    ],
+    "correctAnswer": 1,
+    "hint1": "One continuous loop!",
+    "hint2": "Think about perfectly round shapes.",
+    "explanation": "The answer is 1. Circles have 1 curved side and 0 corners."
+  },
+  {
+    "id": "Q3_3",
+    "type": "property",
+    "world": 1,
+    "difficulty": 1,
+    "questionText": "The space alien asks: How many corners does a circle have?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "options": [
+      4,
+      2,
+      1,
+      0
+    ],
+    "correctAnswer": 0,
+    "hint1": "Smooth and round!",
+    "hint2": "Think about perfectly round shapes.",
+    "explanation": "The answer is 0. Circles have 1 curved side and 0 corners."
+  },
+  {
+    "id": "Q3_4",
+    "type": "property",
+    "world": 2,
+    "difficulty": 1,
+    "questionText": "The space alien asks: How many corners does a circle have?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "options": [
+      2,
+      0,
+      1,
+      4
+    ],
+    "correctAnswer": 0,
+    "hint1": "Smooth and round!",
+    "hint2": "Think about perfectly round shapes.",
+    "explanation": "The answer is 0. Circles have 1 curved side and 0 corners."
+  },
+  {
+    "id": "Q3_5",
+    "type": "property",
+    "world": 2,
+    "difficulty": 2,
+    "questionText": "The space alien asks: Which shape has ZERO corners?",
+    "visual": "shapes_mcq",
+    "targetShape": "circle",
+    "options": [
+      "Circle",
+      "Square",
+      "Triangle",
+      "Rectangle"
+    ],
+    "correctAnswer": "Circle",
+    "hint1": "Only one is perfectly round.",
+    "hint2": "Think about perfectly round shapes.",
+    "explanation": "The answer is Circle. Circles have 1 curved side and 0 corners."
+  },
+  {
+    "id": "Q3_6",
+    "type": "property",
+    "world": 3,
+    "difficulty": 2,
+    "questionText": "The space alien asks: How many corners does a circle have?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "options": [
+      0,
+      1,
+      4,
+      2
+    ],
+    "correctAnswer": 0,
+    "hint1": "Smooth and round!",
+    "hint2": "Think about perfectly round shapes.",
+    "explanation": "The answer is 0. Circles have 1 curved side and 0 corners."
+  },
+  {
+    "id": "Q3_7",
+    "type": "property",
+    "world": 4,
+    "difficulty": 2,
+    "questionText": "The space alien asks: How many curved sides does a circle have?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "options": [
+      2,
+      1,
+      0,
+      4
+    ],
+    "correctAnswer": 1,
+    "hint1": "One continuous loop!",
+    "hint2": "Think about perfectly round shapes.",
+    "explanation": "The answer is 1. Circles have 1 curved side and 0 corners."
+  },
+  {
+    "id": "Q3_8",
+    "type": "property",
+    "world": 4,
+    "difficulty": 2,
+    "questionText": "The space alien asks: How many corners does a circle have?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "options": [
+      0,
+      4,
+      1,
+      2
+    ],
+    "correctAnswer": 0,
+    "hint1": "Smooth and round!",
+    "hint2": "Think about perfectly round shapes.",
+    "explanation": "The answer is 0. Circles have 1 curved side and 0 corners."
+  },
+  {
+    "id": "Q3_9",
+    "type": "property",
+    "world": 5,
+    "difficulty": 2,
+    "questionText": "The space alien asks: How many curved sides does a circle have?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "options": [
+      4,
+      2,
+      1,
+      0
+    ],
+    "correctAnswer": 1,
+    "hint1": "One continuous loop!",
+    "hint2": "Think about perfectly round shapes.",
+    "explanation": "The answer is 1. Circles have 1 curved side and 0 corners."
+  },
+  {
+    "id": "Q3_10",
+    "type": "property",
+    "world": 6,
+    "difficulty": 3,
+    "questionText": "The space alien asks: How many curved sides does a circle have?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "options": [
+      2,
+      0,
+      1,
+      4
+    ],
+    "correctAnswer": 1,
+    "hint1": "One continuous loop!",
+    "hint2": "Think about perfectly round shapes.",
+    "explanation": "The answer is 1. Circles have 1 curved side and 0 corners."
+  },
+  {
+    "id": "Q3_11",
+    "type": "property",
+    "world": 6,
+    "difficulty": 3,
+    "questionText": "The space alien asks: How many curved sides does a circle have?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "options": [
+      2,
+      0,
+      1,
+      4
+    ],
+    "correctAnswer": 1,
+    "hint1": "One continuous loop!",
+    "hint2": "Think about perfectly round shapes.",
+    "explanation": "The answer is 1. Circles have 1 curved side and 0 corners."
+  },
+  {
+    "id": "Q3_12",
+    "type": "property",
+    "world": 7,
+    "difficulty": 3,
+    "questionText": "The space alien asks: How many curved sides does a circle have?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "options": [
+      4,
+      0,
+      1,
+      2
+    ],
+    "correctAnswer": 1,
+    "hint1": "One continuous loop!",
+    "hint2": "Think about perfectly round shapes.",
+    "explanation": "The answer is 1. Circles have 1 curved side and 0 corners."
+  },
+  {
+    "id": "Q3_13",
+    "type": "property",
+    "world": 8,
+    "difficulty": 3,
+    "questionText": "The space alien asks: How many corners does a circle have?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "options": [
+      2,
+      1,
+      4,
+      0
+    ],
+    "correctAnswer": 0,
+    "hint1": "Smooth and round!",
+    "hint2": "Think about perfectly round shapes.",
+    "explanation": "The answer is 0. Circles have 1 curved side and 0 corners."
+  },
+  {
+    "id": "Q3_14",
+    "type": "property",
+    "world": 8,
+    "difficulty": 3,
+    "questionText": "The space alien asks: How many corners does a circle have?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "options": [
+      0,
+      1,
+      4,
+      2
+    ],
+    "correctAnswer": 0,
+    "hint1": "Smooth and round!",
+    "hint2": "Think about perfectly round shapes.",
+    "explanation": "The answer is 0. Circles have 1 curved side and 0 corners."
+  },
+  {
+    "id": "Q3_15",
+    "type": "property",
+    "world": 9,
+    "difficulty": 4,
+    "questionText": "The space alien asks: How many corners does a circle have?",
+    "visual": "single_shape",
+    "targetShape": "circle",
+    "options": [
+      4,
+      2,
+      1,
+      0
+    ],
+    "correctAnswer": 0,
+    "hint1": "Smooth and round!",
+    "hint2": "Think about perfectly round shapes.",
+    "explanation": "The answer is 0. Circles have 1 curved side and 0 corners."
+  },
+  {
+    "id": "Q4_1",
+    "type": "pick_circle",
+    "world": 0,
+    "difficulty": 1,
+    "questionText": "Help the astronaut find the planet! Which shape is a circle?",
+    "visual": "shapes_mcq",
+    "options": [
+      "circle",
+      "semicircle",
+      "rectangle",
+      "triangle"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Look for the perfectly round one.",
+    "hint2": "No corners!",
+    "explanation": "The circle is perfectly round!"
+  },
+  {
+    "id": "Q4_2",
+    "type": "pick_circle",
+    "world": 0,
+    "difficulty": 1,
+    "questionText": "Help the astronaut find the planet! Which shape is a circle?",
+    "visual": "shapes_mcq",
+    "options": [
+      "rectangle",
+      "oval",
+      "triangle",
+      "circle"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Look for the perfectly round one.",
+    "hint2": "No corners!",
+    "explanation": "The circle is perfectly round!"
+  },
+  {
+    "id": "Q4_3",
+    "type": "pick_circle",
+    "world": 1,
+    "difficulty": 1,
+    "questionText": "Help the astronaut find the planet! Which shape is a circle?",
+    "visual": "shapes_mcq",
+    "options": [
+      "circle",
+      "square",
+      "semicircle",
+      "rectangle"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Look for the perfectly round one.",
+    "hint2": "No corners!",
+    "explanation": "The circle is perfectly round!"
+  },
+  {
+    "id": "Q4_4",
+    "type": "pick_circle",
+    "world": 2,
+    "difficulty": 1,
+    "questionText": "Help the astronaut find the planet! Which shape is a circle?",
+    "visual": "shapes_mcq",
+    "options": [
+      "rectangle",
+      "circle",
+      "semicircle",
+      "oval"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Look for the perfectly round one.",
+    "hint2": "No corners!",
+    "explanation": "The circle is perfectly round!"
+  },
+  {
+    "id": "Q4_5",
+    "type": "pick_circle",
+    "world": 2,
+    "difficulty": 2,
+    "questionText": "Help the astronaut find the planet! Which shape is a circle?",
+    "visual": "shapes_mcq",
+    "options": [
+      "square",
+      "circle",
+      "semicircle",
+      "triangle"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Look for the perfectly round one.",
+    "hint2": "No corners!",
+    "explanation": "The circle is perfectly round!"
+  },
+  {
+    "id": "Q4_6",
+    "type": "pick_circle",
+    "world": 3,
+    "difficulty": 2,
+    "questionText": "Help the astronaut find the planet! Which shape is a circle?",
+    "visual": "shapes_mcq",
+    "options": [
+      "rectangle",
+      "oval",
+      "semicircle",
+      "circle"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Look for the perfectly round one.",
+    "hint2": "No corners!",
+    "explanation": "The circle is perfectly round!"
+  },
+  {
+    "id": "Q4_7",
+    "type": "pick_circle",
+    "world": 4,
+    "difficulty": 2,
+    "questionText": "Help the astronaut find the planet! Which shape is a circle?",
+    "visual": "shapes_mcq",
+    "options": [
+      "rectangle",
+      "semicircle",
+      "square",
+      "circle"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Look for the perfectly round one.",
+    "hint2": "No corners!",
+    "explanation": "The circle is perfectly round!"
+  },
+  {
+    "id": "Q4_8",
+    "type": "pick_circle",
+    "world": 4,
+    "difficulty": 2,
+    "questionText": "Help the astronaut find the planet! Which shape is a circle?",
+    "visual": "shapes_mcq",
+    "options": [
+      "rectangle",
+      "square",
+      "circle",
+      "oval"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Look for the perfectly round one.",
+    "hint2": "No corners!",
+    "explanation": "The circle is perfectly round!"
+  },
+  {
+    "id": "Q4_9",
+    "type": "pick_circle",
+    "world": 5,
+    "difficulty": 2,
+    "questionText": "Help the astronaut find the planet! Which shape is a circle?",
+    "visual": "shapes_mcq",
+    "options": [
+      "semicircle",
+      "circle",
+      "triangle",
+      "square"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Look for the perfectly round one.",
+    "hint2": "No corners!",
+    "explanation": "The circle is perfectly round!"
+  },
+  {
+    "id": "Q4_10",
+    "type": "pick_circle",
+    "world": 6,
+    "difficulty": 3,
+    "questionText": "Help the astronaut find the planet! Which shape is a circle?",
+    "visual": "shapes_mcq",
+    "options": [
+      "circle",
+      "rectangle",
+      "oval",
+      "square"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Look for the perfectly round one.",
+    "hint2": "No corners!",
+    "explanation": "The circle is perfectly round!"
+  },
+  {
+    "id": "Q4_11",
+    "type": "pick_circle",
+    "world": 6,
+    "difficulty": 3,
+    "questionText": "Help the astronaut find the planet! Which shape is a circle?",
+    "visual": "shapes_mcq",
+    "options": [
+      "circle",
+      "rectangle",
+      "triangle",
+      "oval"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Look for the perfectly round one.",
+    "hint2": "No corners!",
+    "explanation": "The circle is perfectly round!"
+  },
+  {
+    "id": "Q4_12",
+    "type": "pick_circle",
+    "world": 7,
+    "difficulty": 3,
+    "questionText": "Help the astronaut find the planet! Which shape is a circle?",
+    "visual": "shapes_mcq",
+    "options": [
+      "circle",
+      "semicircle",
+      "rectangle",
+      "square"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Look for the perfectly round one.",
+    "hint2": "No corners!",
+    "explanation": "The circle is perfectly round!"
+  },
+  {
+    "id": "Q4_13",
+    "type": "pick_circle",
+    "world": 8,
+    "difficulty": 3,
+    "questionText": "Help the astronaut find the planet! Which shape is a circle?",
+    "visual": "shapes_mcq",
+    "options": [
+      "circle",
+      "triangle",
+      "oval",
+      "rectangle"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Look for the perfectly round one.",
+    "hint2": "No corners!",
+    "explanation": "The circle is perfectly round!"
+  },
+  {
+    "id": "Q4_14",
+    "type": "pick_circle",
+    "world": 8,
+    "difficulty": 3,
+    "questionText": "Help the astronaut find the planet! Which shape is a circle?",
+    "visual": "shapes_mcq",
+    "options": [
+      "semicircle",
+      "square",
+      "circle",
+      "oval"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Look for the perfectly round one.",
+    "hint2": "No corners!",
+    "explanation": "The circle is perfectly round!"
+  },
+  {
+    "id": "Q4_15",
+    "type": "pick_circle",
+    "world": 9,
+    "difficulty": 4,
+    "questionText": "Help the astronaut find the planet! Which shape is a circle?",
+    "visual": "shapes_mcq",
+    "options": [
+      "rectangle",
+      "circle",
+      "semicircle",
+      "square"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Look for the perfectly round one.",
+    "hint2": "No corners!",
+    "explanation": "The circle is perfectly round!"
+  },
+  {
+    "id": "Q5_1",
+    "type": "real_world",
+    "world": 0,
+    "difficulty": 1,
+    "questionText": "The detective is searching! Which object is shaped like a circle?",
+    "visual": "real_objects",
+    "options": [
+      "🚪 Door",
+      "🪙 Gold Coin",
+      "📺 TV Screen",
+      "📕 Book"
+    ],
+    "correctAnswer": "🪙 Gold Coin",
+    "hint1": "Think about the shape in real life.",
+    "hint2": "Look for perfectly round objects.",
+    "explanation": "🪙 Gold Coin is round!"
+  },
+  {
+    "id": "Q5_2",
+    "type": "real_world",
+    "world": 0,
+    "difficulty": 1,
+    "questionText": "The detective is searching! Which object is NOT a circle?",
+    "visual": "real_objects",
+    "options": [
+      "🍩 Donut",
+      "🪙 Gold Coin",
+      "🍕 Pizza Slice",
+      "🌕 Full Moon"
+    ],
+    "correctAnswer": "🍕 Pizza Slice",
+    "hint1": "Think about the shape in real life.",
+    "hint2": "Look for corners.",
+    "explanation": "🍕 Pizza Slice is not round!"
+  },
+  {
+    "id": "Q5_3",
+    "type": "real_world",
+    "world": 1,
+    "difficulty": 1,
+    "questionText": "The detective is searching! Which object is shaped like a circle?",
+    "visual": "real_objects",
+    "options": [
+      "🚪 Door",
+      "🍕 Pizza Slice",
+      "🪙 Gold Coin",
+      "📺 TV Screen"
+    ],
+    "correctAnswer": "🪙 Gold Coin",
+    "hint1": "Think about the shape in real life.",
+    "hint2": "Look for perfectly round objects.",
+    "explanation": "🪙 Gold Coin is round!"
+  },
+  {
+    "id": "Q5_4",
+    "type": "real_world",
+    "world": 2,
+    "difficulty": 1,
+    "questionText": "The detective is searching! Which object is shaped like a circle?",
+    "visual": "real_objects",
+    "options": [
+      "📺 TV Screen",
+      "📕 Book",
+      "🍕 Pizza Slice",
+      "🪙 Gold Coin"
+    ],
+    "correctAnswer": "🪙 Gold Coin",
+    "hint1": "Think about the shape in real life.",
+    "hint2": "Look for perfectly round objects.",
+    "explanation": "🪙 Gold Coin is round!"
+  },
+  {
+    "id": "Q5_5",
+    "type": "real_world",
+    "world": 2,
+    "difficulty": 2,
+    "questionText": "The detective is searching! Which object is shaped like a circle?",
+    "visual": "real_objects",
+    "options": [
+      "📺 TV Screen",
+      "📏 Ruler",
+      "🍕 Pizza Slice",
+      "🪙 Gold Coin"
+    ],
+    "correctAnswer": "🪙 Gold Coin",
+    "hint1": "Think about the shape in real life.",
+    "hint2": "Look for perfectly round objects.",
+    "explanation": "🪙 Gold Coin is round!"
+  },
+  {
+    "id": "Q5_6",
+    "type": "real_world",
+    "world": 3,
+    "difficulty": 2,
+    "questionText": "The detective is searching! Which object is NOT a circle?",
+    "visual": "real_objects",
+    "options": [
+      "🍕 Pizza Slice",
+      "⌚ Clock Face",
+      "🪙 Gold Coin",
+      "🌕 Full Moon"
+    ],
+    "correctAnswer": "🍕 Pizza Slice",
+    "hint1": "Think about the shape in real life.",
+    "hint2": "Look for corners.",
+    "explanation": "🍕 Pizza Slice is not round!"
+  },
+  {
+    "id": "Q5_7",
+    "type": "real_world",
+    "world": 4,
+    "difficulty": 2,
+    "questionText": "The detective is searching! Which object is NOT a circle?",
+    "visual": "real_objects",
+    "options": [
+      "⌚ Clock Face",
+      "🍩 Donut",
+      "🍕 Pizza Slice",
+      "🪙 Gold Coin"
+    ],
+    "correctAnswer": "🍕 Pizza Slice",
+    "hint1": "Think about the shape in real life.",
+    "hint2": "Look for corners.",
+    "explanation": "🍕 Pizza Slice is not round!"
+  },
+  {
+    "id": "Q5_8",
+    "type": "real_world",
+    "world": 4,
+    "difficulty": 2,
+    "questionText": "The detective is searching! Which object is shaped like a circle?",
+    "visual": "real_objects",
+    "options": [
+      "📺 TV Screen",
+      "🪙 Gold Coin",
+      "📕 Book",
+      "🍕 Pizza Slice"
+    ],
+    "correctAnswer": "🪙 Gold Coin",
+    "hint1": "Think about the shape in real life.",
+    "hint2": "Look for perfectly round objects.",
+    "explanation": "🪙 Gold Coin is round!"
+  },
+  {
+    "id": "Q5_9",
+    "type": "real_world",
+    "world": 5,
+    "difficulty": 2,
+    "questionText": "The detective is searching! Which object is NOT a circle?",
+    "visual": "real_objects",
+    "options": [
+      "🍕 Pizza Slice",
+      "🛞 Wheel",
+      "🪙 Gold Coin",
+      "🍩 Donut"
+    ],
+    "correctAnswer": "🍕 Pizza Slice",
+    "hint1": "Think about the shape in real life.",
+    "hint2": "Look for corners.",
+    "explanation": "🍕 Pizza Slice is not round!"
+  },
+  {
+    "id": "Q5_10",
+    "type": "real_world",
+    "world": 6,
+    "difficulty": 3,
+    "questionText": "The detective is searching! Which object is shaped like a circle?",
+    "visual": "real_objects",
+    "options": [
+      "📺 TV Screen",
+      "🍕 Pizza Slice",
+      "🚪 Door",
+      "🪙 Gold Coin"
+    ],
+    "correctAnswer": "🪙 Gold Coin",
+    "hint1": "Think about the shape in real life.",
+    "hint2": "Look for perfectly round objects.",
+    "explanation": "🪙 Gold Coin is round!"
+  },
+  {
+    "id": "Q5_11",
+    "type": "real_world",
+    "world": 6,
+    "difficulty": 3,
+    "questionText": "The detective is searching! Which object is shaped like a circle?",
+    "visual": "real_objects",
+    "options": [
+      "📏 Ruler",
+      "🍕 Pizza Slice",
+      "🪙 Gold Coin",
+      "📺 TV Screen"
+    ],
+    "correctAnswer": "🪙 Gold Coin",
+    "hint1": "Think about the shape in real life.",
+    "hint2": "Look for perfectly round objects.",
+    "explanation": "🪙 Gold Coin is round!"
+  },
+  {
+    "id": "Q5_12",
+    "type": "real_world",
+    "world": 7,
+    "difficulty": 3,
+    "questionText": "The detective is searching! Which object is shaped like a circle?",
+    "visual": "real_objects",
+    "options": [
+      "📺 TV Screen",
+      "🍕 Pizza Slice",
+      "🪙 Gold Coin",
+      "🚪 Door"
+    ],
+    "correctAnswer": "🪙 Gold Coin",
+    "hint1": "Think about the shape in real life.",
+    "hint2": "Look for perfectly round objects.",
+    "explanation": "🪙 Gold Coin is round!"
+  },
+  {
+    "id": "Q5_13",
+    "type": "real_world",
+    "world": 8,
+    "difficulty": 3,
+    "questionText": "The detective is searching! Which object is NOT a circle?",
+    "visual": "real_objects",
+    "options": [
+      "🪙 Gold Coin",
+      "🍩 Donut",
+      "⌚ Clock Face",
+      "🍕 Pizza Slice"
+    ],
+    "correctAnswer": "🍕 Pizza Slice",
+    "hint1": "Think about the shape in real life.",
+    "hint2": "Look for corners.",
+    "explanation": "🍕 Pizza Slice is not round!"
+  },
+  {
+    "id": "Q5_14",
+    "type": "real_world",
+    "world": 8,
+    "difficulty": 3,
+    "questionText": "The detective is searching! Which object is NOT a circle?",
+    "visual": "real_objects",
+    "options": [
+      "🛞 Wheel",
+      "🪙 Gold Coin",
+      "⌚ Clock Face",
+      "🍕 Pizza Slice"
+    ],
+    "correctAnswer": "🍕 Pizza Slice",
+    "hint1": "Think about the shape in real life.",
+    "hint2": "Look for corners.",
+    "explanation": "🍕 Pizza Slice is not round!"
+  },
+  {
+    "id": "Q5_15",
+    "type": "real_world",
+    "world": 9,
+    "difficulty": 4,
+    "questionText": "The detective is searching! Which object is NOT a circle?",
+    "visual": "real_objects",
+    "options": [
+      "🪙 Gold Coin",
+      "⌚ Clock Face",
+      "🛞 Wheel",
+      "🍕 Pizza Slice"
+    ],
+    "correctAnswer": "🍕 Pizza Slice",
+    "hint1": "Think about the shape in real life.",
+    "hint2": "Look for corners.",
+    "explanation": "🍕 Pizza Slice is not round!"
+  },
+  {
+    "id": "Q6_1",
+    "type": "count_circles",
+    "world": 0,
+    "difficulty": 1,
+    "questionText": "The dinosaur is hungry! How many perfect circles can it eat?",
+    "visual": "shape_group",
+    "shapes": [
+      "rectangle",
+      "rectangle",
+      "rectangle",
+      "circle"
+    ],
+    "options": [
+      1,
+      2,
+      5,
+      6
+    ],
+    "correctAnswer": 1,
+    "hint1": "Count ONLY the perfectly round shapes.",
+    "hint2": "Ovals and semi-circles do not count!",
+    "explanation": "There are 1 circles!"
+  },
+  {
+    "id": "Q6_2",
+    "type": "count_circles",
+    "world": 0,
+    "difficulty": 1,
+    "questionText": "The dinosaur is hungry! How many perfect circles can it eat?",
+    "visual": "shape_group",
+    "shapes": [
+      "circle",
+      "circle",
+      "circle",
+      "rectangle",
+      "circle"
+    ],
+    "options": [
+      1,
+      4,
+      6,
+      7
+    ],
+    "correctAnswer": 4,
+    "hint1": "Count ONLY the perfectly round shapes.",
+    "hint2": "Ovals and semi-circles do not count!",
+    "explanation": "There are 4 circles!"
+  },
+  {
+    "id": "Q6_3",
+    "type": "count_circles",
+    "world": 1,
+    "difficulty": 1,
+    "questionText": "The dinosaur is hungry! How many perfect circles can it eat?",
+    "visual": "shape_group",
+    "shapes": [
+      "circle",
+      "rectangle",
+      "triangle",
+      "circle",
+      "circle"
+    ],
+    "options": [
+      0,
+      2,
+      3,
+      6
+    ],
+    "correctAnswer": 3,
+    "hint1": "Count ONLY the perfectly round shapes.",
+    "hint2": "Ovals and semi-circles do not count!",
+    "explanation": "There are 3 circles!"
+  },
+  {
+    "id": "Q6_4",
+    "type": "count_circles",
+    "world": 2,
+    "difficulty": 1,
+    "questionText": "The dinosaur is hungry! How many perfect circles can it eat?",
+    "visual": "shape_group",
+    "shapes": [
+      "circle",
+      "circle",
+      "triangle",
+      "triangle",
+      "circle",
+      "circle"
+    ],
+    "options": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "correctAnswer": 4,
+    "hint1": "Count ONLY the perfectly round shapes.",
+    "hint2": "Ovals and semi-circles do not count!",
+    "explanation": "There are 4 circles!"
+  },
+  {
+    "id": "Q6_5",
+    "type": "count_circles",
+    "world": 2,
+    "difficulty": 2,
+    "questionText": "The dinosaur is hungry! How many perfect circles can it eat?",
+    "visual": "shape_group",
+    "shapes": [
+      "oval",
+      "oval",
+      "triangle",
+      "circle",
+      "circle",
+      "circle"
+    ],
+    "options": [
+      1,
+      3,
+      6,
+      7
+    ],
+    "correctAnswer": 3,
+    "hint1": "Count ONLY the perfectly round shapes.",
+    "hint2": "Ovals and semi-circles do not count!",
+    "explanation": "There are 3 circles!"
+  },
+  {
+    "id": "Q6_6",
+    "type": "count_circles",
+    "world": 3,
+    "difficulty": 2,
+    "questionText": "The dinosaur is hungry! How many perfect circles can it eat?",
+    "visual": "shape_group",
+    "shapes": [
+      "semicircle",
+      "circle",
+      "rectangle",
+      "circle"
+    ],
+    "options": [
+      0,
+      1,
+      2,
+      6
+    ],
+    "correctAnswer": 2,
+    "hint1": "Count ONLY the perfectly round shapes.",
+    "hint2": "Ovals and semi-circles do not count!",
+    "explanation": "There are 2 circles!"
+  },
+  {
+    "id": "Q6_7",
+    "type": "count_circles",
+    "world": 4,
+    "difficulty": 2,
+    "questionText": "The dinosaur is hungry! How many perfect circles can it eat?",
+    "visual": "shape_group",
+    "shapes": [
+      "circle",
+      "circle",
+      "triangle",
+      "rectangle"
+    ],
+    "options": [
+      2,
+      4,
+      5,
+      6
+    ],
+    "correctAnswer": 2,
+    "hint1": "Count ONLY the perfectly round shapes.",
+    "hint2": "Ovals and semi-circles do not count!",
+    "explanation": "There are 2 circles!"
+  },
+  {
+    "id": "Q6_8",
+    "type": "count_circles",
+    "world": 4,
+    "difficulty": 2,
+    "questionText": "The dinosaur is hungry! How many perfect circles can it eat?",
+    "visual": "shape_group",
+    "shapes": [
+      "circle",
+      "semicircle",
+      "circle",
+      "rectangle"
+    ],
+    "options": [
+      0,
+      2,
+      4,
+      7
+    ],
+    "correctAnswer": 2,
+    "hint1": "Count ONLY the perfectly round shapes.",
+    "hint2": "Ovals and semi-circles do not count!",
+    "explanation": "There are 2 circles!"
+  },
+  {
+    "id": "Q6_9",
+    "type": "count_circles",
+    "world": 5,
+    "difficulty": 2,
+    "questionText": "The dinosaur is hungry! How many perfect circles can it eat?",
+    "visual": "shape_group",
+    "shapes": [
+      "semicircle",
+      "oval",
+      "circle",
+      "circle",
+      "semicircle"
+    ],
+    "options": [
+      0,
+      2,
+      3,
+      6
+    ],
+    "correctAnswer": 2,
+    "hint1": "Count ONLY the perfectly round shapes.",
+    "hint2": "Ovals and semi-circles do not count!",
+    "explanation": "There are 2 circles!"
+  },
+  {
+    "id": "Q6_10",
+    "type": "count_circles",
+    "world": 6,
+    "difficulty": 3,
+    "questionText": "The dinosaur is hungry! How many perfect circles can it eat?",
+    "visual": "shape_group",
+    "shapes": [
+      "rectangle",
+      "circle",
+      "circle",
+      "rectangle"
+    ],
+    "options": [
+      0,
+      2,
+      5,
+      7
+    ],
+    "correctAnswer": 2,
+    "hint1": "Count ONLY the perfectly round shapes.",
+    "hint2": "Ovals and semi-circles do not count!",
+    "explanation": "There are 2 circles!"
+  },
+  {
+    "id": "Q6_11",
+    "type": "count_circles",
+    "world": 6,
+    "difficulty": 3,
+    "questionText": "The dinosaur is hungry! How many perfect circles can it eat?",
+    "visual": "shape_group",
+    "shapes": [
+      "square",
+      "square",
+      "circle",
+      "square",
+      "oval"
+    ],
+    "options": [
+      1,
+      2,
+      3,
+      6
+    ],
+    "correctAnswer": 1,
+    "hint1": "Count ONLY the perfectly round shapes.",
+    "hint2": "Ovals and semi-circles do not count!",
+    "explanation": "There are 1 circles!"
+  },
+  {
+    "id": "Q6_12",
+    "type": "count_circles",
+    "world": 7,
+    "difficulty": 3,
+    "questionText": "The dinosaur is hungry! How many perfect circles can it eat?",
+    "visual": "shape_group",
+    "shapes": [
+      "circle",
+      "triangle",
+      "circle",
+      "oval",
+      "triangle"
+    ],
+    "options": [
+      1,
+      2,
+      5,
+      6
+    ],
+    "correctAnswer": 2,
+    "hint1": "Count ONLY the perfectly round shapes.",
+    "hint2": "Ovals and semi-circles do not count!",
+    "explanation": "There are 2 circles!"
+  },
+  {
+    "id": "Q6_13",
+    "type": "count_circles",
+    "world": 8,
+    "difficulty": 3,
+    "questionText": "The dinosaur is hungry! How many perfect circles can it eat?",
+    "visual": "shape_group",
+    "shapes": [
+      "square",
+      "circle",
+      "circle",
+      "oval"
+    ],
+    "options": [
+      0,
+      2,
+      3,
+      5
+    ],
+    "correctAnswer": 2,
+    "hint1": "Count ONLY the perfectly round shapes.",
+    "hint2": "Ovals and semi-circles do not count!",
+    "explanation": "There are 2 circles!"
+  },
+  {
+    "id": "Q6_14",
+    "type": "count_circles",
+    "world": 8,
+    "difficulty": 3,
+    "questionText": "The dinosaur is hungry! How many perfect circles can it eat?",
+    "visual": "shape_group",
+    "shapes": [
+      "circle",
+      "triangle",
+      "rectangle",
+      "circle",
+      "circle"
+    ],
+    "options": [
+      1,
+      2,
+      3,
+      6
+    ],
+    "correctAnswer": 3,
+    "hint1": "Count ONLY the perfectly round shapes.",
+    "hint2": "Ovals and semi-circles do not count!",
+    "explanation": "There are 3 circles!"
+  },
+  {
+    "id": "Q6_15",
+    "type": "count_circles",
+    "world": 9,
+    "difficulty": 4,
+    "questionText": "The dinosaur is hungry! How many perfect circles can it eat?",
+    "visual": "shape_group",
+    "shapes": [
+      "circle",
+      "circle",
+      "circle",
+      "oval"
+    ],
+    "options": [
+      0,
+      1,
+      3,
+      7
+    ],
+    "correctAnswer": 3,
+    "hint1": "Count ONLY the perfectly round shapes.",
+    "hint2": "Ovals and semi-circles do not count!",
+    "explanation": "There are 3 circles!"
+  },
+  {
+    "id": "Q7_1",
+    "type": "true_false",
+    "world": 0,
+    "difficulty": 1,
+    "questionText": "The wizard says: \"A square has no corners.\" Is this True or False?",
+    "visual": "true_false",
+    "options": [
+      "True",
+      "False"
+    ],
+    "correctAnswer": "False",
+    "hint1": "Think carefully!",
+    "hint2": "It's a trick!",
+    "explanation": "The statement is False!"
+  },
+  {
+    "id": "Q7_2",
+    "type": "true_false",
+    "world": 0,
+    "difficulty": 1,
+    "questionText": "The wizard says: \"A circle has 4 corners.\" Is this True or False?",
+    "visual": "true_false",
+    "options": [
+      "True",
+      "False"
+    ],
+    "correctAnswer": "False",
+    "hint1": "Think carefully!",
+    "hint2": "It's a trick!",
+    "explanation": "The statement is False!"
+  },
+  {
+    "id": "Q7_3",
+    "type": "true_false",
+    "world": 1,
+    "difficulty": 1,
+    "questionText": "The wizard says: \"A square has no corners.\" Is this True or False?",
+    "visual": "true_false",
+    "options": [
+      "True",
+      "False"
+    ],
+    "correctAnswer": "False",
+    "hint1": "Think carefully!",
+    "hint2": "It's a trick!",
+    "explanation": "The statement is False!"
+  },
+  {
+    "id": "Q7_4",
+    "type": "true_false",
+    "world": 2,
+    "difficulty": 1,
+    "questionText": "The wizard says: \"A circle has 1 continuous curved side.\" Is this True or False?",
+    "visual": "true_false",
+    "options": [
+      "True",
+      "False"
+    ],
+    "correctAnswer": "True",
+    "hint1": "Think carefully!",
+    "hint2": "It is a fact!",
+    "explanation": "The statement is True!"
+  },
+  {
+    "id": "Q7_5",
+    "type": "true_false",
+    "world": 2,
+    "difficulty": 2,
+    "questionText": "The wizard says: \"A circle has 4 corners.\" Is this True or False?",
+    "visual": "true_false",
+    "options": [
+      "True",
+      "False"
+    ],
+    "correctAnswer": "False",
+    "hint1": "Think carefully!",
+    "hint2": "It's a trick!",
+    "explanation": "The statement is False!"
+  },
+  {
+    "id": "Q7_6",
+    "type": "true_false",
+    "world": 3,
+    "difficulty": 2,
+    "questionText": "The wizard says: \"A square has no corners.\" Is this True or False?",
+    "visual": "true_false",
+    "options": [
+      "True",
+      "False"
+    ],
+    "correctAnswer": "False",
+    "hint1": "Think carefully!",
+    "hint2": "It's a trick!",
+    "explanation": "The statement is False!"
+  },
+  {
+    "id": "Q7_7",
+    "type": "true_false",
+    "world": 4,
+    "difficulty": 2,
+    "questionText": "The wizard says: \"A circle is perfectly round.\" Is this True or False?",
+    "visual": "true_false",
+    "options": [
+      "True",
+      "False"
+    ],
+    "correctAnswer": "True",
+    "hint1": "Think carefully!",
+    "hint2": "It is a fact!",
+    "explanation": "The statement is True!"
+  },
+  {
+    "id": "Q7_8",
+    "type": "true_false",
+    "world": 4,
+    "difficulty": 2,
+    "questionText": "The wizard says: \"A circle has 4 corners.\" Is this True or False?",
+    "visual": "true_false",
+    "options": [
+      "True",
+      "False"
+    ],
+    "correctAnswer": "False",
+    "hint1": "Think carefully!",
+    "hint2": "It's a trick!",
+    "explanation": "The statement is False!"
+  },
+  {
+    "id": "Q7_9",
+    "type": "true_false",
+    "world": 5,
+    "difficulty": 2,
+    "questionText": "The wizard says: \"An oval is the exact same as a circle.\" Is this True or False?",
+    "visual": "true_false",
+    "options": [
+      "True",
+      "False"
+    ],
+    "correctAnswer": "False",
+    "hint1": "Think carefully!",
+    "hint2": "It's a trick!",
+    "explanation": "The statement is False!"
+  },
+  {
+    "id": "Q7_10",
+    "type": "true_false",
+    "world": 6,
+    "difficulty": 3,
+    "questionText": "The wizard says: \"A square has no corners.\" Is this True or False?",
+    "visual": "true_false",
+    "options": [
+      "True",
+      "False"
+    ],
+    "correctAnswer": "False",
+    "hint1": "Think carefully!",
+    "hint2": "It's a trick!",
+    "explanation": "The statement is False!"
+  },
+  {
+    "id": "Q7_11",
+    "type": "true_false",
+    "world": 6,
+    "difficulty": 3,
+    "questionText": "The wizard says: \"A circle is perfectly round.\" Is this True or False?",
+    "visual": "true_false",
+    "options": [
+      "True",
+      "False"
+    ],
+    "correctAnswer": "True",
+    "hint1": "Think carefully!",
+    "hint2": "It is a fact!",
+    "explanation": "The statement is True!"
+  },
+  {
+    "id": "Q7_12",
+    "type": "true_false",
+    "world": 7,
+    "difficulty": 3,
+    "questionText": "The wizard says: \"An oval is the exact same as a circle.\" Is this True or False?",
+    "visual": "true_false",
+    "options": [
+      "True",
+      "False"
+    ],
+    "correctAnswer": "False",
+    "hint1": "Think carefully!",
+    "hint2": "It's a trick!",
+    "explanation": "The statement is False!"
+  },
+  {
+    "id": "Q7_13",
+    "type": "true_false",
+    "world": 8,
+    "difficulty": 3,
+    "questionText": "The wizard says: \"An oval is the exact same as a circle.\" Is this True or False?",
+    "visual": "true_false",
+    "options": [
+      "True",
+      "False"
+    ],
+    "correctAnswer": "False",
+    "hint1": "Think carefully!",
+    "hint2": "It's a trick!",
+    "explanation": "The statement is False!"
+  },
+  {
+    "id": "Q7_14",
+    "type": "true_false",
+    "world": 8,
+    "difficulty": 3,
+    "questionText": "The wizard says: \"A circle is perfectly round.\" Is this True or False?",
+    "visual": "true_false",
+    "options": [
+      "True",
+      "False"
+    ],
+    "correctAnswer": "True",
+    "hint1": "Think carefully!",
+    "hint2": "It is a fact!",
+    "explanation": "The statement is True!"
+  },
+  {
+    "id": "Q7_15",
+    "type": "true_false",
+    "world": 9,
+    "difficulty": 4,
+    "questionText": "The wizard says: \"A circle has 1 continuous curved side.\" Is this True or False?",
+    "visual": "true_false",
+    "options": [
+      "True",
+      "False"
+    ],
+    "correctAnswer": "True",
+    "hint1": "Think carefully!",
+    "hint2": "It is a fact!",
+    "explanation": "The statement is True!"
+  },
+  {
+    "id": "Q8_1",
+    "type": "odd_one_out",
+    "world": 0,
+    "difficulty": 1,
+    "questionText": "The robot's scanner detected an odd shape! Which one doesn't belong?",
+    "visual": "shapes_mcq",
+    "options": [
+      "square",
+      "square",
+      "square",
+      "circle"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Three shapes are the same kind.",
+    "hint2": "Find the one that is different.",
+    "explanation": "The circle is the odd one out!"
+  },
+  {
+    "id": "Q8_2",
+    "type": "odd_one_out",
+    "world": 0,
+    "difficulty": 1,
+    "questionText": "The robot's scanner detected an odd shape! Which one doesn't belong?",
+    "visual": "shapes_mcq",
+    "options": [
+      "circle",
+      "square",
+      "circle",
+      "circle"
+    ],
+    "correctAnswer": "square",
+    "hint1": "Three shapes are the same kind.",
+    "hint2": "Find the one that is different.",
+    "explanation": "The square is the odd one out!"
+  },
+  {
+    "id": "Q8_3",
+    "type": "odd_one_out",
+    "world": 1,
+    "difficulty": 1,
+    "questionText": "The robot's scanner detected an odd shape! Which one doesn't belong?",
+    "visual": "shapes_mcq",
+    "options": [
+      "rectangle",
+      "rectangle",
+      "rectangle",
+      "circle"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Three shapes are the same kind.",
+    "hint2": "Find the one that is different.",
+    "explanation": "The circle is the odd one out!"
+  },
+  {
+    "id": "Q8_4",
+    "type": "odd_one_out",
+    "world": 2,
+    "difficulty": 1,
+    "questionText": "The robot's scanner detected an odd shape! Which one doesn't belong?",
+    "visual": "shapes_mcq",
+    "options": [
+      "square",
+      "square",
+      "square",
+      "circle"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Three shapes are the same kind.",
+    "hint2": "Find the one that is different.",
+    "explanation": "The circle is the odd one out!"
+  },
+  {
+    "id": "Q8_5",
+    "type": "odd_one_out",
+    "world": 2,
+    "difficulty": 2,
+    "questionText": "The robot's scanner detected an odd shape! Which one doesn't belong?",
+    "visual": "shapes_mcq",
+    "options": [
+      "circle",
+      "circle",
+      "rectangle",
+      "circle"
+    ],
+    "correctAnswer": "rectangle",
+    "hint1": "Three shapes are the same kind.",
+    "hint2": "Find the one that is different.",
+    "explanation": "The rectangle is the odd one out!"
+  },
+  {
+    "id": "Q8_6",
+    "type": "odd_one_out",
+    "world": 3,
+    "difficulty": 2,
+    "questionText": "The robot's scanner detected an odd shape! Which one doesn't belong?",
+    "visual": "shapes_mcq",
+    "options": [
+      "circle",
+      "circle",
+      "rectangle",
+      "circle"
+    ],
+    "correctAnswer": "rectangle",
+    "hint1": "Three shapes are the same kind.",
+    "hint2": "Find the one that is different.",
+    "explanation": "The rectangle is the odd one out!"
+  },
+  {
+    "id": "Q8_7",
+    "type": "odd_one_out",
+    "world": 4,
+    "difficulty": 2,
+    "questionText": "The robot's scanner detected an odd shape! Which one doesn't belong?",
+    "visual": "shapes_mcq",
+    "options": [
+      "circle",
+      "circle",
+      "circle",
+      "rectangle"
+    ],
+    "correctAnswer": "rectangle",
+    "hint1": "Three shapes are the same kind.",
+    "hint2": "Find the one that is different.",
+    "explanation": "The rectangle is the odd one out!"
+  },
+  {
+    "id": "Q8_8",
+    "type": "odd_one_out",
+    "world": 4,
+    "difficulty": 2,
+    "questionText": "The robot's scanner detected an odd shape! Which one doesn't belong?",
+    "visual": "shapes_mcq",
+    "options": [
+      "square",
+      "square",
+      "square",
+      "circle"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Three shapes are the same kind.",
+    "hint2": "Find the one that is different.",
+    "explanation": "The circle is the odd one out!"
+  },
+  {
+    "id": "Q8_9",
+    "type": "odd_one_out",
+    "world": 5,
+    "difficulty": 2,
+    "questionText": "The robot's scanner detected an odd shape! Which one doesn't belong?",
+    "visual": "shapes_mcq",
+    "options": [
+      "triangle",
+      "circle",
+      "circle",
+      "circle"
+    ],
+    "correctAnswer": "triangle",
+    "hint1": "Three shapes are the same kind.",
+    "hint2": "Find the one that is different.",
+    "explanation": "The triangle is the odd one out!"
+  },
+  {
+    "id": "Q8_10",
+    "type": "odd_one_out",
+    "world": 6,
+    "difficulty": 3,
+    "questionText": "The robot's scanner detected an odd shape! Which one doesn't belong?",
+    "visual": "shapes_mcq",
+    "options": [
+      "triangle",
+      "circle",
+      "circle",
+      "circle"
+    ],
+    "correctAnswer": "triangle",
+    "hint1": "Three shapes are the same kind.",
+    "hint2": "Find the one that is different.",
+    "explanation": "The triangle is the odd one out!"
+  },
+  {
+    "id": "Q8_11",
+    "type": "odd_one_out",
+    "world": 6,
+    "difficulty": 3,
+    "questionText": "The robot's scanner detected an odd shape! Which one doesn't belong?",
+    "visual": "shapes_mcq",
+    "options": [
+      "circle",
+      "triangle",
+      "circle",
+      "circle"
+    ],
+    "correctAnswer": "triangle",
+    "hint1": "Three shapes are the same kind.",
+    "hint2": "Find the one that is different.",
+    "explanation": "The triangle is the odd one out!"
+  },
+  {
+    "id": "Q8_12",
+    "type": "odd_one_out",
+    "world": 7,
+    "difficulty": 3,
+    "questionText": "The robot's scanner detected an odd shape! Which one doesn't belong?",
+    "visual": "shapes_mcq",
+    "options": [
+      "rectangle",
+      "rectangle",
+      "circle",
+      "rectangle"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Three shapes are the same kind.",
+    "hint2": "Find the one that is different.",
+    "explanation": "The circle is the odd one out!"
+  },
+  {
+    "id": "Q8_13",
+    "type": "odd_one_out",
+    "world": 8,
+    "difficulty": 3,
+    "questionText": "The robot's scanner detected an odd shape! Which one doesn't belong?",
+    "visual": "shapes_mcq",
+    "options": [
+      "circle",
+      "triangle",
+      "triangle",
+      "triangle"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Three shapes are the same kind.",
+    "hint2": "Find the one that is different.",
+    "explanation": "The circle is the odd one out!"
+  },
+  {
+    "id": "Q8_14",
+    "type": "odd_one_out",
+    "world": 8,
+    "difficulty": 3,
+    "questionText": "The robot's scanner detected an odd shape! Which one doesn't belong?",
+    "visual": "shapes_mcq",
+    "options": [
+      "rectangle",
+      "rectangle",
+      "rectangle",
+      "circle"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Three shapes are the same kind.",
+    "hint2": "Find the one that is different.",
+    "explanation": "The circle is the odd one out!"
+  },
+  {
+    "id": "Q8_15",
+    "type": "odd_one_out",
+    "world": 9,
+    "difficulty": 4,
+    "questionText": "The robot's scanner detected an odd shape! Which one doesn't belong?",
+    "visual": "shapes_mcq",
+    "options": [
+      "rectangle",
+      "circle",
+      "rectangle",
+      "rectangle"
+    ],
+    "correctAnswer": "circle",
+    "hint1": "Three shapes are the same kind.",
+    "hint2": "Find the one that is different.",
+    "explanation": "The circle is the odd one out!"
+  },
+  {
+    "id": "Q9_1",
+    "type": "pattern",
+    "world": 0,
+    "difficulty": 1,
+    "questionText": "Decode the alien's message! What shape comes next?",
+    "visual": "pattern_row",
+    "patternSequence": [
+      "circle",
+      "rectangle",
+      "circle",
+      "rectangle",
+      "circle"
+    ],
+    "options": [
+      "circle",
+      "rectangle",
+      "triangle",
+      "oval"
+    ],
+    "correctAnswer": "rectangle",
+    "hint1": "Look at how it repeats.",
+    "hint2": "It goes circle, rectangle...",
+    "explanation": "The next shape is rectangle!"
+  },
+  {
+    "id": "Q9_2",
+    "type": "pattern",
+    "world": 0,
+    "difficulty": 1,
+    "questionText": "Decode the alien's message! What shape comes next?",
+    "visual": "pattern_row",
+    "patternSequence": [
+      "circle",
+      "square",
+      "circle",
+      "square",
+      "circle"
+    ],
+    "options": [
+      "circle",
+      "square",
+      "triangle",
+      "oval"
+    ],
+    "correctAnswer": "square",
+    "hint1": "Look at how it repeats.",
+    "hint2": "It goes circle, square...",
+    "explanation": "The next shape is square!"
+  },
+  {
+    "id": "Q9_3",
+    "type": "pattern",
+    "world": 1,
+    "difficulty": 1,
+    "questionText": "Decode the alien's message! What shape comes next?",
+    "visual": "pattern_row",
+    "patternSequence": [
+      "circle",
+      "rectangle",
+      "circle",
+      "rectangle",
+      "circle"
+    ],
+    "options": [
+      "circle",
+      "rectangle",
+      "triangle",
+      "oval"
+    ],
+    "correctAnswer": "rectangle",
+    "hint1": "Look at how it repeats.",
+    "hint2": "It goes circle, rectangle...",
+    "explanation": "The next shape is rectangle!"
+  },
+  {
+    "id": "Q9_4",
+    "type": "pattern",
+    "world": 2,
+    "difficulty": 1,
+    "questionText": "Decode the alien's message! What shape comes next?",
+    "visual": "pattern_row",
+    "patternSequence": [
+      "circle",
+      "rectangle",
+      "circle",
+      "rectangle",
+      "circle"
+    ],
+    "options": [
+      "circle",
+      "rectangle",
+      "triangle",
+      "oval"
+    ],
+    "correctAnswer": "rectangle",
+    "hint1": "Look at how it repeats.",
+    "hint2": "It goes circle, rectangle...",
+    "explanation": "The next shape is rectangle!"
+  },
+  {
+    "id": "Q9_5",
+    "type": "pattern",
+    "world": 2,
+    "difficulty": 2,
+    "questionText": "Decode the alien's message! What shape comes next?",
+    "visual": "pattern_row",
+    "patternSequence": [
+      "circle",
+      "square",
+      "circle",
+      "square",
+      "circle"
+    ],
+    "options": [
+      "circle",
+      "square",
+      "triangle",
+      "oval"
+    ],
+    "correctAnswer": "square",
+    "hint1": "Look at how it repeats.",
+    "hint2": "It goes circle, square...",
+    "explanation": "The next shape is square!"
+  },
+  {
+    "id": "Q9_6",
+    "type": "pattern",
+    "world": 3,
+    "difficulty": 2,
+    "questionText": "Decode the alien's message! What shape comes next?",
+    "visual": "pattern_row",
+    "patternSequence": [
+      "circle",
+      "triangle",
+      "circle",
+      "triangle",
+      "circle"
+    ],
+    "options": [
+      "circle",
+      "triangle",
+      "oval",
+      "square"
+    ],
+    "correctAnswer": "triangle",
+    "hint1": "Look at how it repeats.",
+    "hint2": "It goes circle, triangle...",
+    "explanation": "The next shape is triangle!"
+  },
+  {
+    "id": "Q9_7",
+    "type": "pattern",
+    "world": 4,
+    "difficulty": 2,
+    "questionText": "Decode the alien's message! What shape comes next?",
+    "visual": "pattern_row",
+    "patternSequence": [
+      "circle",
+      "rectangle",
+      "circle",
+      "rectangle",
+      "circle"
+    ],
+    "options": [
+      "circle",
+      "rectangle",
+      "triangle",
+      "oval"
+    ],
+    "correctAnswer": "rectangle",
+    "hint1": "Look at how it repeats.",
+    "hint2": "It goes circle, rectangle...",
+    "explanation": "The next shape is rectangle!"
+  },
+  {
+    "id": "Q9_8",
+    "type": "pattern",
+    "world": 4,
+    "difficulty": 2,
+    "questionText": "Decode the alien's message! What shape comes next?",
+    "visual": "pattern_row",
+    "patternSequence": [
+      "circle",
+      "rectangle",
+      "circle",
+      "rectangle",
+      "circle"
+    ],
+    "options": [
+      "circle",
+      "rectangle",
+      "triangle",
+      "oval"
+    ],
+    "correctAnswer": "rectangle",
+    "hint1": "Look at how it repeats.",
+    "hint2": "It goes circle, rectangle...",
+    "explanation": "The next shape is rectangle!"
+  },
+  {
+    "id": "Q9_9",
+    "type": "pattern",
+    "world": 5,
+    "difficulty": 2,
+    "questionText": "Decode the alien's message! What shape comes next?",
+    "visual": "pattern_row",
+    "patternSequence": [
+      "circle",
+      "triangle",
+      "circle",
+      "triangle",
+      "circle"
+    ],
+    "options": [
+      "circle",
+      "triangle",
+      "oval",
+      "square"
+    ],
+    "correctAnswer": "triangle",
+    "hint1": "Look at how it repeats.",
+    "hint2": "It goes circle, triangle...",
+    "explanation": "The next shape is triangle!"
+  },
+  {
+    "id": "Q9_10",
+    "type": "pattern",
+    "world": 6,
+    "difficulty": 3,
+    "questionText": "Decode the alien's message! What shape comes next?",
+    "visual": "pattern_row",
+    "patternSequence": [
+      "circle",
+      "triangle",
+      "circle",
+      "triangle",
+      "circle"
+    ],
+    "options": [
+      "circle",
+      "triangle",
+      "oval",
+      "square"
+    ],
+    "correctAnswer": "triangle",
+    "hint1": "Look at how it repeats.",
+    "hint2": "It goes circle, triangle...",
+    "explanation": "The next shape is triangle!"
+  },
+  {
+    "id": "Q9_11",
+    "type": "pattern",
+    "world": 6,
+    "difficulty": 3,
+    "questionText": "Decode the alien's message! What shape comes next?",
+    "visual": "pattern_row",
+    "patternSequence": [
+      "circle",
+      "triangle",
+      "circle",
+      "triangle",
+      "circle"
+    ],
+    "options": [
+      "circle",
+      "triangle",
+      "oval",
+      "square"
+    ],
+    "correctAnswer": "triangle",
+    "hint1": "Look at how it repeats.",
+    "hint2": "It goes circle, triangle...",
+    "explanation": "The next shape is triangle!"
+  },
+  {
+    "id": "Q9_12",
+    "type": "pattern",
+    "world": 7,
+    "difficulty": 3,
+    "questionText": "Decode the alien's message! What shape comes next?",
+    "visual": "pattern_row",
+    "patternSequence": [
+      "circle",
+      "square",
+      "circle",
+      "square",
+      "circle"
+    ],
+    "options": [
+      "circle",
+      "square",
+      "triangle",
+      "oval"
+    ],
+    "correctAnswer": "square",
+    "hint1": "Look at how it repeats.",
+    "hint2": "It goes circle, square...",
+    "explanation": "The next shape is square!"
+  },
+  {
+    "id": "Q9_13",
+    "type": "pattern",
+    "world": 8,
+    "difficulty": 3,
+    "questionText": "Decode the alien's message! What shape comes next?",
+    "visual": "pattern_row",
+    "patternSequence": [
+      "circle",
+      "rectangle",
+      "circle",
+      "rectangle",
+      "circle"
+    ],
+    "options": [
+      "circle",
+      "rectangle",
+      "triangle",
+      "oval"
+    ],
+    "correctAnswer": "rectangle",
+    "hint1": "Look at how it repeats.",
+    "hint2": "It goes circle, rectangle...",
+    "explanation": "The next shape is rectangle!"
+  },
+  {
+    "id": "Q9_14",
+    "type": "pattern",
+    "world": 8,
+    "difficulty": 3,
+    "questionText": "Decode the alien's message! What shape comes next?",
+    "visual": "pattern_row",
+    "patternSequence": [
+      "circle",
+      "triangle",
+      "circle",
+      "triangle",
+      "circle"
+    ],
+    "options": [
+      "circle",
+      "triangle",
+      "oval",
+      "square"
+    ],
+    "correctAnswer": "triangle",
+    "hint1": "Look at how it repeats.",
+    "hint2": "It goes circle, triangle...",
+    "explanation": "The next shape is triangle!"
+  },
+  {
+    "id": "Q9_15",
+    "type": "pattern",
+    "world": 9,
+    "difficulty": 4,
+    "questionText": "Decode the alien's message! What shape comes next?",
+    "visual": "pattern_row",
+    "patternSequence": [
+      "circle",
+      "triangle",
+      "circle",
+      "triangle",
+      "circle"
+    ],
+    "options": [
+      "circle",
+      "triangle",
+      "oval",
+      "square"
+    ],
+    "correctAnswer": "triangle",
+    "hint1": "Look at how it repeats.",
+    "hint2": "It goes circle, triangle...",
+    "explanation": "The next shape is triangle!"
+  },
+  {
+    "id": "Q10_1",
+    "type": "word_problem",
+    "world": 0,
+    "difficulty": 1,
+    "questionText": "Astronaut Ryan sees a planet with 1 curved side. What shape is it?",
+    "visual": "text_mcq",
+    "options": [
+      "Triangle",
+      "Square",
+      "Rectangle",
+      "Circle"
+    ],
+    "correctAnswer": "Circle",
+    "hint1": "Think about the properties mentioned.",
+    "hint2": "Perfectly round means...",
+    "explanation": "It's a Circle!"
+  },
+  {
+    "id": "Q10_2",
+    "type": "word_problem",
+    "world": 0,
+    "difficulty": 1,
+    "questionText": "Superhero Mia has a shield that is perfectly round. What shape is her shield?",
+    "visual": "text_mcq",
+    "options": [
+      "Rectangle",
+      "Square",
+      "Circle",
+      "Triangle"
+    ],
+    "correctAnswer": "Circle",
+    "hint1": "Think about the properties mentioned.",
+    "hint2": "Perfectly round means...",
+    "explanation": "It's a Circle!"
+  },
+  {
+    "id": "Q10_3",
+    "type": "word_problem",
+    "world": 1,
+    "difficulty": 1,
+    "questionText": "Captain Alex found a treasure map. The mark is a shape with NO corners. What shape is it?",
+    "visual": "text_mcq",
+    "options": [
+      "Square",
+      "Rectangle",
+      "Triangle",
+      "Circle"
+    ],
+    "correctAnswer": "Circle",
+    "hint1": "Think about the properties mentioned.",
+    "hint2": "Perfectly round means...",
+    "explanation": "It's a Circle!"
+  },
+  {
+    "id": "Q10_4",
+    "type": "word_problem",
+    "world": 2,
+    "difficulty": 1,
+    "questionText": "Superhero Mia has a shield that is perfectly round. What shape is her shield?",
+    "visual": "text_mcq",
+    "options": [
+      "Circle",
+      "Square",
+      "Rectangle",
+      "Triangle"
+    ],
+    "correctAnswer": "Circle",
+    "hint1": "Think about the properties mentioned.",
+    "hint2": "Perfectly round means...",
+    "explanation": "It's a Circle!"
+  },
+  {
+    "id": "Q10_5",
+    "type": "word_problem",
+    "world": 2,
+    "difficulty": 2,
+    "questionText": "Superhero Mia has a shield that is perfectly round. What shape is her shield?",
+    "visual": "text_mcq",
+    "options": [
+      "Rectangle",
+      "Triangle",
+      "Square",
+      "Circle"
+    ],
+    "correctAnswer": "Circle",
+    "hint1": "Think about the properties mentioned.",
+    "hint2": "Perfectly round means...",
+    "explanation": "It's a Circle!"
+  },
+  {
+    "id": "Q10_6",
+    "type": "word_problem",
+    "world": 3,
+    "difficulty": 2,
+    "questionText": "Wizard Lily baked a magical cookie that is perfectly round. What shape is it?",
+    "visual": "text_mcq",
+    "options": [
+      "Circle",
+      "Square",
+      "Triangle",
+      "Rectangle"
+    ],
+    "correctAnswer": "Circle",
+    "hint1": "Think about the properties mentioned.",
+    "hint2": "Perfectly round means...",
+    "explanation": "It's a Circle!"
+  },
+  {
+    "id": "Q10_7",
+    "type": "word_problem",
+    "world": 4,
+    "difficulty": 2,
+    "questionText": "Wizard Lily baked a magical cookie that is perfectly round. What shape is it?",
+    "visual": "text_mcq",
+    "options": [
+      "Circle",
+      "Square",
+      "Triangle",
+      "Rectangle"
+    ],
+    "correctAnswer": "Circle",
+    "hint1": "Think about the properties mentioned.",
+    "hint2": "Perfectly round means...",
+    "explanation": "It's a Circle!"
+  },
+  {
+    "id": "Q10_8",
+    "type": "word_problem",
+    "world": 4,
+    "difficulty": 2,
+    "questionText": "Astronaut Ryan sees a planet with 1 curved side. What shape is it?",
+    "visual": "text_mcq",
+    "options": [
+      "Triangle",
+      "Square",
+      "Rectangle",
+      "Circle"
+    ],
+    "correctAnswer": "Circle",
+    "hint1": "Think about the properties mentioned.",
+    "hint2": "Perfectly round means...",
+    "explanation": "It's a Circle!"
+  },
+  {
+    "id": "Q10_9",
+    "type": "word_problem",
+    "world": 5,
+    "difficulty": 2,
+    "questionText": "Astronaut Ryan sees a planet with 1 curved side. What shape is it?",
+    "visual": "text_mcq",
+    "options": [
+      "Rectangle",
+      "Circle",
+      "Square",
+      "Triangle"
+    ],
+    "correctAnswer": "Circle",
+    "hint1": "Think about the properties mentioned.",
+    "hint2": "Perfectly round means...",
+    "explanation": "It's a Circle!"
+  },
+  {
+    "id": "Q10_10",
+    "type": "word_problem",
+    "world": 6,
+    "difficulty": 3,
+    "questionText": "Captain Alex found a treasure map. The mark is a shape with NO corners. What shape is it?",
+    "visual": "text_mcq",
+    "options": [
+      "Triangle",
+      "Square",
+      "Circle",
+      "Rectangle"
+    ],
+    "correctAnswer": "Circle",
+    "hint1": "Think about the properties mentioned.",
+    "hint2": "Perfectly round means...",
+    "explanation": "It's a Circle!"
+  },
+  {
+    "id": "Q10_11",
+    "type": "word_problem",
+    "world": 6,
+    "difficulty": 3,
+    "questionText": "Captain Alex found a treasure map. The mark is a shape with NO corners. What shape is it?",
+    "visual": "text_mcq",
+    "options": [
+      "Circle",
+      "Rectangle",
+      "Square",
+      "Triangle"
+    ],
+    "correctAnswer": "Circle",
+    "hint1": "Think about the properties mentioned.",
+    "hint2": "Perfectly round means...",
+    "explanation": "It's a Circle!"
+  },
+  {
+    "id": "Q10_12",
+    "type": "word_problem",
+    "world": 7,
+    "difficulty": 3,
+    "questionText": "Captain Alex found a treasure map. The mark is a shape with NO corners. What shape is it?",
+    "visual": "text_mcq",
+    "options": [
+      "Triangle",
+      "Circle",
+      "Rectangle",
+      "Square"
+    ],
+    "correctAnswer": "Circle",
+    "hint1": "Think about the properties mentioned.",
+    "hint2": "Perfectly round means...",
+    "explanation": "It's a Circle!"
+  },
+  {
+    "id": "Q10_13",
+    "type": "word_problem",
+    "world": 8,
+    "difficulty": 3,
+    "questionText": "Astronaut Ryan sees a planet with 1 curved side. What shape is it?",
+    "visual": "text_mcq",
+    "options": [
+      "Rectangle",
+      "Triangle",
+      "Square",
+      "Circle"
+    ],
+    "correctAnswer": "Circle",
+    "hint1": "Think about the properties mentioned.",
+    "hint2": "Perfectly round means...",
+    "explanation": "It's a Circle!"
+  },
+  {
+    "id": "Q10_14",
+    "type": "word_problem",
+    "world": 8,
+    "difficulty": 3,
+    "questionText": "Captain Alex found a treasure map. The mark is a shape with NO corners. What shape is it?",
+    "visual": "text_mcq",
+    "options": [
+      "Rectangle",
+      "Circle",
+      "Square",
+      "Triangle"
+    ],
+    "correctAnswer": "Circle",
+    "hint1": "Think about the properties mentioned.",
+    "hint2": "Perfectly round means...",
+    "explanation": "It's a Circle!"
+  },
+  {
+    "id": "Q10_15",
+    "type": "word_problem",
+    "world": 9,
+    "difficulty": 4,
+    "questionText": "Superhero Mia has a shield that is perfectly round. What shape is her shield?",
+    "visual": "text_mcq",
+    "options": [
+      "Circle",
+      "Square",
+      "Triangle",
+      "Rectangle"
+    ],
+    "correctAnswer": "Circle",
+    "hint1": "Think about the properties mentioned.",
+    "hint2": "Perfectly round means...",
+    "explanation": "It's a Circle!"
+  }
 ];
-
 export default questionBank;

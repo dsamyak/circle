@@ -4,22 +4,22 @@ import QuestionRenderer from '../quiz/QuestionRenderer';
 import Mascot from '../shared/Mascot';
 import { calcXP, calcStars, canUnlockNextWorld } from '../../utils/scoring';
 import { checkBadges } from '../../utils/badgeEngine';
-import { generateSessionQuestions, shuffleOptions } from '../../utils/shuffle';
+import { generateSessionQuestions } from '../../utils/shuffle';
 import { narrate, stopAudio } from '../../utils/audio';
 import { PRAISE_VARIANTS, WRONG_VARIANTS, HINT_VARIANTS } from '../../utils/narration';
 import questionBank from '../../data/questionBank';
 
 const WORLD_THEMES = [
-  { name: 'Circle Island', emoji: '🏝️', color: '#87CEEB' },
-  { name: 'Coin Kingdom', emoji: '👑', color: '#FFD700' },
-  { name: 'Shape Safari', emoji: '🌿', color: '#4CAF50' },
-  { name: 'Corner Check', emoji: '🔷', color: '#1565C0' },
-  { name: 'Pattern Path', emoji: '🧩', color: '#9575CD' },
-  { name: 'TF Tower', emoji: '🏰', color: '#FF7043' },
-  { name: 'Oddity Ocean', emoji: '🌊', color: '#00BCD4' },
-  { name: 'Scene Search', emoji: '🔎', color: '#795548' },
-  { name: 'Word World', emoji: '📝', color: '#E91E63' },
-  { name: 'Circle Palace', emoji: '🏛️', color: '#F9A825' },
+  { name: 'Circle Island', emoji: '🏝️', color: '#3f51b5' },
+  { name: 'Coin Kingdom', emoji: '👑', color: '#ffc107' },
+  { name: 'Shape Safari', emoji: '🌿', color: '#4caf50' },
+  { name: 'Corner Check', emoji: '🔷', color: '#1a237e' },
+  { name: 'Pattern Path', emoji: '🧩', color: '#7c5cbf' },
+  { name: 'TF Tower', emoji: '🏰', color: '#ff7043' },
+  { name: 'Oddity Ocean', emoji: '🌊', color: '#283593' },
+  { name: 'Scene Search', emoji: '🔎', color: '#8d6e63' },
+  { name: 'Word World', emoji: '📝', color: '#e91e63' },
+  { name: 'Circle Palace', emoji: '🏛️', color: '#f9a825' },
 ];
 
 const PlayPhase = ({ state, dispatch, onComplete, audioEnabled }) => {
@@ -28,10 +28,8 @@ const PlayPhase = ({ state, dispatch, onComplete, audioEnabled }) => {
   const [localHints, setLocalHints] = useState(0);
   const [localAttempts, setLocalAttempts] = useState(0);
   const [showWorldMap, setShowWorldMap] = useState(true);
-  const [worldCorrect, setWorldCorrect] = useState(0);
   const initialized = useRef(false);
 
-  // Initialize questions on first render
   useEffect(() => {
     if (!initialized.current && state.questionSet.length === 0) {
       initialized.current = true;
@@ -44,49 +42,37 @@ const PlayPhase = ({ state, dispatch, onComplete, audioEnabled }) => {
   const currentWorld = Math.floor(state.currentQuestion / 10);
   const questionInWorld = state.currentQuestion % 10;
 
-  // Check if all 100 questions done
   if (state.currentQuestion >= 100 || state.currentQuestion >= state.questionSet.length) {
     return (
-      <div style={{
-        flex: 1, display: 'flex', flexDirection: 'column',
-        alignItems: 'center', justifyContent: 'center', padding: 40, textAlign: 'center',
-      }}>
-        <Mascot mood="celebrating" size={140} />
-        <h2 style={{ fontFamily: "'Fredoka One', cursive", color: '#4A90D9', margin: '16px 0' }}>
-          All Worlds Complete! 🎉
-        </h2>
-        <p style={{ fontSize: 20, color: '#757575' }}>
-          Total XP: {state.xp} • Stars: {'⭐'.repeat(state.totalStars)}
-        </p>
-        <button className="btn-primary" onClick={onComplete} style={{ marginTop: 24 }}>
-          Continue to Reflect 📓
-        </button>
+      <div className="play-phase" style={{ justifyContent: 'center' }}>
+        <div className="world-complete-card">
+          <Mascot mood="celebrating" size={120} />
+          <h2 className="world-complete-title">All Worlds Complete! 🎉</h2>
+          <div className="world-complete-score">
+            Total XP: {state.xp}
+          </div>
+          <div className="world-complete-stars">
+            {'⭐'.repeat(Math.min(5, state.totalStars))}
+          </div>
+          <button className="btn btn-primary btn-lg" onClick={onComplete} style={{ marginTop: '24px' }}>
+            Continue to Reflect 📓
+          </button>
+        </div>
       </div>
     );
   }
 
-  // World Map view
   if (showWorldMap) {
     return (
-      <div style={{
-        flex: 1, display: 'flex', flexDirection: 'column',
-        alignItems: 'center', padding: 24, overflow: 'auto',
-        background: 'linear-gradient(180deg, #E8EAF6 0%, #F0F7FF 100%)',
-      }}>
-        <h2 style={{ fontFamily: "'Fredoka One', cursive", color: '#4A90D9', margin: '0 0 8px' }}>
-          🗺️ World Map
-        </h2>
-        <p style={{ fontSize: 16, color: '#757575', margin: '0 0 24px' }}>
-          XP: {state.xp} • Streak: 🔥 {state.streak}
-        </p>
+      <div className="play-phase">
+        <div className="play-header">
+          <h2 className="play-title">🗺️ World Map</h2>
+          <div className="play-subtitle">
+            <span className="play-xp-badge">XP: {state.xp} • 🔥 Streak: {state.streak}</span>
+          </div>
+        </div>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
-          gap: 16,
-          width: '100%',
-          maxWidth: 700,
-        }}>
+        <div className="world-map">
           {WORLD_THEMES.map((world, i) => {
             const isUnlocked = i === 0 || canUnlockNextWorld(state.worldScores[i - 1]);
             const score = state.worldScores[i];
@@ -94,59 +80,39 @@ const PlayPhase = ({ state, dispatch, onComplete, audioEnabled }) => {
             const isCurrent = i === currentWorld;
 
             return (
-              <button
+              <div
                 key={i}
+                className={`world-card ${isUnlocked ? 'unlocked' : 'locked'} ${score !== null ? 'completed' : ''}`}
+                style={{ '--world-color': world.color, borderColor: isCurrent ? world.color : '' }}
                 onClick={() => {
-                  if (isUnlocked && (isCurrent || score === null)) {
-                    setShowWorldMap(false);
-                  }
-                }}
-                disabled={!isUnlocked}
-                style={{
-                  padding: 16,
-                  borderRadius: 16,
-                  border: isCurrent ? `3px solid ${world.color}` : '3px solid transparent',
-                  backgroundColor: isUnlocked ? '#FFFFFF' : '#F5F5F5',
-                  opacity: isUnlocked ? 1 : 0.5,
-                  cursor: isUnlocked ? 'pointer' : 'default',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: 8,
-                  boxShadow: isCurrent ? `0 4px 16px ${world.color}40` : '0 2px 8px rgba(0,0,0,0.06)',
-                  transition: 'all 0.2s',
+                  if (isUnlocked && (isCurrent || score === null)) setShowWorldMap(false);
                 }}
               >
-                <span style={{ fontSize: 32 }}>{world.emoji}</span>
-                <span style={{ fontWeight: 700, fontSize: 14, color: world.color }}>
-                  {world.name}
-                </span>
+                {!isUnlocked && <div className="world-lock">🔒</div>}
+                <div className="world-icon">{world.emoji}</div>
+                <div className="world-name" style={{ color: isCurrent ? world.color : 'inherit' }}>{world.name}</div>
+                
                 {score !== null && (
-                  <span style={{ fontSize: 16 }}>
+                  <div className="world-stars">
                     {'⭐'.repeat(stars)}{'☆'.repeat(3 - stars)}
-                  </span>
+                    <span className="world-score">Score: {score}</span>
+                  </div>
                 )}
-                {!isUnlocked && <span style={{ fontSize: 20 }}>🔒</span>}
+                
                 {isCurrent && score === null && (
-                  <span style={{
-                    fontSize: 12, color: '#FFFFFF', backgroundColor: world.color,
-                    padding: '2px 8px', borderRadius: 8, fontWeight: 700,
-                  }}>
-                    PLAY
-                  </span>
+                  <div className="world-play-btn">PLAY</div>
                 )}
-              </button>
+              </div>
             );
           })}
         </div>
 
-        {/* Badges */}
         {state.badges.length > 0 && (
-          <div style={{ marginTop: 24, textAlign: 'center' }}>
-            <h4 style={{ color: '#757575' }}>Badges Earned</h4>
-            <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div style={{ marginTop: '32px', textAlign: 'center' }}>
+            <h4 style={{ color: 'var(--text-secondary)', marginBottom: '12px' }}>Badges Earned</h4>
+            <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', fontSize: '2rem' }}>
               {state.badges.map(b => (
-                <span key={b} style={{ fontSize: 24 }}>
+                <span key={b} title={b}>
                   {b === 'circle_spotter' ? '🔵' : b === 'shape_sorter' ? '🏅' : b === 'circle_champion' ? '🥈' :
                    b === 'shape_master' ? '🥇' : b === 'perfect_round' ? '💎' : b === 'streak_legend' ? '🔥' :
                    b === 'full_explorer' ? '🌟' : '⭐'}
@@ -159,7 +125,6 @@ const PlayPhase = ({ state, dispatch, onComplete, audioEnabled }) => {
     );
   }
 
-  // Question view
   if (!currentQ) return null;
 
   const handleAnswer = (answer) => {
@@ -172,7 +137,6 @@ const PlayPhase = ({ state, dispatch, onComplete, audioEnabled }) => {
       const xpEarned = calcXP(localAttempts + 1, localHints, state.streak);
       dispatch({ type: ACTIONS.ANSWER_CORRECT, payload: { xpEarned, starsEarned: 0 } });
 
-      // Check badges
       const newBadges = checkBadges({ ...state, streak: state.streak + 1, maxStreak: Math.max(state.maxStreak, state.streak + 1) });
       newBadges.forEach(b => dispatch({ type: ACTIONS.UNLOCK_BADGE, payload: b }));
 
@@ -188,9 +152,7 @@ const PlayPhase = ({ state, dispatch, onComplete, audioEnabled }) => {
         setLocalHints(0);
         setLocalAttempts(0);
 
-        // Check if world just finished (every 10 questions)
         if ((state.currentQuestion + 1) % 10 === 0) {
-          // Move to next question and show world map
           dispatch({ type: ACTIONS.NEXT_QUESTION });
           setShowWorldMap(true);
         } else {
@@ -206,7 +168,6 @@ const PlayPhase = ({ state, dispatch, onComplete, audioEnabled }) => {
       narrate([wrongVariant], audioEnabled);
 
       if (newAttempts >= 2) {
-        // Show explanation and auto-advance
         setFeedbackData({ isCorrect: false, message: currentQ.explanation });
         setShowFeedback(true);
 
@@ -224,7 +185,6 @@ const PlayPhase = ({ state, dispatch, onComplete, audioEnabled }) => {
           }
         }, 3000);
       } else {
-        // Show hint
         setLocalHints(prev => prev + 1);
         dispatch({ type: ACTIONS.USE_HINT });
       }
@@ -241,79 +201,40 @@ const PlayPhase = ({ state, dispatch, onComplete, audioEnabled }) => {
   };
 
   return (
-    <div style={{
-      flex: 1, display: 'flex', flexDirection: 'column',
-      alignItems: 'center', padding: 24, overflow: 'auto',
-      background: `linear-gradient(180deg, ${WORLD_THEMES[currentWorld]?.color}15 0%, #F0F7FF 100%)`,
-      position: 'relative',
-    }}>
-      {/* World + Question header */}
-      <div style={{
-        display: 'flex', alignItems: 'center', gap: 16, marginBottom: 16, flexWrap: 'wrap', justifyContent: 'center',
-      }}>
-        <span style={{
-          backgroundColor: WORLD_THEMES[currentWorld]?.color,
-          color: '#FFFFFF',
-          padding: '4px 12px',
-          borderRadius: 20,
-          fontWeight: 700,
-          fontSize: 14,
-        }}>
+    <div className="play-phase">
+      <div className="hud">
+        <div className="hud-item" style={{ color: WORLD_THEMES[currentWorld]?.color }}>
           {WORLD_THEMES[currentWorld]?.emoji} {WORLD_THEMES[currentWorld]?.name}
-        </span>
-        <span style={{ fontSize: 16, color: '#757575', fontWeight: 600 }}>
-          Q{questionInWorld + 1}/10
-        </span>
-        <span style={{ fontSize: 16, color: '#757575' }}>
-          XP: {state.xp} • 🔥{state.streak}
-        </span>
-        <button
-          onClick={() => setShowWorldMap(true)}
-          style={{
-            background: 'none', border: '2px solid #E0E0E0',
-            borderRadius: 8, padding: '4px 12px', cursor: 'pointer',
-            fontSize: 14, fontWeight: 600, color: '#757575',
-          }}
-        >
+        </div>
+        <div className="hud-item" style={{ color: 'var(--gold)' }}>
+          ⚡ {state.xp} | 🔥 {state.streak}
+        </div>
+        <button className="btn-outline btn-sm" onClick={() => setShowWorldMap(true)} style={{ borderRadius: 'var(--radius-full)' }}>
           🗺️ Map
         </button>
       </div>
 
-      {/* Question progress bar */}
-      <div style={{
-        width: '100%', maxWidth: 500, height: 8, backgroundColor: '#E0E0E0',
-        borderRadius: 4, marginBottom: 20, overflow: 'hidden',
-      }}>
-        <div style={{
-          width: `${((questionInWorld) / 10) * 100}%`,
-          height: '100%',
-          backgroundColor: WORLD_THEMES[currentWorld]?.color || '#4A90D9',
-          borderRadius: 4,
-          transition: 'width 0.5s ease',
-        }} />
+      <div className="progress-bar-container" style={{ maxWidth: '700px', marginBottom: '24px' }}>
+        <div className="progress-bar-label">
+          <span>Question {questionInWorld + 1} of 10</span>
+        </div>
+        <div className="progress-bar-track">
+          <div 
+            className="progress-bar-fill" 
+            style={{ 
+              width: `${((questionInWorld) / 10) * 100}%`,
+              background: WORLD_THEMES[currentWorld]?.color || 'var(--gold)'
+            }} 
+          />
+        </div>
       </div>
 
-      {/* Hint button */}
       {localHints < 2 && !showFeedback && (
-        <button
-          onClick={handleHint}
-          style={{
-            marginBottom: 16,
-            padding: '8px 20px',
-            borderRadius: 50,
-            border: '2px solid #FFB300',
-            backgroundColor: '#FFF8E1',
-            color: '#F57F17',
-            fontSize: 15,
-            fontWeight: 700,
-            cursor: 'pointer',
-          }}
-        >
+        <button className="btn-outline btn-sm" onClick={handleHint} style={{ marginBottom: '16px', color: 'var(--gold)', borderColor: 'var(--gold)' }}>
           💡 Hint ({2 - localHints} left)
         </button>
       )}
 
-      {/* Question card */}
       <QuestionRenderer
         question={currentQ}
         onAnswer={handleAnswer}
@@ -321,35 +242,12 @@ const PlayPhase = ({ state, dispatch, onComplete, audioEnabled }) => {
         attemptCount={localAttempts}
       />
 
-      {/* Feedback overlay */}
       {showFeedback && feedbackData && (
-        <div style={{
-          position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-          backgroundColor: feedbackData.isCorrect ? 'rgba(76,175,80,0.12)' : 'rgba(255,107,107,0.12)',
-          backdropFilter: 'blur(2px)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          zIndex: 50,
-        }}>
-          <div className={feedbackData.isCorrect ? 'animate-bounce-in' : 'animate-shake'} style={{
-            backgroundColor: '#FFFFFF',
-            borderRadius: 24,
-            padding: '24px 32px',
-            maxWidth: 400,
-            textAlign: 'center',
-            boxShadow: '0 12px 40px rgba(0,0,0,0.15)',
-            border: `4px solid ${feedbackData.isCorrect ? '#4CAF50' : '#FF6B6B'}`,
-          }}>
-            <Mascot mood={feedbackData.isCorrect ? 'celebrating' : 'thinking'} size={80} />
-            <h3 style={{
-              fontFamily: "'Fredoka One', cursive",
-              color: feedbackData.isCorrect ? '#4CAF50' : '#FF6B6B',
-              margin: '8px 0',
-            }}>
-              {feedbackData.isCorrect ? 'Correct! ✅' : 'Not quite 🤔'}
-            </h3>
-            <p style={{ fontSize: 16, color: '#4A4A4A', lineHeight: 1.4 }}>
-              {feedbackData.message}
-            </p>
+        <div className="feedback-overlay">
+          <div className={`feedback-content ${feedbackData.isCorrect ? 'correct' : 'wrong'}`}>
+            <div className="feedback-emoji">{feedbackData.isCorrect ? '✨' : '🤔'}</div>
+            <div className="feedback-message">{feedbackData.isCorrect ? 'Excellent!' : 'Not Quite!'}</div>
+            <div className="feedback-sub">{feedbackData.message}</div>
           </div>
         </div>
       )}

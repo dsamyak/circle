@@ -1,195 +1,175 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { ACTIONS } from '../../hooks/useGameState';
+import React, { useState, useEffect } from 'react';
 import Mascot from '../shared/Mascot';
-import CircleSVG from '../shared/CircleSVG';
-import { checkBadges } from '../../utils/badgeEngine';
 import { narrate, stopAudio } from '../../utils/audio';
-import { reflectNarration, lessonCompleteNarration } from '../../utils/narration';
+import { reflectNarration } from '../../utils/narration';
+import CircleSVG from '../shared/CircleSVG';
+
+const REFLECT_QUESTIONS = [
+  {
+    question: "What makes a circle special?",
+    options: [
+      { text: "It has 4 straight sides", correct: false, emoji: "🟦" },
+      { text: "It is perfectly round with no corners", correct: true, emoji: "🔵" },
+      { text: "It has 3 pointy corners", correct: false, emoji: "🔺" }
+    ]
+  },
+  {
+    question: "Which of these is a circle?",
+    options: [
+      { text: "A computer screen", correct: false, emoji: "💻" },
+      { text: "A pizza", correct: true, emoji: "🍕" },
+      { text: "A book", correct: false, emoji: "📖" }
+    ]
+  },
+  {
+    question: "How do you draw a circle?",
+    options: [
+      { text: "Draw one continuous curve", correct: true, emoji: "✍️" },
+      { text: "Draw straight lines", correct: false, emoji: "📏" },
+      { text: "Draw zig-zags", correct: false, emoji: "⚡" }
+    ]
+  }
+];
 
 const ReflectPhase = ({ state, dispatch, onComplete, audioEnabled }) => {
-  const [journalText, setJournalText] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-  const narrated = useRef(false);
+  const [currentQIndex, setCurrentQIndex] = useState(0);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [showExplanation, setShowExplanation] = useState(false);
+  const [completed, setCompleted] = useState(false);
+  const [confidence, setConfidence] = useState(null);
 
   useEffect(() => {
-    if (!narrated.current) {
-      narrated.current = true;
-      narrate(reflectNarration(), audioEnabled);
-    }
-    // Check for final badges
-    const newBadges = checkBadges(state);
-    newBadges.forEach(b => dispatch({ type: ACTIONS.UNLOCK_BADGE, payload: b }));
-  }, [audioEnabled, state, dispatch]);
+    stopAudio();
+    narrate(reflectNarration(currentQIndex, completed), audioEnabled);
+  }, [currentQIndex, completed, audioEnabled]);
 
-  const handleSubmit = () => {
-    setSubmitted(true);
-    narrate(lessonCompleteNarration(), audioEnabled);
-
-    // Unlock full explorer badge
-    dispatch({ type: ACTIONS.COMPLETE_PHASE, payload: 'reflect' });
-    const newBadges = checkBadges({
-      ...state,
-      phaseComplete: { ...state.phaseComplete, reflect: true }
-    });
-    newBadges.forEach(b => dispatch({ type: ACTIONS.UNLOCK_BADGE, payload: b }));
+  const handleOptionSelect = (index) => {
+    if (selectedOption !== null) return;
+    setSelectedOption(index);
+    setShowExplanation(true);
   };
 
-  if (submitted) {
+  const handleNext = () => {
+    setSelectedOption(null);
+    setShowExplanation(false);
+    if (currentQIndex < REFLECT_QUESTIONS.length - 1) {
+      setCurrentQIndex(prev => prev + 1);
+    } else {
+      setCompleted(true);
+    }
+  };
+
+  const handleConfidenceSelect = (level) => {
+    setConfidence(level);
+    setTimeout(() => {
+      onComplete();
+    }, 1500);
+  };
+
+  if (completed) {
     return (
-      <div style={{
-        flex: 1, display: 'flex', flexDirection: 'column',
-        alignItems: 'center', justifyContent: 'center', padding: 40,
-        background: 'linear-gradient(180deg, #E8F5E9 0%, #F0F7FF 100%)',
-        textAlign: 'center',
-      }}>
-        <div className="animate-bounce-in">
-          <Mascot mood="celebrating" size={140} />
+      <div className="reflect-phase">
+        <div className="reflect-header">
+          <div className="reflect-label">Self Reflection</div>
+          <h2>How do you feel about circles?</h2>
         </div>
         
-        <h2 style={{
-          fontFamily: "'Fredoka One', cursive",
-          fontSize: 32,
-          color: '#4CAF50',
-          margin: '16px 0',
-        }}>
-          🌟 Lesson Complete! 🌟
-        </h2>
-        
-        <p style={{ fontSize: 20, color: '#4A4A4A', maxWidth: 500, lineHeight: 1.5 }}>
-          You are a true Circle Explorer! Well done!
-        </p>
-
-        {/* Stats summary */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr 1fr',
-          gap: 16,
-          marginTop: 24,
-          marginBottom: 32,
-        }}>
-          {[
-            { label: 'XP Earned', value: state.xp, emoji: '⚡' },
-            { label: 'Stars', value: state.totalStars, emoji: '⭐' },
-            { label: 'Best Streak', value: state.maxStreak, emoji: '🔥' },
-          ].map((stat, i) => (
-            <div key={i} style={{
-              backgroundColor: '#FFFFFF',
-              borderRadius: 16,
-              padding: '16px 12px',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.06)',
-              textAlign: 'center',
-            }}>
-              <div style={{ fontSize: 28 }}>{stat.emoji}</div>
-              <div style={{ fontWeight: 800, fontSize: 24, color: '#4A90D9' }}>{stat.value}</div>
-              <div style={{ fontSize: 14, color: '#757575', fontWeight: 600 }}>{stat.label}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Badges */}
-        {state.badges.length > 0 && (
-          <div style={{ marginBottom: 24 }}>
-            <h4 style={{ color: '#757575', marginBottom: 8 }}>Badges Earned</h4>
-            <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-              {state.badges.map(b => (
-                <span key={b} style={{
-                  fontSize: 32,
-                  filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))',
-                }}>
-                  {b === 'circle_spotter' ? '🔵' : b === 'shape_sorter' ? '🏅' : b === 'circle_champion' ? '🥈' :
-                   b === 'shape_master' ? '🥇' : b === 'perfect_round' ? '💎' : b === 'streak_legend' ? '🔥' :
-                   b === 'full_explorer' ? '🌟' : '⭐'}
-                </span>
-              ))}
-            </div>
+        <div className="reflect-card">
+          <Mascot mood="happy" size={100} style={{ margin: '0 auto 24px' }} />
+          
+          <div className="confidence-grid">
+            <button 
+              className={`confidence-btn ${confidence === 'great' ? 'selected' : ''}`}
+              style={{ '--conf-color': 'var(--green)' }}
+              onClick={() => handleConfidenceSelect('great')}
+            >
+              <span className="confidence-emoji">🤩</span>
+              <span className="confidence-label">I'm a Circle Master!</span>
+            </button>
+            <button 
+              className={`confidence-btn ${confidence === 'good' ? 'selected' : ''}`}
+              style={{ '--conf-color': 'var(--gold)' }}
+              onClick={() => handleConfidenceSelect('good')}
+            >
+              <span className="confidence-emoji">🙂</span>
+              <span className="confidence-label">I feel good about them.</span>
+            </button>
+            <button 
+              className={`confidence-btn ${confidence === 'need_practice' ? 'selected' : ''}`}
+              style={{ '--conf-color': 'var(--blue-bright)' }}
+              onClick={() => handleConfidenceSelect('need_practice')}
+            >
+              <span className="confidence-emoji">🤔</span>
+              <span className="confidence-label">I need a little more practice.</span>
+            </button>
           </div>
-        )}
-
-        <button
-          className="btn-primary"
-          onClick={onComplete}
-          style={{ fontSize: 20, padding: '14px 40px' }}
-        >
-          Finish 🎉
-        </button>
+        </div>
       </div>
     );
   }
 
-  return (
-    <div style={{
-      flex: 1, display: 'flex', flexDirection: 'column',
-      alignItems: 'center', justifyContent: 'center', padding: 32,
-      background: 'linear-gradient(180deg, #E3F2FD 0%, #F0F7FF 100%)',
-    }}>
-      <Mascot mood="happy" size={100} />
-      
-      <h2 style={{
-        fontFamily: "'Fredoka One', cursive",
-        fontSize: 28,
-        color: '#4A90D9',
-        margin: '16px 0',
-        textAlign: 'center',
-      }}>
-        📓 Time to Reflect!
-      </h2>
+  const currentQ = REFLECT_QUESTIONS[currentQIndex];
 
-      <div style={{
-        backgroundColor: '#FFFFFF',
-        borderRadius: 24,
-        padding: '24px 32px',
-        maxWidth: 500,
-        width: '100%',
-        boxShadow: '0 8px 32px rgba(0,0,0,0.08)',
-      }}>
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
-          <CircleSVG size={80} glow />
+  return (
+    <div className="reflect-phase">
+      <div className="reflect-header">
+        <div className="reflect-label">Reflection Time</div>
+        <div className="reflect-sublabel">Let's see what you remember!</div>
+      </div>
+
+      <div className="reflect-card">
+        <div className="reflect-mascot-row">
+          <Mascot mood={selectedOption !== null ? (currentQ.options[selectedOption].correct ? 'celebrating' : 'thinking') : 'idle'} size={70} />
+          <h3 className="reflect-card-title" style={{ margin: 0, textAlign: 'left', flex: 1 }}>{currentQ.question}</h3>
         </div>
 
-        <p style={{
-          fontSize: 20,
-          fontWeight: 700,
-          color: '#4A4A4A',
-          textAlign: 'center',
-          lineHeight: 1.5,
-          marginBottom: 20,
-        }}>
-          Wow — you explored circles today! Can you name three circles you see at home?
-        </p>
+        <div className="reflect-options">
+          {currentQ.options.map((opt, i) => {
+            let btnClass = "reflect-option";
+            if (selectedOption !== null) {
+              if (i === selectedOption) {
+                btnClass += opt.correct ? " correct" : " wrong";
+              } else if (opt.correct) {
+                btnClass += " correct"; // highlight the correct one anyway
+              }
+            }
+            
+            return (
+              <button
+                key={i}
+                disabled={selectedOption !== null}
+                className={btnClass}
+                onClick={() => handleOptionSelect(i)}
+              >
+                <span className="reflect-option-emoji">{opt.emoji}</span>
+                <span>{opt.text}</span>
+              </button>
+            );
+          })}
+        </div>
 
-        <textarea
-          value={journalText}
-          onChange={(e) => setJournalText(e.target.value)}
-          placeholder="I see circles on... a plate, a clock, and..."
-          style={{
-            width: '100%',
-            minHeight: 120,
-            borderRadius: 16,
-            border: '3px solid #E0E0E0',
-            padding: 16,
-            fontSize: 18,
-            fontFamily: "'Nunito', sans-serif",
-            resize: 'vertical',
-            outline: 'none',
-            transition: 'border-color 0.2s',
-          }}
-          onFocus={(e) => e.target.style.borderColor = '#4A90D9'}
-          onBlur={(e) => e.target.style.borderColor = '#E0E0E0'}
-        />
+        {showExplanation && (
+          <div style={{ marginTop: '24px', animation: 'bounceIn 0.5s' }}>
+            {currentQ.options[selectedOption].correct ? (
+              <p style={{ color: 'var(--green-light)', fontWeight: 600, fontSize: '1.1rem', marginBottom: '16px' }}>
+                Spot on! ✅
+              </p>
+            ) : (
+              <p style={{ color: 'var(--gold)', fontWeight: 600, fontSize: '1.1rem', marginBottom: '16px' }}>
+                Not quite! The correct answer is highlighted above.
+              </p>
+            )}
+            <button className="btn btn-primary" onClick={handleNext}>
+              {currentQIndex < REFLECT_QUESTIONS.length - 1 ? 'Next Question ➡️' : 'Finish Reflection 🌟'}
+            </button>
+          </div>
+        )}
+      </div>
 
-        <button
-          className="btn-primary"
-          onClick={handleSubmit}
-          disabled={journalText.trim().length < 3}
-          style={{
-            width: '100%',
-            marginTop: 16,
-            fontSize: 20,
-            opacity: journalText.trim().length < 3 ? 0.5 : 1,
-          }}
-        >
-          Submit & Complete! ✅
-        </button>
+      <div className="reflect-progress">
+        {REFLECT_QUESTIONS.map((_, i) => (
+          <div key={i} className={`reflect-dot ${i === currentQIndex ? 'active' : i < currentQIndex ? 'done' : ''}`} />
+        ))}
       </div>
     </div>
   );

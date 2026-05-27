@@ -1,15 +1,22 @@
 import React from 'react';
 import { useGameState, ACTIONS } from './hooks/useGameState';
 import { useLocalStorage } from './hooks/useLocalStorage';
-import AudioButton from './components/shared/AudioButton';
+import FloatingNumbers from './components/FloatingNumbers';
 import IntroScreen from './components/IntroScreen';
-import ProgressMap from './components/ProgressMap';
 
 import WonderPhase from './components/phases/WonderPhase';
 import StoryPhase from './components/phases/StoryPhase';
 import SimulatePhase from './components/phases/SimulatePhase';
 import PlayPhase from './components/phases/PlayPhase';
 import ReflectPhase from './components/phases/ReflectPhase';
+
+const PHASES = [
+  { id: 'wonder', label: 'Wonder', icon: '🔍', num: '01' },
+  { id: 'story', label: 'Story', icon: '📖', num: '02' },
+  { id: 'simulate', label: 'Simulate', icon: '🧪', num: '03' },
+  { id: 'play', label: 'Play', icon: '🎮', num: '04' },
+  { id: 'reflect', label: 'Reflect', icon: '📓', num: '05' },
+];
 
 function App() {
   const [state, dispatch] = useGameState();
@@ -23,10 +30,14 @@ function App() {
     dispatch({ type: ACTIONS.SET_PHASE, payload: phaseId });
   };
 
+  const goHome = () => navigateTo('intro');
+
+  const showNav = state.phase !== 'intro' && state.phase !== 'results';
+
   const renderPhase = () => {
     switch (state.phase) {
       case 'intro':
-        return <IntroScreen onStart={() => navigateTo('wonder')} />;
+        return <IntroScreen onStart={() => navigateTo('wonder')} audioEnabled={state.audioEnabled} />;
       case 'wonder':
         return <WonderPhase 
                  onComplete={() => {
@@ -75,49 +86,83 @@ function App() {
                />;
       case 'results':
         return (
-          <div style={{ padding: 40, textAlign: 'center' }}>
-            <h2>Lesson Complete!</h2>
-            <button className="btn-primary" onClick={() => dispatch({ type: ACTIONS.RESET_SESSION })}>
-              Play Again
-            </button>
+          <div className="reflect-phase" style={{ justifyContent: 'center' }}>
+            <div className="certificate-card">
+              <div className="cert-badge">🏆</div>
+              <h2 className="cert-title">Lesson Complete!</h2>
+              <p className="cert-subtitle">You are a true Circle Explorer!</p>
+              <div className="cert-stats">
+                <div className="cert-stat">
+                  <div className="cert-stat-value">⚡ {state.xp}</div>
+                  <div className="cert-stat-label">XP Earned</div>
+                </div>
+                <div className="cert-stat">
+                  <div className="cert-stat-value">⭐ {state.totalStars}</div>
+                  <div className="cert-stat-label">Stars</div>
+                </div>
+                <div className="cert-stat">
+                  <div className="cert-stat-value">🔥 {state.maxStreak}</div>
+                  <div className="cert-stat-label">Best Streak</div>
+                </div>
+              </div>
+              <button className="btn btn-primary btn-lg" onClick={() => dispatch({ type: ACTIONS.RESET_SESSION })}>
+                Play Again 🎉
+              </button>
+            </div>
           </div>
         );
       default:
-        return <IntroScreen onStart={() => navigateTo('wonder')} />;
+        return <IntroScreen onStart={() => navigateTo('wonder')} audioEnabled={state.audioEnabled} />;
     }
   };
 
   return (
-    <div className="app-container" style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      
-      {/* Header */}
-      <header className="app-header">
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <div style={{ 
-            background: '#4A90D9', color: 'white', fontWeight: 'bold', 
-            width: 32, height: 32, borderRadius: 8, display: 'flex', 
-            alignItems: 'center', justifyContent: 'center' 
-          }}>
-            I
-          </div>
-          <h1 style={{ fontSize: 20, color: '#4A4A4A', margin: 0, fontFamily: "'Fredoka One', cursive" }}>
-            Circle
-          </h1>
-        </div>
+    <>
+      <FloatingNumbers />
+      <div className="app-container">
         
-        {state.phase !== 'intro' && state.phase !== 'results' && (
-          <ProgressMap currentPhase={state.phase} phaseComplete={state.phaseComplete} />
+        {/* Home Button */}
+        {showNav && (
+          <button className="home-btn" onClick={goHome}>
+            ⬤ Circle
+          </button>
         )}
-        
-        <AudioButton audioEnabled={state.audioEnabled} onToggle={handleAudioToggle} />
-      </header>
 
-      {/* Main Content Area */}
-      <main className="main-content">
+        {/* Journey Bar */}
+        {showNav && (
+          <div className="journey-bar">
+            {PHASES.map((p, i) => {
+              const isActive = state.phase === p.id;
+              const isCompleted = state.phaseComplete[p.id];
+              const phaseIndex = PHASES.findIndex(ph => ph.id === state.phase);
+              const isFilled = i < phaseIndex;
+
+              return (
+                <React.Fragment key={p.id}>
+                  <div className={`journey-step ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}`}>
+                    <div className="journey-step-dot">
+                      {isCompleted ? '✓' : p.num}
+                    </div>
+                    <span className="journey-step-label">{p.label}</span>
+                  </div>
+                  {i < PHASES.length - 1 && (
+                    <div className={`journey-connector ${isFilled || isCompleted ? 'filled' : ''}`} />
+                  )}
+                </React.Fragment>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Audio Toggle */}
+        <button className="audio-toggle-btn" onClick={handleAudioToggle}>
+          {state.audioEnabled ? '🔊' : '🔇'}
+        </button>
+
+        {/* Main Content */}
         {renderPhase()}
-      </main>
-
-    </div>
+      </div>
+    </>
   );
 }
 

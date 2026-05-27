@@ -52,12 +52,12 @@ const phrases = [
   { text: "Let's find out together!", style: "encouragement" },
 
   // STORY
-  { text: "One sunny day, John and Mike went to the food court for lunch!", style: "statement" },
-  { text: "The lady gave them noodles on a big round plate. Look! The plate is a circle!", style: "statement" },
-  { text: "This coin is a circle too! said Mike, showing John his coin.", style: "statement" },
-  { text: "Above them, a round fan spun slowly. Circle again! they both said.", style: "statement" },
-  { text: "A circle has one curved side and zero corners. It is perfectly round!", style: "emphasis" },
-  { text: "Can you name it? C. I. R. C. L. E. Circle!", style: "statement" },
+  { text: "One bright morning, John and Sarah set off on a secret mission to the bustling food court! Their target? The most perfect shape in the universe!", style: "statement" },
+  { text: "The friendly cook handed them a mountain of noodles on a giant, gleaming plate. Look! gasped John. The plate has no corners... it's a circle!", style: "statement" },
+  { text: "Wait, look at my lucky gold coin! Sarah cheered, holding it up to the light. It's perfectly round, just like your plate. Another circle!", style: "statement" },
+  { text: "Suddenly, a cool breeze blew over them. They looked up to see a giant ceiling fan spinning super fast. Woosh! The spinning blades make a giant circle! they shouted together.", style: "statement" },
+  { text: "They discovered the secret: A circle is a continuous, curved line with ZERO sharp corners! It is perfectly smooth and round.", style: "emphasis" },
+  { text: "Can you spell the magical shape they found? C. I. R. C. L. E. Circle!", style: "statement" },
   { text: "Great job! Now let's explore circles ourselves!", style: "encouragement" },
 
   // SIMULATE — Station A

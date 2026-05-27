@@ -3,154 +3,109 @@ import Mascot from '../shared/Mascot';
 import { narrate, stopAudio } from '../../utils/audio';
 import { wonderNarration } from '../../utils/narration';
 
-const OBJECTS = [
-  { emoji: '🪙', label: 'Coin', delay: 300 },
-  { emoji: '⏰', label: 'Clock', delay: 900 },
-  { emoji: '⚽', label: 'Ball', delay: 1500 },
-  { emoji: '☀️', label: 'Sun', delay: 2100 },
+const WONDER_ITEMS = [
+  { emoji: '🪙', label: 'Coin' },
+  { emoji: '⏰', label: 'Clock' },
+  { emoji: '⚽', label: 'Ball' },
+  { emoji: '☀️', label: 'Sun' },
 ];
 
+const PARTICLES = Array.from({ length: 8 }, (_, i) => ({
+  id: i,
+  emoji: ['✨', '⭐', '💫', '🌟', '⬤', '◯', '●', '○'][i],
+  left: `${10 + Math.random() * 80}%`,
+  top: `${10 + Math.random() * 80}%`,
+  delay: `${i * 0.8}s`,
+}));
+
 const WonderPhase = ({ onComplete, audioEnabled }) => {
-  const [visibleObjects, setVisibleObjects] = useState([]);
-  const [showMascot, setShowMascot] = useState(false);
-  const [showQuestion, setShowQuestion] = useState(false);
-  const [showButton, setShowButton] = useState(false);
-  const [bgOpacity, setBgOpacity] = useState(0);
+  const [step, setStep] = useState(0); // 0=qmark, 1=mascot, 2=question, 3=button
+  const [qmarkRevealed, setQmarkRevealed] = useState(false);
   const narrated = useRef(false);
 
   useEffect(() => {
-    // Fade in background
-    const bgTimer = setTimeout(() => setBgOpacity(1), 100);
-
-    // Animate objects in one by one
-    const timers = OBJECTS.map((obj, i) =>
-      setTimeout(() => {
-        setVisibleObjects(prev => [...prev, i]);
-      }, obj.delay)
-    );
-
-    // Mascot appears
-    const mascotTimer = setTimeout(() => setShowMascot(true), 2700);
-
-    // Show question text
-    const questionTimer = setTimeout(() => {
-      setShowQuestion(true);
-      // Play narration
+    const t1 = setTimeout(() => setQmarkRevealed(true), 300);
+    const t2 = setTimeout(() => setStep(1), 1200);
+    const t3 = setTimeout(() => {
+      setStep(2);
       if (!narrated.current) {
         narrated.current = true;
-        narrate(wonderNarration(), audioEnabled).then(() => {
-          setShowButton(true);
-        });
+        narrate(wonderNarration(), audioEnabled).then(() => setStep(3));
       }
-    }, 3400);
-
-    // Fallback: show button after 8s even if audio fails
-    const fallbackTimer = setTimeout(() => setShowButton(true), 8000);
+    }, 2000);
+    const fallback = setTimeout(() => setStep(3), 8000);
 
     return () => {
-      clearTimeout(bgTimer);
-      timers.forEach(clearTimeout);
-      clearTimeout(mascotTimer);
-      clearTimeout(questionTimer);
-      clearTimeout(fallbackTimer);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      clearTimeout(fallback);
       stopAudio();
     };
   }, [audioEnabled]);
 
   return (
-    <div style={{
-      flex: 1,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      background: 'linear-gradient(180deg, #E3F2FD 0%, #BBDEFB 50%, #F0F7FF 100%)',
-      opacity: bgOpacity,
-      transition: 'opacity 0.8s ease',
-      padding: 24,
-      position: 'relative',
-      overflow: 'hidden',
-    }}>
-      {/* Floating circular objects */}
-      <div style={{
-        display: 'flex',
-        gap: 32,
-        marginBottom: 40,
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-      }}>
-        {OBJECTS.map((obj, i) => (
-          <div
-            key={i}
-            className={visibleObjects.includes(i) ? 'animate-bounce-in' : ''}
-            style={{
-              width: 100,
-              height: 100,
-              borderRadius: '50%',
-              background: 'linear-gradient(135deg, #FFFFFF 0%, #E3F2FD 100%)',
-              boxShadow: '0 8px 24px rgba(74,144,217,0.15)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: 48,
-              opacity: visibleObjects.includes(i) ? 1 : 0,
-              transition: 'opacity 0.3s',
-            }}
+    <div className="wonder-phase">
+      {/* Particles */}
+      <div className="wonder-particles">
+        {PARTICLES.map(p => (
+          <span
+            key={p.id}
+            className="wonder-particle"
+            style={{ left: p.left, top: p.top, animationDelay: p.delay, fontSize: '2rem' }}
           >
-            <span className={visibleObjects.includes(i) ? 'animate-spin' : ''} style={{ animationDuration: '8s' }}>
-              {obj.emoji}
-            </span>
-          </div>
+            {p.emoji}
+          </span>
         ))}
       </div>
 
-      {/* Mascot */}
-      {showMascot && (
-        <div className="animate-slide-up" style={{ marginBottom: 24 }}>
-          <Mascot mood="thinking" size={120} />
+      <div className="wonder-content">
+        {/* Question Mark Orb */}
+        <div className={`wonder-qmark ${qmarkRevealed ? 'revealed' : ''}`}>
+          <span className="wonder-qmark-icon">?</span>
+          <div className="wonder-qmark-glow" />
         </div>
-      )}
 
-      {/* Question Text */}
-      {showQuestion && (
-        <div className="animate-fade-in" style={{
-          backgroundColor: 'rgba(255,255,255,0.9)',
-          backdropFilter: 'blur(8px)',
-          borderRadius: 20,
-          padding: '24px 32px',
-          maxWidth: 550,
-          textAlign: 'center',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.08)',
-          marginBottom: 32,
-        }}>
-          <p style={{
-            fontFamily: "'Nunito', sans-serif",
-            fontSize: 22,
-            fontWeight: 700,
-            color: '#4A4A4A',
-            lineHeight: 1.5,
-            margin: 0,
-          }}>
-            Have you ever noticed? A coin is round. A clock is round. The sun is round! 
-            <span style={{ color: '#4A90D9', fontWeight: 800 }}> What shape do they all share?</span>
+        {/* Mascot */}
+        <div className={`wonder-mascot ${step >= 1 ? 'visible' : ''}`}>
+          <div className="mascot-container">
+            <Mascot mood="thinking" size={80} />
+            <div className="speech-bubble wonder-bubble">
+              What shape do they all share?
+            </div>
+          </div>
+        </div>
+
+        {/* Question Card */}
+        <div className={`wonder-question-card ${step >= 2 ? 'visible' : ''}`}>
+          <div className="wonder-emoji">🔵</div>
+          <div className="wonder-question-text">
+            A coin is round. A clock is round. The sun is round!<br />
+            What shape do they all share?
+          </div>
+          <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap', marginTop: 16 }}>
+            {WONDER_ITEMS.map((item, i) => (
+              <div key={i} className="feature-card">
+                <div className="feature-card-icon">{item.emoji}</div>
+                <div className="feature-card-label">{item.label}</div>
+              </div>
+            ))}
+          </div>
+          <p className="wonder-subtext" style={{ marginTop: 16 }}>
+            They're all circles — the most perfect shape! ⬤
           </p>
         </div>
-      )}
 
-      {/* CTA Button */}
-      {showButton && (
+        {/* CTA Button */}
         <button
-          className="btn-primary animate-bounce-in"
+          className={`btn btn-wonder ${step >= 3 ? 'visible' : ''}`}
           onClick={onComplete}
-          style={{
-            fontSize: 24,
-            padding: '18px 48px',
-            minHeight: 56,
-          }}
         >
-          Let's Explore! 🔍
+          <span className="wonder-btn-sparkle">✨</span>
+          Let's Explore!
+          <span className="wonder-btn-sparkle">✨</span>
         </button>
-      )}
+      </div>
     </div>
   );
 };

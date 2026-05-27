@@ -26,12 +26,12 @@ export function wonderNarration() {
 // ── STORY PHASE (per panel index) ──
 export function storyNarration(panelIndex) {
   const panels = [
-    [say("One sunny day, John and Mike went to the food court for lunch!")],
-    [say("The lady gave them noodles on a big round plate. Look! The plate is a circle!")],
-    [say("This coin is a circle too! said Mike, showing John his coin.")],
-    [say("Above them, a round fan spun slowly. Circle again! they both said.")],
-    [emphasize("A circle has one curved side and zero corners. It is perfectly round!")],
-    [say("Can you name it? C. I. R. C. L. E. Circle!"), encourage("Great job! Now let's explore circles ourselves!")],
+    [say("One bright morning, John and Sarah set off on a secret mission to the bustling food court! Their target? The most perfect shape in the universe!")],
+    [say("The friendly cook handed them a mountain of noodles on a giant, gleaming plate. Look! gasped John. The plate has no corners... it's a circle!")],
+    [say("Wait, look at my lucky gold coin! Sarah cheered, holding it up to the light. It's perfectly round, just like your plate. Another circle!")],
+    [say("Suddenly, a cool breeze blew over them. They looked up to see a giant ceiling fan spinning super fast. Woosh! The spinning blades make a giant circle! they shouted together.")],
+    [emphasize("They discovered the secret: A circle is a continuous, curved line with ZERO sharp corners! It is perfectly smooth and round.")],
+    [say("Can you spell the magical shape they found? C. I. R. C. L. E. Circle!"), encourage("Great job! Now let's explore circles ourselves!")],
   ];
   return panels[panelIndex] || [];
 }
@@ -59,6 +59,14 @@ export function sorterWrongNarration() {
 }
 export function ovalNotCircleNarration() {
   return [emphasize("Is an oval a circle? No! An oval is stretched out. A circle is perfectly round.")];
+}
+
+// ── SIMULATE PHASE — Wrapper ──
+export function simulateNarration(index) {
+  if (index === 0) return simulateNarrationA();
+  if (index === 1) return simulateNarrationB();
+  if (index === 2) return simulateNarrationC();
+  return [];
 }
 
 // ── SIMULATE PHASE — Station C (Spot Circle) ──

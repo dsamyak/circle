@@ -1,73 +1,56 @@
 import React from 'react';
 import CircleSVG from './shared/CircleSVG';
 
-const IntroScreen = ({ onStart }) => {
-  return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: '100%',
-      padding: 24,
-      textAlign: 'center',
-      backgroundColor: '#FFFFFF',
-    }}>
-      <div className="animate-bounce-in" style={{ marginBottom: 32 }}>
-        <CircleSVG size={180} animated={true} glow={true} />
-      </div>
-      
-      <h1 style={{ 
-        fontFamily: "'Fredoka One', cursive", 
-        fontSize: '3rem', 
-        color: '#4A90D9',
-        margin: '0 0 16px 0'
-      }}>
-        Welcome to Circles!
-      </h1>
-      
-      <p style={{ 
-        fontFamily: "'Nunito', sans-serif", 
-        fontSize: '1.25rem', 
-        color: '#757575',
-        maxWidth: 500,
-        margin: '0 0 40px 0',
-        lineHeight: 1.5
-      }}>
-        Today we're going to learn all about the shape called a circle. Are you ready to explore?
-      </p>
-      
-      <button 
-        className="btn-primary animate-slide-up"
-        onClick={onStart}
-        style={{ fontSize: 24, padding: '16px 48px' }}
-      >
-        Let's Start! 🔵
-      </button>
+const JOURNEY_PHASES = [
+  { icon: '🔍', label: 'Wonder', desc: 'Spark your curiosity' },
+  { icon: '📖', label: 'Story', desc: 'Hear the tale' },
+  { icon: '🧪', label: 'Simulate', desc: 'Explore & discover' },
+  { icon: '🎮', label: 'Play', desc: 'Test your skills' },
+  { icon: '📓', label: 'Reflect', desc: 'What did you learn?' },
+];
 
-      {/* Phase preview map */}
-      <div style={{ marginTop: 64, display: 'flex', gap: 24, flexWrap: 'wrap', justifyContent: 'center' }}>
-        {[
-          { icon: '🔍', title: 'Wonder', color: 'var(--wonder-color)' },
-          { icon: '📖', title: 'Story', color: 'var(--story-color)' },
-          { icon: '🧪', title: 'Simulate', color: 'var(--simulate-color)' },
-          { icon: '🎮', title: 'Play', color: 'var(--play-color)' },
-          { icon: '📓', title: 'Reflect', color: 'var(--reflect-color)' },
-        ].map((p, i) => (
-          <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-            <div style={{ 
-              width: 48, height: 48, borderRadius: '50%', backgroundColor: p.color, 
-              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24,
-              boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
-            }}>
-              {p.icon}
-            </div>
-            <span style={{ fontSize: 14, fontWeight: 'bold', color: '#757575' }}>{p.title}</span>
-          </div>
-        ))}
+export default function IntroScreen({ onStart, audioEnabled }) {
+  return (
+    <div className="intro-screen">
+      <div className="intro-badge">
+        ✨· Grade 1
+      </div>
+
+      <h1 className="intro-title">
+        Circle<br />
+        <span style={{ color: 'var(--gold)' }}>Introduction to Geometry</span>
+      </h1>
+
+      <p className="intro-desc">
+        Discover what makes a circle special! Explore, play, and learn all about
+        the most perfect shape in nature. 🔵
+      </p>
+
+      <div className="intro-start-btn">
+        <button className="btn btn-primary btn-lg" onClick={onStart}>
+          Start the Journey ✨
+        </button>
+      </div>
+
+      <div className="intro-journey-map">
+        <div className="intro-journey-title">Your Learning Journey</div>
+        <div className="intro-journey-steps">
+          {JOURNEY_PHASES.map((phase, i) => (
+            <React.Fragment key={i}>
+              <div className="intro-journey-step">
+                <div className="intro-journey-icon">{phase.icon}</div>
+                <div className="intro-journey-info">
+                  <div className="intro-journey-label">{phase.label}</div>
+                  <div className="intro-journey-desc">{phase.desc}</div>
+                </div>
+              </div>
+              {i < JOURNEY_PHASES.length - 1 && (
+                <span className="intro-journey-arrow">→</span>
+              )}
+            </React.Fragment>
+          ))}
+        </div>
       </div>
     </div>
   );
-};
-
-export default IntroScreen;
+}
